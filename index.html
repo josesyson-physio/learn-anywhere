@@ -17,6 +17,7 @@
 <script src="library/neuro.js"></script>
 <script src="library/cardio.js"></script>
 <script src="library/principles.js"></script>
+<script src="library/syllabus.js"></script>
 <style>
 :root{color-scheme:light}
 body{margin:0;padding-top:env(safe-area-inset-top,0px)}
@@ -168,7 +169,7 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
 .refs li{margin:5px 0;overflow-wrap:anywhere}
 .related{margin-top:14px}.related h3{margin:0 0 8px;font-size:1rem}
 .lib-tools{display:flex;gap:8px;flex-wrap:wrap}.lib-tools input{flex:1 1 200px}.lib-tools select{flex:0 1 200px}
-.shelf{margin-top:18px}.shelf summary{cursor:pointer;font-weight:600}.shelf h4{margin:14px 0 4px}
+.shelf{margin-top:18px}.sylrow{margin:10px 0 14px}.sylrow h4{margin:0}.sylrow p{margin:2px 0 6px}.suggest button b{color:var(--primary);margin-left:4px}.shelf summary{cursor:pointer;font-weight:600}.shelf h4{margin:14px 0 4px}
 .actions{display:flex;flex-wrap:wrap;gap:8px;padding:14px 18px;background:var(--sunk);border-top:1px solid var(--line)}
 .reexplain{white-space:pre-wrap;background:var(--bg);border-radius:10px;padding:12px;font-size:.96rem;overflow-x:auto}
 
@@ -392,6 +393,12 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
       <div><h2>Library</h2><p class="small">Ready answers that work without internet, written from standard physiotherapy textbooks and guidelines. <span id="libCount"></span></p></div>
       <button class="ghost" id="libPdf" type="button" hidden>Download library as PDF</button>
     </div>
+    <details class="shelf" id="sylMap"><summary>Syllabus map: BPT and MPT</summary>
+      <p class="small">Common subjects across Indian universities. Tap a subject to see its topics. Always check your own university's syllabus for your batch.</p>
+      <div id="sylStages"></div>
+      <h4>Official university syllabus pages</h4>
+      <ul class="b" id="sylLinks"></ul>
+    </details>
     <div class="lib-tools"><input id="libSearch" type="search" placeholder="Search: stroke, knee, TENS, red flags, viva"><select id="libSubject" aria-label="Subject"></select></div>
     <p class="status" id="libStatus" aria-live="polite"></p>
     <div class="cards" id="libCards"></div>
@@ -436,11 +443,12 @@ const SUBJECTS = [
   {k:"Sports", d:"Injury, return to play", s:["ACL reconstruction rehabilitation","Lateral ankle sprain","Hamstring strain","Patellofemoral pain syndrome"]},
   {k:"Paediatrics", d:"CP, milestones, DMD", s:["Spastic diplegic cerebral palsy","Duchenne muscular dystrophy","Developmental milestones","Congenital talipes equinovarus"]},
   {k:"Geriatrics", d:"Falls, frailty", s:["Falls prevention in older adults","Osteoporosis exercise prescription","Frailty assessment"]},
-  {k:"Women's health", d:"Pelvic floor, pregnancy", s:["Antenatal exercise","Stress urinary incontinence","Diastasis recti"]},
+  {k:"Women's health", d:"Pelvic floor, pregnancy", s:["Antenatal and postnatal exercise","Stress urinary incontinence","Diastasis recti"]},
+  {k:"Rehabilitation", d:"Amputation, burns, ICU, community", s:["Lower limb amputation and prosthetic training","Burns rehabilitation","Physiotherapy in the ICU","Community-based rehabilitation"]},
   {k:"Exercise therapy", d:"Principles, techniques", s:["PNF techniques","Muscle energy technique","Principles of resisted exercise"]},
   {k:"Electrotherapy", d:"TENS, US, IFT", s:["TENS: parameters and gate control theory","Therapeutic ultrasound","Interferential therapy"]},
   {k:"Anatomy & biomechanics", d:"Muscles, joints, gait", s:["Brachial plexus","Normal gait cycle","Biomechanics of the shoulder complex"]},
-  {k:"Research", d:"Methods, statistics", s:["Levels of evidence","Reliability and validity of outcome measures","Types of sampling"]}
+  {k:"Research", d:"Methods, statistics, ICF", s:["Levels of evidence","Reliability and validity of outcome measures","Types of sampling","ICF framework and SOAP notes"]}
 ];
 
 const LIB_BASE = [
@@ -623,7 +631,8 @@ const STAGE_MAP = {"frozen-shoulder":"112234","knee-oa":"011234","lbp":"233344",
 const PROCESS = new Set(["gait-cycle","pnf","mmt","goniometry","tens","ultrasound","ift","maitland-grades","fitt","brunnstrom","levels-evidence"]);
 function stagesOf(a){
   const flow = a.flow || [];
-  if (PROCESS.has(a.id)) return null;
+  if (PROCESS.has(a.id) || a.stages === "steps") return null;
+  if (typeof a.stages === "string" && a.stages.length === flow.length) return [...a.stages].map(Number);
   if (STAGE_MAP[a.id]) return [...STAGE_MAP[a.id]].map(Number);
   let prev = 0;
   return flow.map((f, i) => {
@@ -993,11 +1002,15 @@ function renderShelf(){
   $("#shelfCount").textContent = Object.keys(BOOKS).length + (window.SHELF_EXTRA || []).length;
   $("#shelfList").innerHTML = Object.keys(groups).sort().map(g => `<h4>${esc(g)}</h4><ul class="b">${groups[g].map(b => `<li><strong>${esc(b.t)}</strong>${b.a ? ` <span class="small">${esc(b.a)}</span>` : ""}</li>`).join("")}</ul>`).join("");
   $("#freeList").innerHTML = (window.FREE_READS || []).map(r => `<li><a href="${esc(r.u)}" target="_blank" rel="noopener"><strong>${esc(r.t)}</strong></a> <span class="small">${esc(r.d)}</span></li>`).join("");
+  const SY = window.SYLLABUS || { stages: [], links: [] }, count = k => LIB.filter(t => t.subject === k).length;
+  $("#sylStages").innerHTML = SY.stages.map(st => `<div class="sylrow"><h4>${esc(st.h)}</h4><p class="small">${esc(st.d)}</p><div class="suggest">${st.s.filter(count).map(k => `<button type="button" data-sub="${esc(k)}">${esc(k)} <b>${count(k)}</b></button>`).join("")}</div></div>`).join("");
+  $("#sylLinks").innerHTML = SY.links.map(([n, u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}</a></li>`).join("");
   const subs = [...new Set(LIB.map(t => t.subject))].sort();
   $("#libSubject").innerHTML = `<option value="">All subjects</option>` + subs.map(x => `<option>${esc(x)}</option>`).join("");
 }
 $("#libSearch").addEventListener("input", renderLib);
 $("#libSubject").addEventListener("change", renderLib);
+$("#sylStages").addEventListener("click", e => { const b = e.target.closest("[data-sub]"); if (!b) return; $("#libSearch").value = ""; $("#libSubject").value = b.dataset.sub; renderLib(); $("#libCards").scrollIntoView({ behavior: "smooth", block: "start" }); });
 $("#libCards").addEventListener("click", e => {
   const c = e.target.closest(".card"); if (!c) return;
   const it = allItems().find(x => x.id === c.dataset.id);
