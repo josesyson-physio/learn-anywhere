@@ -11,7 +11,7 @@ Free, open-source physiotherapy learning for every student, including those who 
 - **PDF downloads:** save any answer, or the whole library, as a PDF.
 - **Quiz:** exam-style MCQs with explanations.
 
-AI-written answers (ask any topic, in 12 languages) currently work in the Claude-hosted version. The public site shows the closest library topic until an AI service is connected.
+AI-written answers (ask any topic, in 12 languages) come from a small server in [`worker/`](worker/README.md) that calls Claude. Until it's set up, the site shows the closest library topic.
 
 ## Run it
 
@@ -36,6 +36,7 @@ python3 -m http.server 8000
 | `sw.js` | Service worker for offline use |
 | `manifest.webmanifest`, `icons/` | Makes the app installable |
 | `vendor/jspdf.umd.min.js` | PDF generation (jsPDF 2.5.1, MIT) |
+| `worker/` | AI server (Cloudflare Worker) for answers |
 | `docs/plan.md` | Product plan and roadmap |
 
 ## Adding a topic

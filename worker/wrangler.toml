@@ -1,0 +1,14 @@
+name = "learn-anywhere-ai"
+main = "src/index.ts"
+compatibility_date = "2025-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+MODEL = "claude-sonnet-5-5"
+ALLOWED_ORIGINS = "https://josesyson-physio.github.io"
+
+# Each student (by IP address) can ask at most 4 questions per minute.
+[[ratelimits]]
+name = "LIMITER"
+namespace_id = "1001"
+simple = { limit = 4, period = 60 }

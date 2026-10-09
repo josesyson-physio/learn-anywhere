@@ -561,7 +561,10 @@ const store = {
   get(){ try { return JSON.parse(localStorage.getItem("la-saved") || "[]"); } catch { return []; } },
   set(v){ try { localStorage.setItem("la-saved", JSON.stringify(v)); return true; } catch { return false; } }
 };
+// Address of the AI server (worker/ folder). Leave empty to show library answers only.
+const AI_ENDPOINT = "";
 let sample = null, downloads = null, canImages = false, ctl = null, uid = 0;
+const aiReady = () => !!sample || !!AI_ENDPOINT;
 
 /* ================= answer rendering ================= */
 function renderAnswer(a, opts = {}){
@@ -620,14 +623,15 @@ function renderAnswer(a, opts = {}){
     s.onclick = () => { const saved = store.get(); saved.unshift({...a, id:"saved-"+Date.now(), saved:true}); s.textContent = store.set(saved.slice(0,100)) ? "Saved to library" : "Could not save on this device"; s.disabled = true; renderLib(); };
     actions.append(s);
   }
-  if (sample) {
+  if (aiReady()) {
     [["Explain more simply","Explain this again in much simpler words for a first-year student, in short sentences, keeping the key exam terms."],
      ["Tell it as a story","Explain this as a short, memorable story or analogy from everyday life in India, then list the 3 facts the story teaches."],
      ["Revision table","Turn this into a compact revision table in plain text (use | between columns), then 5 one-line high-yield points."],
      ["5 more viva questions","Write 5 more viva questions an Indian BPT examiner would ask on this topic, each with a 1-2 line model answer."]]
      .forEach(([label, instr]) => {
        const b = document.createElement("button"); b.className = "ghost"; b.type = "button"; b.textContent = label;
-       b.onclick = () => reExplain(el, a, label, instr);
+       b.dataset.kind = {"Explain more simply":"simpler","Tell it as a story":"story","Revision table":"table","5 more viva questions":"viva"}[label];
+       b.onclick = () => reExplain(el, a, label, instr, b.dataset.kind);
        actions.append(b);
      });
   }
@@ -749,7 +753,10 @@ function errCopy(code){
     cancelled:"Stopped.", refused:"That could not be answered. Try phrasing it as a study topic.",
     invalid_json:"The answer came back in the wrong shape. Try again.",
     session_expired:"Your session expired. Reload the page and try again.",
-    sampling_disabled:"AI answers are turned off here. The Library and Quiz still work."}[code]) || "Could not make the answer. Check your connection and try again; the Library works offline.";
+    sampling_disabled:"AI answers are turned off here. The Library and Quiz still work.",
+    slow_down:"You're asking very fast. Wait a minute, then try again.",
+    upstream_error:"The AI service is busy or has reached its limit. Try again later; the Library and Quiz still work.",
+    bad_request:"Write a slightly longer question (at least a few words) and try again."}[code]) || "Could not make the answer. Check your connection and try again; the Library works offline.";
 }
 
 let marks = 10;
@@ -765,7 +772,8 @@ $("#askForm").addEventListener("submit", async e => {
   e.preventDefault();
   const q = $("#q").value.trim();
   if (!q && !photo) { setStatus("Type a topic or add a photo of the question.", true); return; }
-  if (!sample) { setStatus("New AI answers are not switched on in this version yet. Showing the closest library topic.", true); showLibMatch(q); return; }
+  if (!aiReady()) { showLibMatch(q, true); return; }
+  if (!sample && !q) { setStatus("Type your question; photo questions are not available here yet.", true); return; }
   const lang = $("#lang").value, uni = $("#uni").value, level = $("#level").value, qtype = $("#qtype").value;
   const prompt = `You are an expert physiotherapy professor and examiner in India, teaching students who cannot afford coaching. Write an advanced, exam-ready, evidence-based answer.
 Student: ${level}, ${uni}. Question type: ${qtype}. Marks: ${marks}.
@@ -782,28 +790,48 @@ ${SCHEMA}`;
   setStatus("Thinking like an examiner. A detailed answer can take up to a minute.");
   $("#answer").innerHTML = "";
   try {
-    const opts = { signal: ctl.signal, modelTier: "complex" };
-    if (photo && canImages) opts.images = [photo];
-    const a = await sample.json(prompt, opts);
+    let a;
+    if (sample) {
+      const opts = { signal: ctl.signal, modelTier: "complex" };
+      if (photo && canImages) opts.images = [photo];
+      a = await sample.json(prompt, opts);
+    } else {
+      a = (await callServer({ mode: "answer", question: q, marks, qtype, level, uni, lang }, ctl.signal)).answer;
+    }
     Object.assign(a, { marks, lang, uni, level, qtype });
     $("#answer").append(renderAnswer(a, { ai: true, savable: true }));
     setStatus("");
     $("#answer").scrollIntoView({ behavior: "smooth", block: "start" });
   } catch (err) {
     setStatus(errCopy(err && err.code), err && err.code !== "cancelled");
-    if (err && err.code === "not_granted") showLibMatch(q);
+    if (err && ["not_granted","upstream_error","network"].includes(err.code)) showLibMatch(q, false);
   } finally {
     $("#askBtn").disabled = false; $("#stopBtn").hidden = true;
   }
 });
 $("#stopBtn").onclick = () => ctl && ctl.abort();
 
-async function reExplain(el, a, label, instr){
+async function callServer(body, signal){
+  let res;
+  try { res = await fetch(AI_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), signal }); }
+  catch (e) { throw { code: e && e.name === "AbortError" ? "cancelled" : "network" }; }
+  let data = {};
+  try { data = await res.json(); } catch {}
+  if (!res.ok) throw { code: data.error || "upstream_error" };
+  return data;
+}
+
+async function reExplain(el, a, label, instr, kind){
   const box = el.querySelector("[data-re]"), out = box.querySelector(".reexplain");
   box.hidden = false; el.querySelector("[data-re-title]").textContent = label; out.textContent = "Thinking...";
   box.scrollIntoView({ behavior: "smooth", block: "nearest" });
   const lang = a.lang || $("#lang").value;
   try {
+    if (!sample) {
+      const { text } = await callServer({ mode: "reexplain", kind, title: a.title, summary: a.simple || "", steps: (a.flow||[]).join(" -> "), lang });
+      out.textContent = text;
+      return;
+    }
     await sample(`${instr} Write in ${lang}. Plain text only, no markdown symbols.\n\nTopic: ${a.title}\nSummary: ${a.simple}\nKey steps: ${(a.flow||[]).join(" -> ")}\nExam headings: ${(a.exam||[]).map(s=>s.h).join(", ")}`,
       { modelTier: "default", onText: ({text}) => { out.textContent = text; } });
   } catch (err) { out.textContent = (err && err.text) || errCopy(err && err.code); }
@@ -829,7 +857,18 @@ function match(q){
   for (const it of allItems()) { const h = hay(it); const sc = words.filter(w => h.includes(w)).length; if (sc > bestScore) { best = it; bestScore = sc; } }
   return best;
 }
-function showLibMatch(q){ const m = match(q); if (m) $("#answer").replaceChildren(renderAnswer(m, { badge: "From library" })); }
+function showLibMatch(q, explain){
+  const m = match(q);
+  if (m) {
+    if (explain) setStatus("AI answers are not switched on here yet. This is the closest topic from the library.", true);
+    $("#answer").replaceChildren(renderAnswer(m, { badge: "From library" }));
+    return;
+  }
+  if (explain) setStatus("AI answers are not switched on here yet, and the library has no topic on this. These topics are ready to study:", true);
+  const box = document.createElement("div"); box.className = "suggest";
+  allItems().forEach(it => { const b = document.createElement("button"); b.type = "button"; b.textContent = it.title; b.onclick = () => $("#answer").replaceChildren(renderAnswer(it, { badge: "From library" })); box.append(b); });
+  $("#answer").replaceChildren(box);
+}
 function libItems(){ const q = $("#libSearch").value.trim().toLowerCase(); return allItems().filter(it => !q || hay(it).includes(q)); }
 function renderLib(){
   const items = libItems();
