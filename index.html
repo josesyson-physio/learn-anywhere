@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Free, offline-first physiotherapy learning for every student.">
+<meta name="theme-color" content="#15205a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>Learn Anywhere Physio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500&display=swap">
+<script src="vendor/jspdf.umd.min.js">
+if ("serviceWorker" in navigator && location.protocol !== "file:") navigator.serviceWorker.register("sw.js").catch(() => {});
+</script>
+</body>
+</html>
+<style>
+:root{color-scheme:light}
+body{margin:0;padding-top:env(safe-area-inset-top,0px)}
+img{max-width:100%}
+/* Layout: phone-first study app. Cobalt hero with a saffron highlight, sticky tabs, answers as a sectioned study sheet with a jump bar */
+:root{
+  --bg:#f3f5fb; --surface:#ffffff; --sunk:#eaeef8; --ink:#121a33; --muted:#59627f; --line:#dbe1ef;
+  --primary:#2f4fe0; --primary-ink:#ffffff; --primary-soft:#e2e7fd;
+  --hero:#15205a; --hero-ink:#f3f5ff; --hero-muted:#b7c0ea;
+  --saffron:#b86e00; --saffron-bright:#f5a623; --saffron-soft:#fdf0d9;
+  --mint:#0b8a6d; --mint-soft:#daf3eb; --flag:#c43c31; --flag-soft:#fbe4e2;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0b1020; --surface:#131a31; --sunk:#1a2240; --ink:#e8ebf7; --muted:#9ca5c6; --line:#27304f;
+  --primary:#8196ff; --primary-ink:#0b1020; --primary-soft:#202a58;
+  --hero:#1b2668; --hero-ink:#f3f5ff; --hero-muted:#b7c0ea;
+  --saffron:#f5b544; --saffron-bright:#f5b544; --saffron-soft:#3a2c12;
+  --mint:#4fd3ae; --mint-soft:#12352d; --flag:#ff8c80; --flag-soft:#3d1d1d; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0b1020; --surface:#131a31; --sunk:#1a2240; --ink:#e8ebf7; --muted:#9ca5c6; --line:#27304f;
+  --primary:#8196ff; --primary-ink:#0b1020; --primary-soft:#202a58;
+  --hero:#1b2668; --hero-ink:#f3f5ff; --hero-muted:#b7c0ea;
+  --saffron:#f5b544; --saffron-bright:#f5b544; --saffron-soft:#3a2c12;
+  --mint:#4fd3ae; --mint-soft:#12352d; --flag:#ff8c80; --flag-soft:#3d1d1d; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--body);padding:0 16px 56px}
+.wrap{max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+h2{font:800 1.4rem/1.2 var(--display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+h3{font:500 .74rem/1.2 var(--mono);text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin:0 0 10px}
+p{margin:0}
+a{color:var(--primary)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--saffron-bright);outline-offset:2px}
+
+/* hero */
+.hero{margin-top:16px;background:var(--hero);color:var(--hero-ink);border-radius:20px;padding:22px 20px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-90px;top:-90px;width:200px;height:200px;border-radius:50%;border:24px solid var(--saffron-bright);opacity:.16}
+.brand{font:800 1.9rem/1 var(--display);letter-spacing:-.02em;margin:0}
+.brand span{color:var(--saffron-bright)}
+.hero p{color:var(--hero-muted);max-width:52ch}
+.hero .mission{color:var(--hero-ink);font-weight:600}
+.stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.stats span{font:500 .72rem var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.1);color:var(--hero-ink)}
+
+/* tabs */
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:4px;padding-block:8px;border-bottom:1px solid var(--line)}
+nav.tabs button{flex:1;font:700 .95rem var(--body);color:var(--muted);background:none;border:0;border-radius:10px;padding:10px 6px;cursor:pointer}
+nav.tabs button[aria-selected="true"]{background:var(--primary);color:var(--primary-ink)}
+.view{display:flex;flex-direction:column;gap:18px}
+
+/* ask */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:14px}
+.panel label.big{font:800 1.15rem var(--display)}
+textarea{width:100%;min-height:80px;resize:vertical;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 13px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.field>span{font:600 .82rem var(--body);color:var(--muted)}
+select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 10px}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font:700 .88rem var(--body);border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:7px 13px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.primary{font:700 1rem var(--body);background:var(--primary);color:var(--primary-ink);border:0;border-radius:10px;padding:12px 20px;cursor:pointer}
+.primary:disabled{opacity:.55;cursor:default}
+.ghost{font:700 .9rem var(--body);background:var(--surface);color:var(--primary);border:1px solid var(--primary);border-radius:10px;padding:8px 13px;cursor:pointer}
+.ghost:disabled{opacity:.6;cursor:default}
+.saff{background:var(--saffron-bright);color:#1d1400}
+.small{font-size:.86rem;color:var(--muted)}
+.filebtn{font:700 .88rem var(--body);color:var(--ink);border:1px dashed var(--muted);border-radius:10px;padding:8px 12px;cursor:pointer}
+.filebtn input{display:none}
+.status{font-size:.92rem;color:var(--muted)}
+.status.err{color:var(--flag)}
+
+/* subjects */
+.subjects{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.subj{text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;display:flex;flex-direction:column;gap:2px}
+.subj:hover{border-color:var(--primary)}
+.subj b{font:700 .98rem var(--display)}
+.subj span{font-size:.8rem;color:var(--muted)}
+.subj[aria-pressed="true"]{border-color:var(--primary);background:var(--primary-soft)}
+.suggest{display:flex;flex-wrap:wrap;gap:6px}
+.suggest button{font:600 .86rem var(--body);background:var(--primary-soft);color:var(--ink);border:0;border-radius:999px;padding:7px 12px;cursor:pointer;text-align:left}
+
+/* answer sheet */
+.sheet{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.sheet-head{padding:20px 18px 14px;display:flex;flex-direction:column;gap:10px;border-bottom:1px solid var(--line)}
+.meta{display:flex;flex-wrap:wrap;gap:6px}
+.pill{font:500 .7rem var(--mono);letter-spacing:.05em;text-transform:uppercase;padding:4px 9px;border-radius:999px;background:var(--sunk);color:var(--muted)}
+.pill.marks{background:var(--saffron-soft);color:var(--saffron)}
+.pill.tag{background:var(--primary-soft);color:var(--primary)}
+.pill.ok{background:var(--mint-soft);color:var(--mint)}
+.jump{display:flex;gap:6px;overflow-x:auto;padding:10px 18px;background:var(--sunk);scrollbar-width:thin}
+.jump a{flex:none;font:700 .8rem var(--body);text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 11px}
+.sec{padding:18px;border-bottom:1px solid var(--line);min-width:0;scroll-margin-top:70px}
+.sec:last-of-type{border-bottom:0}
+.simple{font-size:1.1rem;line-height:1.6}
+.flow{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.flow li{background:var(--bg);border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:10px;padding:9px 12px;position:relative}
+.flow li+li{margin-top:22px}
+.flow li+li::before{content:"";position:absolute;left:50%;top:-18px;height:14px;border-left:2px solid var(--primary)}
+.flow li+li::after{content:"";position:absolute;left:calc(50% - 5px);top:-8px;border:5px solid transparent;border-top-color:var(--primary)}
+.flow b{font:800 1rem var(--display);color:var(--primary);margin-right:6px}
+.exam h4,.adv h4{font:800 1.02rem var(--display);margin:14px 0 4px}
+.exam h4:first-child,.adv h4:first-child{margin-top:0}
+ul.b{margin:0;padding-left:20px}
+ul.b li{margin:3px 0}
+.markbar{display:flex;flex-direction:column;gap:6px}
+.markrow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;font-size:.95rem}
+.markrow .bar{grid-column:1 / -1;height:6px;border-radius:6px;background:var(--sunk);overflow:hidden}
+.markrow .bar i{display:block;height:100%;background:var(--saffron-bright)}
+.markrow b{font:700 .85rem var(--mono);font-variant-numeric:tabular-nums;color:var(--saffron)}
+.tip{margin-top:12px;padding:11px 13px;border-radius:10px;background:var(--saffron-soft);font-size:.96rem}
+.tip strong{color:var(--saffron)}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.93rem;min-width:420px}
+th{font:500 .72rem var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
+.grade{font:700 .78rem var(--mono);padding:2px 8px;border-radius:6px;background:var(--mint-soft);color:var(--mint);white-space:nowrap}
+.mnem{font:800 1.7rem/1.1 var(--display);color:var(--primary);letter-spacing:.02em}
+.mnem-list{margin:10px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.mnem-list li{background:var(--primary-soft);border-radius:8px;padding:6px 10px;font-size:.94rem}
+.mnem-list b{font-family:var(--display);color:var(--primary)}
+.flags{background:var(--flag-soft);border-radius:10px;padding:12px 14px}
+.flags h3{color:var(--flag)}
+.viva details{border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:var(--bg)}
+.viva details+details{margin-top:8px}
+.viva summary{font-weight:700;cursor:pointer}
+.viva details p{margin-top:6px}
+.refs{margin:0;padding-left:20px;font-size:.93rem}
+.refs li{margin:5px 0;overflow-wrap:anywhere}
+.actions{display:flex;flex-wrap:wrap;gap:8px;padding:14px 18px;background:var(--sunk);border-top:1px solid var(--line)}
+.reexplain{white-space:pre-wrap;background:var(--bg);border-radius:10px;padding:12px;font-size:.96rem;overflow-x:auto}
+
+/* library */
+.lib-tools input{width:100%;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 13px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.card{text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:15px;cursor:pointer;display:flex;flex-direction:column;gap:7px}
+.card:hover{border-color:var(--primary)}
+.card .t{font:800 1.05rem/1.25 var(--display)}
+.card .s{font-size:.9rem;color:var(--muted)}
+
+/* quiz */
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:flex;flex-direction:column;gap:12px}
+.qprog{font:500 .8rem var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.qtrack{height:6px;border-radius:6px;background:var(--sunk);overflow:hidden}
+.qtrack i{display:block;height:100%;background:var(--primary)}
+.qq{font:800 1.18rem/1.35 var(--display)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{text-align:left;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 13px;cursor:pointer}
+.opt.right{border-color:var(--mint);background:var(--mint-soft)}
+.opt.wrong{border-color:var(--flag);background:var(--flag-soft)}
+.why{font-size:.95rem;background:var(--sunk);border-radius:10px;padding:11px 13px}
+.score{font:800 2.6rem var(--display);font-variant-numeric:tabular-nums;color:var(--primary)}
+.about{display:flex;flex-direction:column;gap:10px;max-width:65ch}
+@media (prefers-reduced-motion:no-preference){.sheet{animation:rise .3s ease-out both}@keyframes rise{from{transform:translateY(8px)}to{transform:none}}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <h1 class="brand">Learn <span>Anywhere</span></h1>
+    <p class="mission">Free physiotherapy learning for every student in India and beyond.</p>
+    <p>Ask any topic. Get an answer written the way your university examiners expect, backed by evidence, with a memory trick and viva questions.</p>
+    <div class="stats"><span>Free forever</span><span>BPT · MPT</span><span>Library works offline</span></div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-view="ask">Ask</button>
+    <button role="tab" aria-selected="false" data-view="lib">Library</button>
+    <button role="tab" aria-selected="false" data-view="quiz">Quiz</button>
+    <button role="tab" aria-selected="false" data-view="about">About</button>
+  </nav>
+
+  <!-- ASK -->
+  <section id="view-ask" class="view">
+    <form class="panel" id="askForm">
+      <label class="big" for="q">What do you want to master today?</label>
+      <textarea id="q" placeholder="e.g. Physiotherapy management of frozen shoulder"></textarea>
+      <div class="grid2">
+        <label class="field"><span>University</span>
+          <select id="uni">
+            <option>MUHS (Maharashtra)</option><option>RGUHS (Karnataka)</option><option>Tamil Nadu Dr. M.G.R. Medical University</option><option>Dr. NTR UHS (Andhra Pradesh)</option><option>KNRUHS (Telangana)</option><option>KUHS (Kerala)</option><option>BFUHS (Punjab)</option><option>Pt. B.D. Sharma UHS (Haryana)</option><option>GGSIPU (Delhi)</option><option>Gujarat (state universities)</option><option>Deemed or private university</option><option>Other / not sure</option>
+          </select></label>
+        <label class="field"><span>Year</span>
+          <select id="level"><option>BPT 1st year</option><option>BPT 2nd year</option><option>BPT 3rd year</option><option selected>BPT 4th year</option><option>Internship</option><option>MPT</option></select></label>
+        <label class="field"><span>Question type</span>
+          <select id="qtype"><option>Long essay</option><option>Short essay</option><option>Short answer</option><option>Viva</option><option>Practical / OSCE</option></select></label>
+        <label class="field"><span>Language</span>
+          <select id="lang"><option>English</option><option>Hindi</option><option>Tamil</option><option>Telugu</option><option>Malayalam</option><option>Kannada</option><option>Bengali</option><option>Marathi</option><option>Gujarati</option><option>Punjabi</option><option>Urdu</option><option>Odia</option></select></label>
+      </div>
+      <div class="field"><span>Marks</span>
+        <div class="seg" id="marks">
+          <button type="button" data-m="2" aria-pressed="false">2</button>
+          <button type="button" data-m="3" aria-pressed="false">3</button>
+          <button type="button" data-m="5" aria-pressed="false">5</button>
+          <button type="button" data-m="10" aria-pressed="true">10</button>
+          <button type="button" data-m="15" aria-pressed="false">15</button>
+          <button type="button" data-m="20" aria-pressed="false">20</button>
+        </div>
+      </div>
+      <div class="row">
+        <button class="primary" id="askBtn" type="submit">Make my answer</button>
+        <button class="ghost" id="stopBtn" type="button" hidden>Stop</button>
+        <label class="filebtn" id="fileLabel" hidden>Add photo of question<input type="file" id="photo" accept="image/*"></label>
+        <span class="small" id="photoName"></span>
+      </div>
+      <p class="status" id="askStatus" aria-live="polite"></p>
+    </form>
+
+    <div class="view" style="gap:10px">
+      <h3 style="margin:0">Explore by subject</h3>
+      <div class="subjects" id="subjects"></div>
+      <div class="suggest" id="suggest"></div>
+    </div>
+
+    <div id="answer"></div>
+  </section>
+
+  <!-- LIBRARY -->
+  <section id="view-lib" class="view" hidden>
+    <div class="row" style="justify-content:space-between">
+      <div><h2>Library</h2><p class="small">Ready answers work without internet. Answers you save appear here.</p></div>
+      <button class="ghost" id="libPdf" type="button" hidden>Download library as PDF</button>
+    </div>
+    <div class="lib-tools"><input id="libSearch" type="search" placeholder="Search: shoulder, red flags, evidence, viva"></div>
+    <p class="status" id="libStatus" aria-live="polite"></p>
+    <div class="cards" id="libCards"></div>
+    <div id="libAnswer"></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="view-quiz" class="view" hidden>
+    <div><h2>Quick quiz</h2><p class="small">Exam-style MCQs from the library. Works offline.</p></div>
+    <div class="qcard" id="quiz"></div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="view-about" class="view" hidden>
+    <h2>Why this exists</h2>
+    <div class="about">
+      <p>Good coaching and books cost money many students do not have. Learn Anywhere gives every physiotherapy student the same quality of explanation, for free, on any phone.</p>
+      <p><strong>How answers are built.</strong> Choose your university, year, question type and marks. The answer follows the layout Indian BPT and MPT examiners expect: definition, pathophysiology, clinical features, assessment, phased management, diagram and conclusion. Advanced sections add evidence grades, outcome measures with clinically important change scores, recent trials and viva questions.</p>
+      <p><strong>Marking guide.</strong> The marks split is a typical pattern for Indian health science university papers. Always check your own university's syllabus and previous question papers.</p>
+      <p><strong>References.</strong> Built-in topics cite real guidelines and trials. AI-written answers suggest references; check each one with the PubMed link before you quote it.</p>
+      <p><strong>Low network.</strong> The library and quiz are inside the page. A new answer uses only a few kilobytes of text. You can download any answer, or the whole library, as a PDF to read offline.</p>
+      <p>This is a study aid for students, not medical advice for patients.</p>
+    </div>
+  </section>
+</div>
+
+<script>
+/* ================= content ================= */
+const SUBJECTS = [
+  {k:"Musculoskeletal", d:"Orthopaedics, spine, joints", s:["Physiotherapy management of total knee replacement","Rotator cuff tendinopathy","Ankylosing spondylitis","Cervical radiculopathy"]},
+  {k:"Neurology", d:"Stroke, spinal cord, PD", s:["Physiotherapy management of hemiplegia after stroke","Parkinson's disease rehabilitation","Spinal cord injury: complete T6 paraplegia","Guillain-Barre syndrome"]},
+  {k:"Cardio-respiratory", d:"ICU, COPD, cardiac rehab", s:["Pulmonary rehabilitation in COPD","Phase 1 cardiac rehabilitation after CABG","Airway clearance techniques","Physiotherapy in the ICU"]},
+  {k:"Sports", d:"Injury, return to play", s:["ACL reconstruction rehabilitation","Lateral ankle sprain","Hamstring strain","Patellofemoral pain syndrome"]},
+  {k:"Paediatrics", d:"CP, milestones, DMD", s:["Spastic diplegic cerebral palsy","Duchenne muscular dystrophy","Developmental milestones","Congenital talipes equinovarus"]},
+  {k:"Geriatrics", d:"Falls, frailty", s:["Falls prevention in older adults","Osteoporosis exercise prescription","Frailty assessment"]},
+  {k:"Women's health", d:"Pelvic floor, pregnancy", s:["Antenatal exercise","Stress urinary incontinence","Diastasis recti"]},
+  {k:"Exercise therapy", d:"Principles, techniques", s:["PNF techniques","Muscle energy technique","Principles of resisted exercise"]},
+  {k:"Electrotherapy", d:"TENS, US, IFT", s:["TENS: parameters and gate control theory","Therapeutic ultrasound","Interferential therapy"]},
+  {k:"Anatomy & biomechanics", d:"Muscles, joints, gait", s:["Brachial plexus","Normal gait cycle","Biomechanics of the shoulder complex"]},
+  {k:"Research", d:"Methods, statistics", s:["Levels of evidence","Reliability and validity of outcome measures","Types of sampling"]}
+];
+
+const LIB = [
+{
+  id:"frozen-shoulder", title:"Frozen shoulder (adhesive capsulitis)", subject:"Musculoskeletal", region:"Shoulder", marks:10,
+  simple:"The shoulder capsule first becomes inflamed, then thick and tight. The shoulder hurts and slowly loses movement in every direction, most of all turning outwards. It usually recovers over 1 to 3 years, and physiotherapy matched to how irritable the shoulder is speeds this up.",
+  flow:["Synovial inflammation of the glenohumeral capsule","Fibroblast proliferation and capsular contracture (rotator interval, coracohumeral ligament)","Painful, global loss of active and passive ROM","Capsular pattern: ER > ABD > IR","Classify irritability: high, moderate or low","Match treatment dose to irritability; add injection if pain blocks progress"],
+  exam:[
+    {h:"Definition", p:["A condition of insidious onset with painful, progressive loss of active and passive glenohumeral movement due to capsular fibrosis, with a normal X-ray.","Primary (idiopathic) or secondary (diabetes, thyroid disease, post-surgery, immobilisation)."]},
+    {h:"Pathophysiology", p:["Synovitis followed by fibroblastic proliferation and myofibroblast contracture of the capsule.","Thickened coracohumeral ligament and rotator interval explain early loss of external rotation.","Reduced capsular volume, loss of the axillary recess."]},
+    {h:"Clinical features and stages", p:["Freezing (painful): about 2 to 9 months, night pain.","Frozen (stiff): about 4 to 12 months, stiffness dominates.","Thawing (recovery): about 5 to 24 months.","Key sign: loss of passive external rotation, often more than 50 percent."]},
+    {h:"Assessment", p:["Goniometric ROM (ER at 0 and 90 degrees of abduction), capsular end feel.","NPRS, SPADI, QuickDASH; irritability classification (Kelley 2013).","Differentiate from rotator cuff tear (passive ROM preserved) and OA (X-ray changes)."]},
+    {h:"Physiotherapy management", p:["High irritability: education, pain relief, gentle pain-free ROM, grade I-II mobilisation, pendular exercise.","Moderate to low irritability: end-range stretching, grade III-IV mobilisation, posterior and inferior glides, mobilisation with movement.","Scapular control and rotator cuff strengthening as ROM returns.","Home programme: wand, towel, sleeper and cross-body stretches.","Combine with intra-articular corticosteroid when pain limits therapy."]},
+    {h:"Conclusion", p:["Self-limiting but slow. Irritability-matched physiotherapy with education gives the best function."]}
+  ],
+  marking:[["Definition and types",1],["Pathophysiology",1.5],["Clinical features and stages",1.5],["Assessment and outcome measures",2],["Physiotherapy management by stage",3],["Diagram",0.5],["Conclusion",0.5]],
+  tip:"Draw the shoulder with the thickened capsule and a 3-box stage timeline. Underline 'capsular pattern', 'passive ER' and 'irritability'.",
+  evidence:[["Intra-articular corticosteroid injection","Short-term pain relief and ROM gains","A"],["Patient education","Explain natural history, set expectations","B"],["Stretching matched to irritability","Improves ROM and function","B"],["Joint mobilisation","Improves ROM and function","B"],["Shortwave diathermy, ultrasound, electrical stimulation","Only with stretching","C"]],
+  evidenceSource:"Kelley et al. 2013 JOSPT clinical practice guideline",
+  outcomes:[["SPADI","Pain and disability; MCID about 8 to 13 points"],["QuickDASH","Upper limb function; MCID about 8 to 11 points"],["NPRS","Pain; MCID about 2 points"],["Goniometry","Passive ER, abduction, IR"]],
+  recent:["UK FROST trial (Rangan et al., Lancet 2020): early structured physiotherapy with steroid injection, manipulation under anaesthesia and arthroscopic capsular release all improved patients. None was clearly better, and physiotherapy with injection cost least.","Hydrodilatation (capsular distension) may add short-term benefit to physiotherapy."],
+  mnemonic:{word:"FFT", items:[["F","Freezing: pain"],["F","Frozen: stiffness"],["T","Thawing: recovery"]], extra:"Capsular pattern ER > ABD > IR: 'Every ABle Individual'."},
+  example:"A 52-year-old teacher with type 2 diabetes cannot reach behind her back to tie her sari and wakes at night with pain. X-ray is normal. Passive ER is 30 degrees against 80 degrees on the other side.",
+  flags:["Trauma with sudden loss of movement (dislocation or fracture)","Night pain, weight loss, history of cancer","Fever or a hot swollen joint (septic arthritis)"],
+  viva:[["Why is external rotation lost first?","Contracture of the coracohumeral ligament and rotator interval, which are tight in external rotation."],["How do you tell frozen shoulder from a rotator cuff tear?","In a cuff tear, active movement is lost but passive movement is preserved. In frozen shoulder both active and passive are lost."],["What is the capsular pattern of the shoulder?","External rotation is most limited, then abduction, then internal rotation."]],
+  refs:[
+    {c:"Kelley MJ, Shaffer MA, Kuhn JE, et al. Shoulder pain and mobility deficits: adhesive capsulitis. Clinical practice guidelines. J Orthop Sports Phys Ther. 2013;43(5):A1-A31.", q:"Kelley adhesive capsulitis clinical practice guideline 2013"},
+    {c:"Rangan A, et al. Management of adults with primary frozen shoulder in secondary care (UK FROST): a multicentre, pragmatic, three-arm, superiority randomised clinical trial. Lancet. 2020;396:977-989.", q:"UK FROST frozen shoulder randomised trial Lancet 2020"},
+    {c:"Physiopedia: Adhesive Capsulitis.", u:"https://www.physio-pedia.com/Adhesive_Capsulitis"}
+  ],
+  keywords:"adhesive capsulitis physiotherapy"
+},
+{
+  id:"knee-oa", title:"Knee osteoarthritis", subject:"Musculoskeletal", region:"Knee", marks:10,
+  simple:"Knee osteoarthritis is a slow change in the whole joint: cartilage, bone, lining and muscles. The knee becomes painful and stiff and walking or stairs get harder. Education, exercise and weight loss help every patient, at every stage.",
+  flow:["Risk factors: age, obesity, previous injury, malalignment, female sex","Whole-joint change: cartilage loss, osteophytes, subchondral sclerosis, synovitis","Quadriceps inhibition and weakness","Activity-related pain, short morning stiffness, crepitus","Clinical diagnosis; X-ray graded by Kellgren-Lawrence if needed","Core care: education, exercise, weight management; then adjuncts or surgery"],
+  exam:[
+    {h:"Definition", p:["A degenerative disease of the whole synovial joint with focal cartilage loss, osteophytes, subchondral bone change and synovitis."]},
+    {h:"Pathophysiology", p:["Imbalance between cartilage matrix synthesis and breakdown (MMPs, aggrecanases).","Subchondral sclerosis, bone marrow lesions, osteophytes, meniscal degeneration.","Arthrogenic muscle inhibition of the quadriceps."]},
+    {h:"Clinical features", p:["Activity-related pain, morning stiffness under 30 minutes, crepitus, bony enlargement, reduced ROM, varus deformity.","NICE (2022): diagnose clinically if 45 or over, activity-related pain, and no or short morning stiffness."]},
+    {h:"Assessment", p:["NPRS, WOMAC or KOOS; ROM, quadriceps strength, gait.","OARSI performance tests: 30-second chair stand, 40 m fast-paced walk, stair climb test.","Kellgren-Lawrence grade 0 to 4 on X-ray."]},
+    {h:"Physiotherapy management", p:["Education and self-management.","Strengthening: quadriceps (SLR, sit-to-stand, mini squats), hip abductors.","Aerobic and mind-body exercise: walking, cycling, aquatic exercise, tai chi, yoga.","Weight loss if overweight; walking stick in the opposite hand; footwear advice.","Adjuncts for short-term relief: heat or ice, TENS, manual therapy alongside exercise."]},
+    {h:"Conclusion", p:["Exercise and education are first-line for all patients, before and alongside any surgery."]}
+  ],
+  marking:[["Definition",1],["Pathophysiology and risk factors",1.5],["Clinical features and grading",1.5],["Assessment and outcome measures",2],["Physiotherapy management",3],["Diagram",0.5],["Conclusion",0.5]],
+  tip:"Put 'Education, Exercise, Weight loss' in a box at the start of management. Draw a normal vs OA knee with labelled osteophytes and joint-space narrowing.",
+  evidence:[["Structured land-based exercise","Strengthening, cardio, mind-body","Core"],["Education and self-management","For all patients","Core"],["Weight management","If overweight","Core"],["Topical NSAIDs (knee)","Medication; refer to doctor","1A"],["Arthroscopic lavage or debridement","Do not offer (NICE)","Avoid"]],
+  evidenceSource:"OARSI 2019 guideline and NICE NG226 (2022)",
+  outcomes:[["WOMAC","Pain, stiffness, function"],["KOOS","Knee-specific; five subscales"],["30-second chair stand","Lower limb strength"],["40 m fast-paced walk","Short-distance walking"],["Stair climb test","Stair function"]],
+  recent:["GLA:D programme (Denmark): education plus neuromuscular exercise delivered by trained physiotherapists reduces pain and medication use at scale.","Skou et al. (NEJM 2015): total knee replacement followed by non-surgical care gave more pain relief than non-surgical care alone, but two-thirds of the non-surgical group did not have surgery by 1 year."],
+  mnemonic:{word:"EWE", items:[["E","Education"],["W","Weight loss"],["E","Exercise"]], extra:"Walking stick goes in the opposite hand to the painful knee."},
+  example:"A 60-year-old farmer has knee pain climbing to his roof and 10 minutes of stiffness each morning. The knee creaks on squatting and he takes 14 seconds for 5 sit-to-stands.",
+  flags:["Hot, swollen, very painful joint with fever (infection)","Locking or giving way after injury (mechanical tear)","Night pain and weight loss (tumour)"],
+  viva:[["Name the Kellgren-Lawrence grades.","0 none, 1 doubtful narrowing and possible osteophyte, 2 definite osteophyte, 3 moderate osteophytes and definite narrowing, 4 large osteophytes, marked narrowing and bone deformity."],["Why should the stick be held in the opposite hand?","It moves the centre of mass towards the painful side and reduces the adductor moment and load on the affected knee."],["Which performance tests does OARSI recommend?","30-second chair stand, 40 m fast-paced walk and stair climb test."]],
+  refs:[
+    {c:"Bannuru RR, et al. OARSI guidelines for the non-surgical management of knee, hip, and polyarticular osteoarthritis. Osteoarthritis Cartilage. 2019;27(11):1578-1589.", q:"OARSI guidelines non-surgical management knee osteoarthritis 2019"},
+    {c:"NICE guideline NG226. Osteoarthritis in over 16s: diagnosis and management. 2022.", u:"https://www.nice.org.uk/guidance/ng226"},
+    {c:"Skou ST, et al. A randomized, controlled trial of total knee replacement. N Engl J Med. 2015;373:1597-1606.", q:"Skou randomized controlled trial total knee replacement 2015"},
+    {c:"Physiopedia: Knee Osteoarthritis.", u:"https://www.physio-pedia.com/Knee_Osteoarthritis"}
+  ],
+  keywords:"knee osteoarthritis exercise therapy"
+},
+{
+  id:"lbp", title:"Non-specific low back pain", subject:"Musculoskeletal", region:"Spine", marks:10,
+  simple:"Most back pain has no single serious cause. The pain is real and comes from the tissues and nervous system of the back, and it usually gets better. Staying active, exercise and confidence help more than rest or machines.",
+  flow:["Patient with low back pain","Screen red flags (serious pathology)","Check for radicular signs (sciatica)","Stratify risk with STarT Back; note yellow flags","Advice to stay active and reassurance","Exercise, plus manual therapy or psychologically informed care as needed"],
+  exam:[
+    {h:"Definition", p:["Pain between the costal margins and the gluteal folds, with or without leg pain, not attributable to a specific cause such as fracture, infection, malignancy or inflammatory disease."]},
+    {h:"Pathophysiology", p:["Multifactorial nociceptive input from disc, facet joints, ligaments and muscle.","In persistent pain, central sensitisation and altered motor control.","Biopsychosocial model: fear-avoidance, catastrophising and work factors drive disability."]},
+    {h:"Classification", p:["Acute under 6 weeks, subacute 6 to 12 weeks, chronic over 12 weeks.","Risk: low, medium or high (STarT Back)."]},
+    {h:"Assessment", p:["Red flags and yellow flags; neurological screen (myotomes, dermatomes, reflexes), SLR and slump.","Outcome measures: ODI, RMDQ, NPRS, FABQ."]},
+    {h:"Physiotherapy management", p:["Reassurance, education and advice to stay active.","Exercise therapy: motor control, general strengthening, McKenzie, walking, yoga or Pilates.","Manual therapy only with exercise.","Cognitive functional therapy or combined physical and psychological programmes for high-risk patients.","Return-to-work planning; NICE advises against traction, ultrasound, TENS, interferential, belts and orthotics."]},
+    {h:"Conclusion", p:["Screen out serious pathology, then build activity, strength and confidence."]}
+  ],
+  marking:[["Definition and classification",1],["Pathophysiology (biopsychosocial)",1.5],["Red and yellow flags",1.5],["Assessment and outcome measures",2],["Physiotherapy management",3],["Diagram",0.5],["Conclusion",0.5]],
+  tip:"Write red flags first, then yellow flags. Draw a lumbar motion segment with disc, facet and nerve root. Name the STarT Back tool.",
+  evidence:[["Exercise therapy (chronic LBP)","Reduces pain and disability","A"],["Thrust or non-thrust manual therapy","With exercise, acute and chronic","A/B"],["Pain neuroscience education","Combined with exercise","B"],["Traction, ultrasound, TENS, interferential","Do not offer (NICE NG59)","Avoid"]],
+  evidenceSource:"George et al. 2021 JOSPT CPG and NICE NG59",
+  outcomes:[["Oswestry Disability Index","Disability; MCID about 10 points"],["Roland-Morris (RMDQ)","Disability; MCID about 2 to 5 points"],["STarT Back","Risk of poor outcome"],["FABQ","Fear-avoidance beliefs"]],
+  recent:["RESTORE trial (Kent et al., Lancet 2023): cognitive functional therapy gave larger, lasting improvements in disability than usual care for chronic low back pain.","Guidelines now favour active care and discourage imaging without red flags."],
+  mnemonic:{word:"TUNA FISH", items:[["T","Trauma"],["U","Unexplained weight loss"],["N","Neurological deficit"],["A","Age over 50"],["F","Fever"],["I","IV drug use"],["S","Steroid use"],["H","History of cancer"]], extra:"Red flags for low back pain."},
+  example:"A 30-year-old call-centre worker has had back pain for 3 weeks after lifting a gas cylinder. No leg symptoms, no red flags. He avoids bending because he believes his disc has 'slipped'.",
+  flags:["Saddle anaesthesia, bladder or bowel change (cauda equina: emergency)","History of cancer, weight loss","Fever, IV drug use (infection)","Major trauma or osteoporosis (fracture)"],
+  viva:[["Difference between red and yellow flags?","Red flags suggest serious pathology needing referral. Yellow flags are psychosocial factors that predict long-term disability."],["When is the SLR test positive?","Reproduction of radicular leg pain between about 30 and 70 degrees of hip flexion."],["Why avoid bed rest?","It delays recovery, increases deconditioning and reinforces fear-avoidance."]],
+  refs:[
+    {c:"NICE guideline NG59. Low back pain and sciatica in over 16s: assessment and management. 2016, updated 2020.", u:"https://www.nice.org.uk/guidance/ng59"},
+    {c:"George SZ, et al. Interventions for the management of acute and chronic low back pain: revision 2021. J Orthop Sports Phys Ther. 2021;51(11):CPG1-CPG60.", q:"George interventions management acute chronic low back pain revision 2021"},
+    {c:"Kent P, et al. Cognitive functional therapy with or without movement sensor biofeedback versus usual care for chronic, disabling low back pain (RESTORE). Lancet. 2023;401:1866-1877.", q:"RESTORE cognitive functional therapy chronic low back pain Lancet 2023"},
+    {c:"Physiopedia: Low Back Pain.", u:"https://www.physio-pedia.com/Low_Back_Pain"}
+  ],
+  keywords:"non-specific low back pain exercise therapy"
+},
+{
+  id:"acl", title:"ACL injury and rehabilitation", subject:"Sports", region:"Knee", marks:10,
+  simple:"The anterior cruciate ligament stops the shin bone sliding forward and twisting under the thigh bone. It usually tears when an athlete lands or changes direction and the knee collapses inward. Rehabilitation rebuilds strength, control and confidence, with or without surgery.",
+  flow:["Non-contact pivot or landing with knee valgus and rotation","Pop, haemarthrosis within hours, giving way","Lachman, anterior drawer, pivot shift; MRI confirms","Prehabilitation: settle effusion, full extension, quadriceps control","Reconstruction or rehab-only by shared decision","Criteria-based rehab and return to sport (9 months or more)"],
+  exam:[
+    {h:"Anatomy and function", p:["Runs from the posteromedial side of the lateral femoral condyle to the anterior intercondylar area of the tibia.","Two bundles: anteromedial and posterolateral.","Resists anterior tibial translation and rotatory instability."]},
+    {h:"Mechanism and pathology", p:["Non-contact deceleration, pivoting or landing with valgus and rotation.","Poor healing because of the intra-articular synovial environment.","Associated injuries: meniscus, MCL, bone bruises; Segond fracture suggests ACL tear."]},
+    {h:"Assessment", p:["Lachman (most sensitive), anterior drawer, pivot shift (most specific).","Effusion grading, ROM, quadriceps lag.","IKDC, KOOS, Lysholm, Tegner; hop test battery; ACL-RSI for psychological readiness."]},
+    {h:"Physiotherapy management", p:["Phase 1: control effusion, full extension, quadriceps activation, patellar mobilisation, gait.","Phase 2: closed-chain strengthening; open-chain in a protected range (90 to 45 degrees) early after reconstruction.","Phase 3: neuromuscular training, balance, plyometrics, running, agility.","Phase 4: return to sport when strength and hop tests reach 90 percent or more limb symmetry and psychological readiness is good."]},
+    {h:"Conclusion", p:["Rehabilitation is criteria-based, not only time-based, and reduces second ACL injury."]}
+  ],
+  marking:[["Anatomy and function",1.5],["Mechanism and pathology",1.5],["Special tests and assessment",2],["Phased rehabilitation",3.5],["Diagram",0.5],["Conclusion",1]],
+  tip:"Draw the knee in sagittal view with ACL and PCL labelled. Present rehab as a 4-phase table with goals, exercises and criteria to progress.",
+  evidence:[["Rehab with optional delayed reconstruction","Similar 2-year outcomes to early reconstruction (KANON)","RCT"],["Delay return to sport until 9 months and meet criteria","Lower reinjury risk (Delaware-Oslo cohort)","Cohort"],["Neuromuscular injury prevention programmes","Reduce ACL injury risk in athletes","SR"]],
+  evidenceSource:"KANON trial, Delaware-Oslo ACL cohort, systematic reviews",
+  outcomes:[["IKDC subjective form","Symptoms and function"],["KOOS","Five subscales incl. sport and QOL"],["Hop test battery","Limb symmetry index target 90 percent or more"],["ACL-RSI","Psychological readiness"]],
+  recent:["Grindem et al. (BJSM 2016): each month of delay in return to sport up to 9 months cut reinjury risk by about 51 percent; passing return-to-sport criteria also lowered risk.","Interest in cross-bracing and ACL healing response is growing but is still early evidence."],
+  mnemonic:{word:"3 P's", items:[["P","Pop"],["P","Pain"],["P","Puffy knee within hours"]], extra:"Lachman Leads (most sensitive); Pivot Proves (most specific)."},
+  example:"A 19-year-old kabaddi player lands from a raid, feels a pop and the knee swells by evening. Lachman shows increased anterior translation with a soft end feel.",
+  flags:["Locked knee that cannot fully extend (bucket-handle meniscal tear)","Calf pain and swelling after surgery (DVT)","Cold, numb foot after major trauma (knee dislocation with vascular injury)"],
+  viva:[["Why is open-chain exercise limited to 90-45 degrees early after ACLR?","In that range quadriceps contraction produces less anterior tibial shear, so the graft is less strained."],["What is a Segond fracture?","An avulsion of the lateral tibial plateau, strongly associated with ACL tear."],["What is the 'unhappy triad'?","Combined ACL, MCL and meniscal injury from a valgus-rotation force."]],
+  refs:[
+    {c:"Frobell RB, et al. A randomized trial of treatment for acute anterior cruciate ligament tears. N Engl J Med. 2010;363(4):331-342.", q:"Frobell randomized trial acute anterior cruciate ligament tears 2010"},
+    {c:"Grindem H, et al. Simple decision rules can reduce reinjury risk by 84% after ACL reconstruction: the Delaware-Oslo ACL cohort study. Br J Sports Med. 2016;50(13):804-808.", q:"Grindem simple decision rules reinjury ACL reconstruction Delaware-Oslo"},
+    {c:"Filbay SR, Grindem H. Evidence-based recommendations for the management of anterior cruciate ligament (ACL) rupture. Best Pract Res Clin Rheumatol. 2019;33(1):33-47.", q:"Filbay Grindem evidence-based recommendations ACL rupture"},
+    {c:"Physiopedia: Anterior Cruciate Ligament (ACL) Injury.", u:"https://www.physio-pedia.com/Anterior_Cruciate_Ligament_(ACL)_Injury"}
+  ],
+  keywords:"anterior cruciate ligament rehabilitation"
+}
+];
+
+const QUIZ = [
+  {q:"Which movement is lost most in the capsular pattern of the shoulder?", o:["Internal rotation","Abduction","External rotation","Flexion"], a:2, w:"Shoulder capsular pattern: external rotation > abduction > internal rotation."},
+  {q:"Which structure's contracture best explains early loss of shoulder external rotation in frozen shoulder?", o:["Glenoid labrum","Coracohumeral ligament and rotator interval","Supraspinatus tendon","Acromioclavicular ligament"], a:1, w:"The coracohumeral ligament and rotator interval tighten in ER and are thickened in adhesive capsulitis."},
+  {q:"According to the Kelley 2013 CPG, which intervention has Grade A evidence for short-term relief in adhesive capsulitis?", o:["Ultrasound","Corticosteroid injection","Shortwave diathermy","Rest in a sling"], a:1, w:"Intra-articular corticosteroid injection has Grade A evidence for short-term pain and function."},
+  {q:"Which is NOT an OARSI-recommended performance test for knee OA?", o:["30-second chair stand","40 m fast-paced walk","Stair climb test","Berg Balance Scale"], a:3, w:"OARSI recommends the chair stand, 40 m fast-paced walk and stair climb test (plus others such as TUG)."},
+  {q:"First-line treatment for every patient with knee osteoarthritis is:", o:["Arthroscopic washout","Exercise and education","Bed rest","Ultrasound therapy alone"], a:1, w:"OARSI and NICE recommend exercise and education for all, plus weight loss if needed."},
+  {q:"Saddle anaesthesia with new bladder change in a back pain patient suggests:", o:["Facet joint pain","Cauda equina syndrome","Non-specific low back pain","Sacroiliac joint pain"], a:1, w:"This is a red flag for cauda equina syndrome and needs emergency referral."},
+  {q:"NICE NG59 advises AGAINST which treatment for low back pain?", o:["Group exercise","Manual therapy with exercise","TENS","Psychological therapy with exercise"], a:2, w:"NICE does not recommend TENS, ultrasound, interferential therapy or traction for low back pain."},
+  {q:"The most sensitive clinical test for an ACL tear is:", o:["Pivot shift","Lachman test","McMurray test","Valgus stress test"], a:1, w:"Lachman is the most sensitive. Pivot shift is the most specific."},
+  {q:"A Segond fracture is most associated with:", o:["PCL tear","ACL tear","Patellar dislocation","Medial meniscus tear alone"], a:1, w:"A lateral tibial plateau avulsion (Segond) strongly suggests ACL rupture."},
+  {q:"A common limb symmetry index target for return to sport after ACL reconstruction is:", o:["50 percent","70 percent","90 percent or more","No target needed"], a:2, w:"Strength and hop tests at 90 percent or more of the other limb are commonly used criteria."}
+];
+
+/* ================= helpers ================= */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pubmed = q => "https://pubmed.ncbi.nlm.nih.gov/?term=" + encodeURIComponent(q);
+const physio = q => "https://www.physio-pedia.com/index.php?search=" + encodeURIComponent(q);
+const slug = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60) || "answer";
+const store = {
+  get(){ try { return JSON.parse(localStorage.getItem("la-saved") || "[]"); } catch { return []; } },
+  set(v){ try { localStorage.setItem("la-saved", JSON.stringify(v)); return true; } catch { return false; } }
+};
+let sample = null, downloads = null, canImages = false, ctl = null, uid = 0;
+
+/* ================= answer rendering ================= */
+function renderAnswer(a, opts = {}){
+  const id = "a" + (++uid);
+  const marks = a.marks ? a.marks + " marks" : "Full";
+  const S = [];
+  const add = (key, label, html) => { if (html) S.push({key, label, html}); };
+  add("simple","Simple", `<p class="simple">${esc(a.simple)}</p>`);
+  if ((a.flow||[]).length) add("flow","Flow", `<ol class="flow">${a.flow.map((f,i)=>`<li><b>${i+1}</b>${esc(f)}</li>`).join("")}</ol>`);
+  if ((a.exam||[]).length) add("exam","Exam answer", `<div class="exam">${a.exam.map(s=>`<h4>${esc(s.h)}</h4><ul class="b">${(s.p||[]).map(p=>`<li>${esc(p)}</li>`).join("")}</ul>`).join("")}</div>${a.tip?`<p class="tip"><strong>For full marks: </strong>${esc(a.tip)}</p>`:""}`);
+  if ((a.marking||[]).length) {
+    const total = a.marking.reduce((t,[,m])=>t+(+m||0),0) || 1;
+    add("marks","Marks", `<div class="markbar">${a.marking.map(([p,m])=>`<div class="markrow"><span>${esc(p)}</span><b>${esc(m)}</b><span class="bar"><i style="width:${Math.round((+m||0)/total*100)}%"></i></span></div>`).join("")}</div><p class="small" style="margin-top:10px">Typical split for ${esc(a.uni || "Indian health science university")} papers. Check your syllabus and past papers.</p>`);
+  }
+  const ev = a.evidence||[], oc = a.outcomes||[], rc = a.recent||[];
+  if (ev.length || oc.length || rc.length || a.patho) {
+    let h = "";
+    if (ev.length) h += `<h4>Evidence summary</h4><div class="tbl"><table><thead><tr><th>Intervention</th><th>Effect</th><th>Grade</th></tr></thead><tbody>${ev.map(([i,e,g])=>`<tr><td>${esc(i)}</td><td>${esc(e)}</td><td><span class="grade">${esc(g)}</span></td></tr>`).join("")}</tbody></table></div>${a.evidenceSource?`<p class="small" style="margin-top:6px">Source: ${esc(a.evidenceSource)}</p>`:""}`;
+    if (oc.length) h += `<h4>Outcome measures</h4><div class="tbl"><table><thead><tr><th>Measure</th><th>What it shows</th></tr></thead><tbody>${oc.map(([n,u])=>`<tr><td><strong>${esc(n)}</strong></td><td>${esc(u)}</td></tr>`).join("")}</tbody></table></div>`;
+    if (rc.length) h += `<h4>Recent advances</h4><ul class="b">${rc.map(r=>`<li>${esc(r)}</li>`).join("")}</ul>`;
+    add("adv","Advanced", `<div class="adv">${h}</div>`);
+  }
+  const m = a.mnemonic || {};
+  if (m.word) add("mem","Memory trick", `<p class="mnem">${esc(m.word)}</p>${(m.items||[]).length?`<ul class="mnem-list">${m.items.map(([k,v])=>`<li><b>${esc(k)}</b> ${esc(v)}</li>`).join("")}</ul>`:""}${m.extra?`<p class="small" style="margin-top:8px">${esc(m.extra)}</p>`:""}`);
+  if (a.example) add("ex","Example", `<p>${esc(a.example)}</p>`);
+  if ((a.flags||[]).length) add("flags","Red flags", `<div class="flags"><h3>Refer, do not treat</h3><ul class="b">${a.flags.map(f=>`<li>${esc(f)}</li>`).join("")}</ul></div>`);
+  if ((a.viva||[]).length) add("viva","Viva", `<div class="viva">${a.viva.map(([q,ans])=>`<details><summary>${esc(q)}</summary><p>${esc(ans)}</p></details>`).join("")}</div>`);
+  const kw = a.keywords || a.title;
+  add("refs","References", `${(a.refs||[]).length?`<ol class="refs">${a.refs.map(r=>`<li>${esc(r.c)} (${r.u?`<a href="${esc(r.u)}" target="_blank" rel="noopener">open</a>`:`<a href="${pubmed(r.q||r.c)}" target="_blank" rel="noopener">find on PubMed</a>`})</li>`).join("")}</ol>`:""}
+    <p class="small" style="margin-top:8px">Read more: <a href="${pubmed(kw)}" target="_blank" rel="noopener">PubMed</a> · <a href="${physio(kw)}" target="_blank" rel="noopener">Physiopedia</a></p>
+    ${opts.ai?`<p class="small" style="margin-top:6px">AI-written answer. Check each reference on PubMed before quoting it.</p>`:""}`);
+  const labels = {simple:"In simple words",flow:"The flow",exam:"How to write it in the exam",marks:"How marks are usually given",adv:"Advanced: evidence and research",mem:"Memory trick",ex:"Real-life example",flags:"Red flags",viva:"Viva questions",refs:"References"};
+
+  const el = document.createElement("article");
+  el.className = "sheet";
+  el.innerHTML = `
+    <div class="sheet-head">
+      <div class="meta"><span class="pill marks">${esc(marks)}</span>${a.qtype?`<span class="pill">${esc(a.qtype)}</span>`:""}${a.subject?`<span class="pill tag">${esc(a.subject)}</span>`:""}${a.lang&&a.lang!=="English"?`<span class="pill">${esc(a.lang)}</span>`:""}${opts.badge?`<span class="pill ok">${esc(opts.badge)}</span>`:""}</div>
+      <h2>${esc(a.title)}</h2>
+    </div>
+    <nav class="jump" aria-label="Sections">${S.map(s=>`<a href="#${id}-${s.key}">${esc(s.label)}</a>`).join("")}</nav>
+    ${S.map(s=>`<section class="sec" id="${id}-${s.key}"><h3>${esc(labels[s.key])}</h3>${s.html}</section>`).join("")}
+    <section class="sec" data-re hidden><h3 data-re-title>Explained again</h3><div class="reexplain"></div></section>
+    <div class="actions"></div>`;
+  el.querySelectorAll(".jump a").forEach(l => l.addEventListener("click", e => { e.preventDefault(); el.querySelector(l.getAttribute("href")).scrollIntoView({behavior:"smooth",block:"start"}); }));
+
+  const actions = el.querySelector(".actions");
+  if (downloads) {
+    const d = document.createElement("button"); d.className = "primary saff"; d.type = "button";
+    d.textContent = isLatin(a.lang) ? "Download PDF" : "Download for offline";
+    d.onclick = () => downloadAnswers([a], slug(a.title), d);
+    actions.append(d);
+  }
+  if (opts.savable) {
+    const s = document.createElement("button"); s.className = "primary"; s.type = "button"; s.textContent = "Save to library";
+    s.onclick = () => { const saved = store.get(); saved.unshift({...a, id:"saved-"+Date.now(), saved:true}); s.textContent = store.set(saved.slice(0,100)) ? "Saved to library" : "Could not save on this device"; s.disabled = true; renderLib(); };
+    actions.append(s);
+  }
+  if (sample) {
+    [["Explain more simply","Explain this again in much simpler words for a first-year student, in short sentences, keeping the key exam terms."],
+     ["Tell it as a story","Explain this as a short, memorable story or analogy from everyday life in India, then list the 3 facts the story teaches."],
+     ["Revision table","Turn this into a compact revision table in plain text (use | between columns), then 5 one-line high-yield points."],
+     ["5 more viva questions","Write 5 more viva questions an Indian BPT examiner would ask on this topic, each with a 1-2 line model answer."]]
+     .forEach(([label, instr]) => {
+       const b = document.createElement("button"); b.className = "ghost"; b.type = "button"; b.textContent = label;
+       b.onclick = () => reExplain(el, a, label, instr);
+       actions.append(b);
+     });
+  }
+  if (!actions.children.length) actions.remove();
+  return el;
+}
+
+/* ================= downloads (PDF / HTML) ================= */
+function isLatin(lang){ return !lang || ["English"].includes(lang); }
+function ascii(s){
+  return String(s ?? "").replace(/[‘’]/g,"'").replace(/[“”]/g,'"').replace(/[–—]/g,"-").replace(/→/g,"->").replace(/≥/g,">=").replace(/≤/g,"<=").replace(/…/g,"...").replace(/[^\x09\x0a\x0d\x20-\x7e -ÿ]/g,"");
+}
+function buildPdf(list){
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:"pt", format:"a4" });
+  const W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight(), M = 48, CW = W - M*2;
+  let y = M;
+  const need = h => { if (y + h > H - M) { doc.addPage(); y = M; } };
+  const text = (t, size=10.5, style="normal", color=[25,30,50], indent=0, gap=4) => {
+    doc.setFont("helvetica", style); doc.setFontSize(size); doc.setTextColor(...color);
+    const lines = doc.splitTextToSize(ascii(t), CW - indent);
+    lines.forEach(l => { need(size*1.35); doc.text(l, M + indent, y + size); y += size*1.35; });
+    y += gap;
+  };
+  const head = t => { y += 6; need(30); doc.setDrawColor(47,79,224); doc.setLineWidth(1.2); doc.line(M, y, M+28, y); y += 8; text(t.toUpperCase(), 9, "bold", [47,79,224], 0, 2); };
+  const bullet = t => text("- " + t, 10.5, "normal", [25,30,50], 10, 1);
+  list.forEach((a, i) => {
+    if (i > 0) { doc.addPage(); y = M; }
+    text("LEARN ANYWHERE  |  free physiotherapy learning", 8, "bold", [184,110,0], 0, 6);
+    text(a.title, 20, "bold", [18,26,51], 0, 2);
+    text([a.marks ? a.marks + " marks" : "", a.qtype, a.subject, a.uni].filter(Boolean).join("  |  "), 9, "normal", [89,98,127], 0, 8);
+    head("In simple words"); text(a.simple);
+    if ((a.flow||[]).length){ head("The flow"); a.flow.forEach((f,k)=>text((k+1)+". "+f, 10.5, "normal", [25,30,50], 6, 1)); }
+    if ((a.exam||[]).length){ head("How to write it in the exam"); a.exam.forEach(s=>{ text(s.h, 11.5, "bold", [18,26,51], 0, 1); (s.p||[]).forEach(bullet); y += 3; }); if (a.tip) text("For full marks: " + a.tip, 10, "italic", [140,85,0]); }
+    if ((a.marking||[]).length){ head("How marks are usually given"); a.marking.forEach(([p,m])=>bullet(p + ": " + m + " marks")); }
+    if ((a.evidence||[]).length){ head("Evidence summary"); a.evidence.forEach(([iv,e,g])=>bullet(iv + " - " + e + " [" + g + "]")); if (a.evidenceSource) text("Source: " + a.evidenceSource, 9, "italic", [89,98,127]); }
+    if ((a.outcomes||[]).length){ head("Outcome measures"); a.outcomes.forEach(([n,u])=>bullet(n + ": " + u)); }
+    if ((a.recent||[]).length){ head("Recent advances"); a.recent.forEach(bullet); }
+    if (a.mnemonic && a.mnemonic.word){ head("Memory trick"); text(a.mnemonic.word, 14, "bold", [47,79,224], 0, 2); (a.mnemonic.items||[]).forEach(([k,v])=>bullet(k + " - " + v)); if (a.mnemonic.extra) text(a.mnemonic.extra, 10, "italic"); }
+    if (a.example){ head("Real-life example"); text(a.example); }
+    if ((a.flags||[]).length){ head("Red flags: refer, do not treat"); a.flags.forEach(bullet); }
+    if ((a.viva||[]).length){ head("Viva questions"); a.viva.forEach(([q,ans])=>{ text("Q. " + q, 10.5, "bold", [18,26,51], 0, 0); text("A. " + ans, 10.5, "normal", [25,30,50], 10, 4); }); }
+    if ((a.refs||[]).length){ head("References"); a.refs.forEach((r,k)=>text((k+1)+". "+r.c + (r.u ? " " + r.u : ""), 9.5, "normal", [25,30,50], 6, 2)); }
+  });
+  const pages = doc.getNumberOfPages();
+  for (let p = 1; p <= pages; p++){ doc.setPage(p); doc.setFont("helvetica","normal"); doc.setFontSize(8); doc.setTextColor(140,145,165); doc.text("Learn Anywhere  |  study aid, not medical advice  |  page " + p + " of " + pages, M, H - 24); }
+  return doc.output("blob");
+}
+function buildHtml(list){
+  const css = "body{font:16px/1.6 system-ui,sans-serif;max-width:760px;margin:0 auto;padding:24px 16px;color:#121a33}h1{font-size:1.6rem}h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:#2f4fe0;margin-top:22px}h3{font-size:1rem;margin:12px 0 4px}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #dde;padding:6px;text-align:left}.m{color:#59627f;font-size:.9rem}hr{margin:40px 0}";
+  const li = arr => "<ul>" + arr.map(x => "<li>" + esc(x) + "</li>").join("") + "</ul>";
+  const body = list.map(a => `<article><p class="m">Learn Anywhere</p><h1>${esc(a.title)}</h1><p class="m">${esc([a.marks ? a.marks + " marks" : "", a.qtype, a.subject, a.uni, a.lang].filter(Boolean).join(" | "))}</p>
+    <h2>In simple words</h2><p>${esc(a.simple)}</p>
+    ${(a.flow||[]).length?`<h2>The flow</h2><ol>${a.flow.map(f=>`<li>${esc(f)}</li>`).join("")}</ol>`:""}
+    ${(a.exam||[]).length?`<h2>Exam answer</h2>${a.exam.map(s=>`<h3>${esc(s.h)}</h3>${li(s.p||[])}`).join("")}${a.tip?`<p><strong>For full marks:</strong> ${esc(a.tip)}</p>`:""}`:""}
+    ${(a.marking||[]).length?`<h2>Marks</h2>${li(a.marking.map(([p,m])=>p+": "+m))}`:""}
+    ${(a.evidence||[]).length?`<h2>Evidence</h2><table>${a.evidence.map(([i,e,g])=>`<tr><td>${esc(i)}</td><td>${esc(e)}</td><td>${esc(g)}</td></tr>`).join("")}</table>`:""}
+    ${(a.outcomes||[]).length?`<h2>Outcome measures</h2>${li(a.outcomes.map(([n,u])=>n+": "+u))}`:""}
+    ${(a.recent||[]).length?`<h2>Recent advances</h2>${li(a.recent)}`:""}
+    ${a.mnemonic&&a.mnemonic.word?`<h2>Memory trick</h2><p><strong>${esc(a.mnemonic.word)}</strong></p>${li((a.mnemonic.items||[]).map(([k,v])=>k+" - "+v))}<p>${esc(a.mnemonic.extra||"")}</p>`:""}
+    ${a.example?`<h2>Example</h2><p>${esc(a.example)}</p>`:""}
+    ${(a.flags||[]).length?`<h2>Red flags</h2>${li(a.flags)}`:""}
+    ${(a.viva||[]).length?`<h2>Viva</h2>${a.viva.map(([q,x])=>`<h3>${esc(q)}</h3><p>${esc(x)}</p>`).join("")}`:""}
+    ${(a.refs||[]).length?`<h2>References</h2><ol>${a.refs.map(r=>`<li>${esc(r.c)}${r.u?` ${esc(r.u)}`:""}</li>`).join("")}</ol>`:""}
+  </article>`).join("<hr>");
+  return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(list.length===1?list[0].title:"Learn Anywhere library")}</title><style>${css}</style></head><body>${body}</body></html>`;
+}
+async function downloadAnswers(list, name, btn, statusEl){
+  const label = btn.textContent; btn.disabled = true; btn.textContent = "Preparing...";
+  const say = t => { if (statusEl) statusEl.textContent = t; else btn.textContent = t; };
+  try {
+    const latin = list.every(a => isLatin(a.lang));
+    let file;
+    if (latin && window.jspdf) file = { filename: name + ".pdf", data: buildPdf(list) };
+    else file = { filename: name + ".html", data: buildHtml(list) };
+    await downloads.save(file);
+    say(file.filename.endsWith(".pdf") ? "Downloaded" : "Downloaded (opens in any browser, works offline)");
+  } catch (e) {
+    const c = e && e.code;
+    say(c === "declined" ? "Download cancelled" : c === "rate_limited" ? "Wait a moment and try again" : "Download is not available here");
+  } finally {
+    setTimeout(() => { btn.disabled = false; btn.textContent = label; }, statusEl ? 0 : 2500);
+  }
+}
+
+/* ================= AI ================= */
+const SCHEMA = `Return ONLY JSON with this exact shape (no markdown):
+{"title": string, "subject": string (e.g. Musculoskeletal, Neurology, Cardio-respiratory, Sports, Paediatrics),
+ "simple": string (2-3 plain sentences a first-year student understands),
+ "flow": string[] (5-7 short steps from cause/mechanism to management, each under 15 words),
+ "exam": [{"h": heading, "p": string[] bullet points}],
+ "tip": string (how to present for full marks: diagram to draw, keywords to underline, table to make),
+ "marking": [[part name, marks as number]] (typical split that sums to the total marks),
+ "evidence": [[intervention, effect, grade or level e.g. "A", "B", "1A", "RCT", "SR", "Avoid"]] (3-6 rows, from named guidelines or systematic reviews),
+ "evidenceSource": string (which guideline or reviews the grades come from),
+ "outcomes": [[measure name, what it measures and MCID if well established]] (3-5 rows),
+ "recent": string[] (1-3 recent advances or landmark trials with author and year),
+ "mnemonic": {"word": string, "items": [[letter, meaning]], "extra": string},
+ "example": string (realistic Indian patient case),
+ "flags": string[] (red flags needing referral; [] if not relevant),
+ "viva": [[question, model answer]] (3-5),
+ "refs": [{"c": full citation, "q": short PubMed search phrase}] (3-6),
+ "keywords": string (PubMed search phrase)}`;
+
+function sizeRule(m, qt){
+  if (qt === "Viva") return "Viva preparation: keep 'exam' short (3 headings), and give 6-8 viva questions with crisp model answers.";
+  if (qt === "Practical / OSCE") return "Practical/OSCE: 'exam' should be a step-by-step examination or technique procedure (patient position, therapist position, hand placement, procedure, interpretation), with 4-6 headings.";
+  return ({2:"2 marks: 'exam' = definition plus 2-3 key bullets only; flow 3-4 steps; evidence 2 rows; viva 2.",
+          3:"3 marks: 'exam' = 2-3 headings, 2 bullets each.",
+          5:"5 marks short essay: 'exam' = 4 headings, 2-4 bullets each.",
+          10:"10 marks long essay: 'exam' = definition, pathophysiology, clinical features, assessment with named outcome measures, phased physiotherapy management, conclusion; 3-5 detailed bullets each.",
+          15:"15 marks long essay: as 10 marks plus etiology/classification, differential diagnosis and a phased management table in words; 4-6 bullets each.",
+          20:"20 marks long essay: comprehensive; add anatomy/biomechanics, investigations, medical/surgical management overview, complications, home programme and prognosis; 4-6 bullets each."})[m];
+}
+
+function errCopy(code){
+  return ({not_granted:"Answers need permission to use Claude. Allow it when asked, or open the Library.",
+    rate_limited:"Too many questions at once. Wait a minute and try again.",
+    cancelled:"Stopped.", refused:"That could not be answered. Try phrasing it as a study topic.",
+    invalid_json:"The answer came back in the wrong shape. Try again.",
+    session_expired:"Your session expired. Reload the page and try again.",
+    sampling_disabled:"AI answers are turned off here. The Library and Quiz still work."}[code]) || "Could not make the answer. Check your connection and try again; the Library works offline.";
+}
+
+let marks = 10;
+$("#marks").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  marks = +b.dataset.m;
+  [...$("#marks").children].forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+});
+let photo = null;
+$("#photo").addEventListener("change", e => { photo = e.target.files[0] || null; $("#photoName").textContent = photo ? photo.name : ""; });
+
+$("#askForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const q = $("#q").value.trim();
+  if (!q && !photo) { setStatus("Type a topic or add a photo of the question.", true); return; }
+  if (!sample) { setStatus("New AI answers are not switched on in this version yet. Showing the closest library topic.", true); showLibMatch(q); return; }
+  const lang = $("#lang").value, uni = $("#uni").value, level = $("#level").value, qtype = $("#qtype").value;
+  const prompt = `You are an expert physiotherapy professor and examiner in India, teaching students who cannot afford coaching. Write an advanced, exam-ready, evidence-based answer.
+Student: ${level}, ${uni}. Question type: ${qtype}. Marks: ${marks}.
+Question: ${q || "(see the attached photo of the question)"}
+${sizeRule(marks, qtype)}
+Follow the answer layout Indian BPT/MPT examiners expect (definition, etiology/pathophysiology, clinical features, assessment with outcome measures, phased physiotherapy management with dosage, diagram suggestion, conclusion). Match depth to ${level}${level==="MPT"?" with critical appraisal and clinical reasoning (ICF)":""}.
+The marking split is a typical pattern; do not claim it is the university's official scheme.
+Evidence: draw on clinical practice guidelines (JOSPT/APTA CPGs, NICE, OARSI etc.), Cochrane and systematic reviews, PubMed research, Physiopedia and standard Indian syllabus textbooks. Include dosage (sets, reps, frequency) where relevant.
+References: cite only real guidelines, textbooks or papers you are confident exist. Never invent DOIs, page numbers or URLs.
+Write all text values in ${lang}${lang!=="English"?" (keep medical terms, outcome measure names and citations in English)":""}.
+${SCHEMA}`;
+  ctl = new AbortController();
+  $("#askBtn").disabled = true; $("#stopBtn").hidden = false;
+  setStatus("Thinking like an examiner. A detailed answer can take up to a minute.");
+  $("#answer").innerHTML = "";
+  try {
+    const opts = { signal: ctl.signal, modelTier: "complex" };
+    if (photo && canImages) opts.images = [photo];
+    const a = await sample.json(prompt, opts);
+    Object.assign(a, { marks, lang, uni, level, qtype });
+    $("#answer").append(renderAnswer(a, { ai: true, savable: true }));
+    setStatus("");
+    $("#answer").scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (err) {
+    setStatus(errCopy(err && err.code), err && err.code !== "cancelled");
+    if (err && err.code === "not_granted") showLibMatch(q);
+  } finally {
+    $("#askBtn").disabled = false; $("#stopBtn").hidden = true;
+  }
+});
+$("#stopBtn").onclick = () => ctl && ctl.abort();
+
+async function reExplain(el, a, label, instr){
+  const box = el.querySelector("[data-re]"), out = box.querySelector(".reexplain");
+  box.hidden = false; el.querySelector("[data-re-title]").textContent = label; out.textContent = "Thinking...";
+  box.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  const lang = a.lang || $("#lang").value;
+  try {
+    await sample(`${instr} Write in ${lang}. Plain text only, no markdown symbols.\n\nTopic: ${a.title}\nSummary: ${a.simple}\nKey steps: ${(a.flow||[]).join(" -> ")}\nExam headings: ${(a.exam||[]).map(s=>s.h).join(", ")}`,
+      { modelTier: "default", onText: ({text}) => { out.textContent = text; } });
+  } catch (err) { out.textContent = (err && err.text) || errCopy(err && err.code); }
+}
+function setStatus(t, bad){ const s = $("#askStatus"); s.textContent = t; s.classList.toggle("err", !!bad); }
+
+/* ================= subjects ================= */
+let subject = null;
+function renderSubjects(){
+  $("#subjects").innerHTML = SUBJECTS.map(s => `<button type="button" class="subj" data-k="${esc(s.k)}" aria-pressed="${subject===s.k}"><b>${esc(s.k)}</b><span>${esc(s.d)}</span></button>`).join("");
+  const s = SUBJECTS.find(x => x.k === subject);
+  $("#suggest").innerHTML = s ? s.s.map(t => `<button type="button" data-t="${esc(t)}">${esc(t)}</button>`).join("") : "";
+}
+$("#subjects").addEventListener("click", e => { const b = e.target.closest(".subj"); if (!b) return; subject = subject === b.dataset.k ? null : b.dataset.k; renderSubjects(); });
+$("#suggest").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; $("#q").value = b.dataset.t; $("#q").focus(); $("#askForm").scrollIntoView({behavior:"smooth",block:"start"}); });
+
+/* ================= library ================= */
+function allItems(){ return [...store.get(), ...LIB]; }
+function hay(it){ return [it.title, it.subject, it.region, it.simple, it.keywords, (it.flags||[]).join(" "), (it.evidence||[]).flat().join(" "), (it.viva||[]).flat().join(" "), it.mnemonic&&it.mnemonic.extra].join(" ").toLowerCase(); }
+function match(q){
+  const words = (q||"").toLowerCase().split(/\W+/).filter(w => w.length > 2);
+  let best = null, bestScore = 0;
+  for (const it of allItems()) { const h = hay(it); const sc = words.filter(w => h.includes(w)).length; if (sc > bestScore) { best = it; bestScore = sc; } }
+  return best;
+}
+function showLibMatch(q){ const m = match(q); if (m) $("#answer").replaceChildren(renderAnswer(m, { badge: "From library" })); }
+function libItems(){ const q = $("#libSearch").value.trim().toLowerCase(); return allItems().filter(it => !q || hay(it).includes(q)); }
+function renderLib(){
+  const items = libItems();
+  $("#libCards").innerHTML = items.length ? items.map(it => `<button class="card" type="button" data-id="${esc(it.id)}"><span class="meta"><span class="pill tag">${esc(it.subject||"Topic")}</span>${it.marks?`<span class="pill marks">${esc(it.marks)} marks</span>`:""}${it.saved?'<span class="pill ok">Saved</span>':""}</span><span class="t">${esc(it.title)}</span><span class="s">${esc((it.simple||"").slice(0,110))}${(it.simple||"").length>110?"...":""}</span></button>`).join("")
+    : `<p class="small">No topic matches yet. Ask it on the Ask tab and save the answer.</p>`;
+}
+$("#libSearch").addEventListener("input", renderLib);
+$("#libCards").addEventListener("click", e => {
+  const c = e.target.closest(".card"); if (!c) return;
+  const it = allItems().find(x => x.id === c.dataset.id);
+  $("#libAnswer").replaceChildren(renderAnswer(it, {}));
+  $("#libAnswer").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+$("#libPdf").addEventListener("click", () => downloadAnswers(libItems(), "learn-anywhere-library", $("#libPdf"), $("#libStatus")));
+
+/* ================= quiz ================= */
+let qi = 0, score = 0;
+function renderQuiz(){
+  const box = $("#quiz");
+  if (qi >= QUIZ.length) {
+    box.innerHTML = `<p class="qprog">Finished</p><p class="score">${score} / ${QUIZ.length}</p><p>${score >= 8 ? "Excellent. You are exam ready on these topics." : score >= 5 ? "Good base. Revise the ones you missed in the Library." : "Read the Library topics, then try again."}</p><div class="row"><button class="primary" type="button" id="qAgain">Try again</button></div>`;
+    $("#qAgain").onclick = () => { qi = 0; score = 0; renderQuiz(); };
+    return;
+  }
+  const it = QUIZ[qi];
+  box.innerHTML = `<p class="qprog">Question ${qi+1} of ${QUIZ.length} · Score ${score}</p><div class="qtrack"><i style="width:${qi/QUIZ.length*100}%"></i></div><p class="qq">${esc(it.q)}</p><div class="opts">${it.o.map((o,i)=>`<button class="opt" type="button" data-i="${i}">${esc(o)}</button>`).join("")}</div><div id="qAfter"></div>`;
+  box.querySelector(".opts").addEventListener("click", e => {
+    const b = e.target.closest(".opt"); if (!b || box.dataset.done === String(qi)) return;
+    box.dataset.done = String(qi);
+    const pick = +b.dataset.i;
+    if (pick === it.a) score++;
+    box.querySelectorAll(".opt").forEach((x,i) => { if (i === it.a) x.classList.add("right"); else if (i === pick) x.classList.add("wrong"); });
+    $("#qAfter").innerHTML = `<p class="why">${pick === it.a ? "<strong>Correct.</strong> " : "<strong>Not quite.</strong> "}${esc(it.w)}</p><div class="row" style="margin-top:10px"><button class="primary" type="button" id="qNext">${qi+1 < QUIZ.length ? "Next question" : "See score"}</button></div>`;
+    $("#qNext").onclick = () => { qi++; renderQuiz(); };
+  });
+}
+
+/* ================= tabs + start ================= */
+const views = ["ask","lib","quiz","about"];
+function show(v){
+  views.forEach(x => { $("#view-"+x).hidden = x !== v; $(`[data-view="${x}"]`).setAttribute("aria-selected", x === v ? "true" : "false"); });
+  try { localStorage.setItem("la-tab", v); } catch {}
+}
+document.querySelector("nav.tabs").addEventListener("click", e => { const b = e.target.closest("[data-view]"); if (b) show(b.dataset.view); });
+
+function showExample(){ $("#answer").replaceChildren(renderAnswer({...LIB[0], uni:"MUHS (Maharashtra)", qtype:"Long essay"}, { badge: "Example answer" })); }
+$("#q").value = "Physiotherapy management of frozen shoulder";
+renderSubjects(); showExample(); renderLib(); renderQuiz();
+try { const t = localStorage.getItem("la-tab"); if (views.includes(t)) show(t); } catch {}
+
+(async () => {
+  if (!window.claude || !window.claude.use) {
+    // Standalone site: save files with a normal browser download
+    downloads = { save: async ({ filename, data }) => {
+      const blob = data instanceof Blob ? data : new Blob([data], { type: filename.endsWith(".html") ? "text/html" : "application/octet-stream" });
+      const url = URL.createObjectURL(blob), link = document.createElement("a");
+      link.href = url; link.download = filename; document.body.append(link); link.click(); link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+    } };
+    $("#libPdf").hidden = false;
+    showExample();
+    return;
+  }
+  const [s, d] = await Promise.all([window.claude.use("sample"), window.claude.use("downloads")]);
+  sample = s; downloads = d;
+  if (sample) { try { const lim = await sample.limits(); canImages = !!(lim && lim.images); } catch {} }
+  $("#fileLabel").hidden = !canImages;
+  $("#libPdf").hidden = !downloads;
+  if (sample || downloads) showExample();
+})();
+
+if ("serviceWorker" in navigator && location.protocol !== "file:") navigator.serviceWorker.register("sw.js").catch(() => {});
+</script>
+</body>
+</html>
