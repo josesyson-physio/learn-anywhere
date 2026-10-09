@@ -117,5 +117,13 @@
     <!-- plus mark -->
     <g class="la-plus"><rect x="356" y="104" width="64" height="20" rx="5" fill="#f5a623"/><rect x="378" y="82" width="20" height="64" rx="5" fill="#f5a623"/></g>
   </g>
-  
+  <style>
+    .la-head{transform-origin:256px 380px;animation:la-bob 4s ease-in-out infinite}
+    .la-glint{animation:la-glint 3.2s ease-in-out infinite}
+    .la-plus{transform-origin:388px 114px;animation:la-pulse 2.4s ease-in-out infinite}
+    @keyframes la-bob{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg) translateY(-3px)}}
+    @keyframes la-glint{0%,55%{transform:translateX(0) rotate(25deg)}85%,100%{transform:translateX(200px) rotate(25deg)}}
+    @keyframes la-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+    @media (prefers-reduced-motion:reduce){.la-head,.la-glint,.la-plus{animation:none}}
+  </style>
 </svg>

@@ -57,6 +57,8 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 /* hero */
 .hero{margin-top:16px;background:var(--hero);color:var(--hero-ink);border-radius:20px;padding:22px 20px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden}
 .hero::after{content:"";position:absolute;right:-90px;top:-90px;width:200px;height:200px;border-radius:50%;border:24px solid var(--saffron-bright);opacity:.16}
+.hero-top{display:flex;align-items:center;gap:14px;position:relative;z-index:1}
+.logo{width:72px;height:72px;flex:none;border-radius:50%;box-shadow:0 0 0 3px var(--saffron-bright);filter:drop-shadow(0 4px 10px rgba(0,0,0,.25))}
 .brand{font:800 1.9rem/1 var(--display);letter-spacing:-.02em;margin:0}
 .brand span{color:var(--saffron-bright)}
 .hero p{color:var(--hero-muted);max-width:52ch}
@@ -181,7 +183,135 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
 <body>
 <div class="wrap">
   <header class="hero">
-    <h1 class="brand">Learn <span>Anywhere</span></h1>
+    <div class="hero-top"><svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Learn Anywhere logo">
+  <defs>
+    <clipPath id="la-clip"><circle cx="256" cy="256" r="240"/></clipPath>
+    <linearGradient id="la-lens" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a2f3a"/><stop offset="1" stop-color="#07080b"/></linearGradient>
+    <clipPath id="la-lensclip"><circle cx="212" cy="262" r="33"/><circle cx="304" cy="262" r="33"/></clipPath>
+  </defs>
+  <circle cx="256" cy="256" r="248" fill="#15205a"/>
+  <g clip-path="url(#la-clip)">
+    <circle cx="256" cy="256" r="196" fill="none" stroke="#f5a623" stroke-width="10" opacity=".22"/>
+    <!-- blazer and tee -->
+    <path d="M70 520 C80 430 140 400 200 392 L256 470 L312 392 C372 400 432 430 442 520 Z" fill="#0c0d12"/>
+    <path d="M200 392 L256 470 L312 392 C300 420 280 432 256 434 C232 432 212 420 200 392 Z" fill="#f4f1ea"/>
+    <path d="M200 392 L232 470 L214 520 L150 520 Z M312 392 L280 470 L298 520 L362 520 Z" fill="#1b1d26"/>
+    <!-- neck -->
+    <path d="M222 340 L222 398 C236 418 276 418 290 398 L290 340 Z" fill="#5a3826"/>
+    <g class="la-head">
+      <!-- ears -->
+      <ellipse cx="166" cy="276" rx="14" ry="22" fill="#6e4630"/>
+      <ellipse cx="346" cy="276" rx="14" ry="22" fill="#6e4630"/>
+      <!-- face -->
+      <path d="M170 250 C170 180 342 180 342 250 L340 300 C334 352 296 384 256 384 C216 384 178 352 172 300 Z" fill="#7a4e36"/>
+      <!-- beard -->
+      <path d="M176 300 C184 350 220 384 256 384 C292 384 328 350 336 300 C326 330 304 350 290 352 C276 340 236 340 222 352 C208 350 186 330 176 300 Z" fill="#1d130e" opacity=".85"/>
+      <!-- moustache and lips -->
+      <path d="M220 326 C236 312 276 312 292 326 C278 322 266 322 256 326 C246 322 234 322 220 326 Z" fill="#140d09"/>
+      <path d="M232 334 C246 330 266 330 280 334 C272 346 240 346 232 334 Z" fill="#4a2a1e"/>
+      <!-- nose -->
+      <path d="M248 284 C246 300 242 306 244 310 C250 314 262 314 268 310 C270 306 266 300 264 284" fill="none" stroke="#4e3022" stroke-width="5" stroke-linecap="round"/>
+      <!-- hair -->
+      <g fill="#120c0a">
+      <path d="M160 262 C140 120 372 120 352 262 C340 222 306 206 256 208 C206 206 172 222 160 262 Z"/>
+      <circle cx="126" cy="233" r="36"/>
+      <circle cx="123" cy="219" r="33"/>
+      <circle cx="127" cy="201" r="30"/>
+      <circle cx="138" cy="178" r="31"/>
+      <circle cx="147" cy="170" r="31"/>
+      <circle cx="156" cy="153" r="39"/>
+      <circle cx="174" cy="137" r="39"/>
+      <circle cx="184" cy="132" r="33"/>
+      <circle cx="203" cy="114" r="33"/>
+      <circle cx="230" cy="109" r="35"/>
+      <circle cx="248" cy="109" r="35"/>
+      <circle cx="261" cy="105" r="32"/>
+      <circle cx="288" cy="112" r="33"/>
+      <circle cx="306" cy="118" r="33"/>
+      <circle cx="326" cy="130" r="32"/>
+      <circle cx="339" cy="139" r="38"/>
+      <circle cx="355" cy="149" r="39"/>
+      <circle cx="360" cy="165" r="37"/>
+      <circle cx="370" cy="183" r="30"/>
+      <circle cx="382" cy="204" r="35"/>
+      <circle cx="388" cy="217" r="36"/>
+      <circle cx="385" cy="238" r="34"/>
+      <circle cx="156" cy="230" r="30"/>
+      <circle cx="155" cy="200" r="32"/>
+      <circle cx="159" cy="192" r="33"/>
+      <circle cx="163" cy="167" r="32"/>
+      <circle cx="171" cy="153" r="28"/>
+      <circle cx="187" cy="134" r="33"/>
+      <circle cx="203" cy="126" r="30"/>
+      <circle cx="231" cy="117" r="30"/>
+      <circle cx="247" cy="123" r="33"/>
+      <circle cx="270" cy="116" r="30"/>
+      <circle cx="284" cy="127" r="35"/>
+      <circle cx="300" cy="125" r="28"/>
+      <circle cx="318" cy="140" r="31"/>
+      <circle cx="332" cy="147" r="30"/>
+      <circle cx="345" cy="170" r="35"/>
+      <circle cx="357" cy="187" r="32"/>
+      <circle cx="361" cy="200" r="34"/>
+      <circle cx="363" cy="229" r="33"/>
+      <circle cx="185" cy="203" r="25"/>
+      <circle cx="190" cy="179" r="25"/>
+      <circle cx="192" cy="160" r="27"/>
+      <circle cx="203" cy="142" r="25"/>
+      <circle cx="221" cy="135" r="24"/>
+      <circle cx="250" cy="132" r="25"/>
+      <circle cx="263" cy="129" r="27"/>
+      <circle cx="282" cy="141" r="33"/>
+      <circle cx="303" cy="148" r="25"/>
+      <circle cx="312" cy="163" r="26"/>
+      <circle cx="328" cy="180" r="24"/>
+      <circle cx="331" cy="205" r="25"/>
+      <circle cx="138" cy="250" r="26"/>
+      <circle cx="144" cy="285" r="23"/>
+      <circle cx="150" cy="315" r="20"/>
+      <circle cx="374" cy="250" r="26"/>
+      <circle cx="368" cy="285" r="23"/>
+      <circle cx="362" cy="315" r="20"/>
+      <circle cx="190" cy="196" r="20"/>
+      <circle cx="212" cy="202" r="22"/>
+      <circle cx="234" cy="196" r="24"/>
+      <circle cx="256" cy="202" r="20"/>
+      <circle cx="278" cy="196" r="22"/>
+      <circle cx="300" cy="202" r="24"/>
+      <circle cx="322" cy="196" r="20"/>
+      </g>
+      <g fill="none" stroke="#3a2a22" stroke-width="4" stroke-linecap="round" opacity=".7">
+      <path d="M135 208 q10 -12 20 0" />
+      <path d="M150 170 q10 -12 20 0" />
+      <path d="M177 140 q10 -12 20 0" />
+      <path d="M215 121 q10 -12 20 0" />
+      <path d="M257 117 q10 -12 20 0" />
+      <path d="M297 129 q10 -12 20 0" />
+      <path d="M330 154 q10 -12 20 0" />
+      <path d="M351 188 q10 -12 20 0" />
+      </g>
+      <!-- sunglasses -->
+      <g>
+        <path d="M245 258 C252 252 260 252 267 258" fill="none" stroke="#0a0a0d" stroke-width="7" stroke-linecap="round"/>
+        <path d="M179 256 L166 252 M337 256 L350 252" stroke="#0a0a0d" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="212" cy="262" r="33" fill="url(#la-lens)" stroke="#0a0a0d" stroke-width="7"/>
+        <circle cx="304" cy="262" r="33" fill="url(#la-lens)" stroke="#0a0a0d" stroke-width="7"/>
+        <g clip-path="url(#la-lensclip)"><rect class="la-glint" x="150" y="210" width="16" height="110" fill="#ffffff" opacity=".55" transform="rotate(25 256 262)"/></g>
+      </g>
+    </g>
+    <!-- plus mark -->
+    <g class="la-plus"><rect x="356" y="104" width="64" height="20" rx="5" fill="#f5a623"/><rect x="378" y="82" width="20" height="64" rx="5" fill="#f5a623"/></g>
+  </g>
+  <style>
+    .la-head{transform-origin:256px 380px;animation:la-bob 4s ease-in-out infinite}
+    .la-glint{animation:la-glint 3.2s ease-in-out infinite}
+    .la-plus{transform-origin:388px 114px;animation:la-pulse 2.4s ease-in-out infinite}
+    @keyframes la-bob{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg) translateY(-3px)}}
+    @keyframes la-glint{0%,55%{transform:translateX(0) rotate(25deg)}85%,100%{transform:translateX(200px) rotate(25deg)}}
+    @keyframes la-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+    @media (prefers-reduced-motion:reduce){.la-head,.la-glint,.la-plus{animation:none}}
+  </style>
+</svg><h1 class="brand">Learn <span>Anywhere</span></h1></div>
     <p class="mission">Free physiotherapy learning for every student in India and beyond.</p>
     <p>Ask any topic. Get an answer written the way your university examiners expect, backed by evidence, with a memory trick and viva questions.</p>
     <div class="stats"><span>Free forever</span><span>BPT · MPT</span><span>Library works offline</span></div>
