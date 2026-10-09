@@ -17,6 +17,7 @@
 <script src="library/neuro.js"></script>
 <script src="library/cardio.js"></script>
 <script src="library/principles.js"></script>
+<script src="library/syllabus.js"></script>
 <style>
 :root{color-scheme:light}
 body{margin:0;padding-top:env(safe-area-inset-top,0px)}
@@ -27,7 +28,7 @@ img{max-width:100%}
   --primary:#2f4fe0; --primary-ink:#ffffff; --primary-soft:#e2e7fd;
   --hero:#15205a; --hero-ink:#f3f5ff; --hero-muted:#b7c0ea;
   --saffron:#b86e00; --saffron-bright:#f5a623; --saffron-soft:#fdf0d9;
-  --mint:#0b8a6d; --mint-soft:#daf3eb; --flag:#c43c31; --flag-soft:#fbe4e2;
+  --mint:#0b8a6d; --mint-soft:#daf3eb; --violet:#7048c8; --flag:#c43c31; --flag-soft:#fbe4e2;
   --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
   --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
@@ -38,13 +39,13 @@ img{max-width:100%}
   --primary:#8196ff; --primary-ink:#0b1020; --primary-soft:#202a58;
   --hero:#1b2668; --hero-ink:#f3f5ff; --hero-muted:#b7c0ea;
   --saffron:#f5b544; --saffron-bright:#f5b544; --saffron-soft:#3a2c12;
-  --mint:#4fd3ae; --mint-soft:#12352d; --flag:#ff8c80; --flag-soft:#3d1d1d; color-scheme:dark}}
+  --mint:#4fd3ae; --mint-soft:#12352d; --violet:#b39bff; --flag:#ff8c80; --flag-soft:#3d1d1d; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0b1020; --surface:#131a31; --sunk:#1a2240; --ink:#e8ebf7; --muted:#9ca5c6; --line:#27304f;
   --primary:#8196ff; --primary-ink:#0b1020; --primary-soft:#202a58;
   --hero:#1b2668; --hero-ink:#f3f5ff; --hero-muted:#b7c0ea;
   --saffron:#f5b544; --saffron-bright:#f5b544; --saffron-soft:#3a2c12;
-  --mint:#4fd3ae; --mint-soft:#12352d; --flag:#ff8c80; --flag-soft:#3d1d1d; color-scheme:dark}
+  --mint:#4fd3ae; --mint-soft:#12352d; --violet:#b39bff; --flag:#ff8c80; --flag-soft:#3d1d1d; color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 body{background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--body);padding:0 16px 56px}
@@ -120,11 +121,24 @@ select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px 
 .sec:last-of-type{border-bottom:0}
 .simple{font-size:1.1rem;line-height:1.6}
 .flow{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
-.flow li{background:var(--bg);border:1px solid var(--line);border-left:4px solid var(--primary);border-radius:10px;padding:9px 12px;position:relative}
-.flow li+li{margin-top:22px}
-.flow li+li::before{content:"";position:absolute;left:50%;top:-18px;height:14px;border-left:2px solid var(--primary)}
-.flow li+li::after{content:"";position:absolute;left:calc(50% - 5px);top:-8px;border:5px solid transparent;border-top-color:var(--primary)}
-.flow b{font:800 1rem var(--display);color:var(--primary);margin-right:6px}
+.flow li{--c:var(--primary);background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:12px;padding:10px 12px 10px 12px;position:relative;display:grid;grid-template-columns:auto 1fr;gap:2px 10px;align-items:start;box-shadow:0 1px 0 var(--line)}
+.flow li+li{margin-top:24px}
+.flow li+li::before{content:"";position:absolute;left:28px;top:-20px;height:15px;border-left:2px solid var(--c)}
+.flow li+li::after{content:"";position:absolute;left:23px;top:-9px;border:6px solid transparent;border-top-color:var(--c)}
+.flow b{grid-row:span 2;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--c);color:var(--surface);font:800 .95rem var(--display)}
+.flow .stg{font:600 .68rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c)}
+.flow .s0{--c:var(--flag)}.flow .s1{--c:var(--violet)}.flow .s2{--c:var(--saffron)}.flow .s3{--c:var(--primary)}.flow .s4{--c:var(--mint)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:0 0 12px;font-size:.8rem;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.glance{display:grid;gap:22px 12px;grid-template-columns:1fr 1fr;position:relative;padding-top:6px}
+.glance .hub{grid-column:1/-1;justify-self:center;background:var(--hero);color:var(--hero-ink);border-radius:14px;padding:12px 18px;text-align:center;font:700 1.02rem/1.3 var(--display);max-width:100%;position:relative}
+.glance .hub::after{content:"";position:absolute;left:50%;bottom:-17px;height:15px;border-left:2px dashed var(--line)}
+.glance .node{--c:var(--primary);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:12px;padding:10px 11px;background:var(--surface);min-width:0}
+.glance .node h5{margin:0 0 6px;font:700 .72rem var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--c)}
+.glance .node ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:5px}
+.glance .node li{background:var(--sunk);border-radius:999px;padding:3px 9px;font-size:.84rem;line-height:1.35}
+.glance .n-feat{--c:var(--saffron)}.glance .n-ass{--c:var(--primary)}.glance .n-tx{--c:var(--mint)}.glance .n-avoid{--c:var(--muted)}.glance .n-flag{--c:var(--flag)}.glance .n-mem{--c:var(--violet)}
+@media (max-width:420px){.glance{grid-template-columns:1fr}}
 .exam h4,.adv h4{font:800 1.02rem var(--display);margin:14px 0 4px}
 .exam h4:first-child,.adv h4:first-child{margin-top:0}
 ul.b{margin:0;padding-left:20px}
@@ -155,7 +169,7 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
 .refs li{margin:5px 0;overflow-wrap:anywhere}
 .related{margin-top:14px}.related h3{margin:0 0 8px;font-size:1rem}
 .lib-tools{display:flex;gap:8px;flex-wrap:wrap}.lib-tools input{flex:1 1 200px}.lib-tools select{flex:0 1 200px}
-.shelf{margin-top:18px}.shelf summary{cursor:pointer;font-weight:600}.shelf h4{margin:14px 0 4px}
+.shelf{margin-top:18px}.sylrow{margin:10px 0 14px}.sylrow h4{margin:0}.sylrow p{margin:2px 0 6px}.suggest button b{color:var(--primary);margin-left:4px}.shelf summary{cursor:pointer;font-weight:600}.shelf h4{margin:14px 0 4px}
 .actions{display:flex;flex-wrap:wrap;gap:8px;padding:14px 18px;background:var(--sunk);border-top:1px solid var(--line)}
 .reexplain{white-space:pre-wrap;background:var(--bg);border-radius:10px;padding:12px;font-size:.96rem;overflow-x:auto}
 
@@ -379,6 +393,12 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
       <div><h2>Library</h2><p class="small">Ready answers that work without internet, written from standard physiotherapy textbooks and guidelines. <span id="libCount"></span></p></div>
       <button class="ghost" id="libPdf" type="button" hidden>Download library as PDF</button>
     </div>
+    <details class="shelf" id="sylMap"><summary>Syllabus map: BPT and MPT</summary>
+      <p class="small">Common subjects across Indian universities. Tap a subject to see its topics. Always check your own university's syllabus for your batch.</p>
+      <div id="sylStages"></div>
+      <h4>Official university syllabus pages</h4>
+      <ul class="b" id="sylLinks"></ul>
+    </details>
     <div class="lib-tools"><input id="libSearch" type="search" placeholder="Search: stroke, knee, TENS, red flags, viva"><select id="libSubject" aria-label="Subject"></select></div>
     <p class="status" id="libStatus" aria-live="polite"></p>
     <div class="cards" id="libCards"></div>
@@ -386,6 +406,10 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
     <details class="shelf"><summary>Reference shelf: <span id="shelfCount"></span> textbooks</summary>
       <p class="small">Every topic is a summary written in our own words. Each one points to the chapters of these standard textbooks, plus real guidelines and trials, for deeper reading. No book text is copied.</p>
       <div id="shelfList"></div>
+    </details>
+    <details class="shelf" open><summary>Free books and guidelines you can read legally</summary>
+      <p class="small">These are free to read and share. Copyrighted textbooks are not uploaded here; borrow them from your college library.</p>
+      <ul class="b" id="freeList"></ul>
     </details>
   </section>
 
@@ -419,11 +443,12 @@ const SUBJECTS = [
   {k:"Sports", d:"Injury, return to play", s:["ACL reconstruction rehabilitation","Lateral ankle sprain","Hamstring strain","Patellofemoral pain syndrome"]},
   {k:"Paediatrics", d:"CP, milestones, DMD", s:["Spastic diplegic cerebral palsy","Duchenne muscular dystrophy","Developmental milestones","Congenital talipes equinovarus"]},
   {k:"Geriatrics", d:"Falls, frailty", s:["Falls prevention in older adults","Osteoporosis exercise prescription","Frailty assessment"]},
-  {k:"Women's health", d:"Pelvic floor, pregnancy", s:["Antenatal exercise","Stress urinary incontinence","Diastasis recti"]},
+  {k:"Women's health", d:"Pelvic floor, pregnancy", s:["Antenatal and postnatal exercise","Stress urinary incontinence","Diastasis recti"]},
+  {k:"Rehabilitation", d:"Amputation, burns, ICU, community", s:["Lower limb amputation and prosthetic training","Burns rehabilitation","Physiotherapy in the ICU","Community-based rehabilitation"]},
   {k:"Exercise therapy", d:"Principles, techniques", s:["PNF techniques","Muscle energy technique","Principles of resisted exercise"]},
   {k:"Electrotherapy", d:"TENS, US, IFT", s:["TENS: parameters and gate control theory","Therapeutic ultrasound","Interferential therapy"]},
   {k:"Anatomy & biomechanics", d:"Muscles, joints, gait", s:["Brachial plexus","Normal gait cycle","Biomechanics of the shoulder complex"]},
-  {k:"Research", d:"Methods, statistics", s:["Levels of evidence","Reliability and validity of outcome measures","Types of sampling"]}
+  {k:"Research", d:"Methods, statistics, ICF", s:["Levels of evidence","Reliability and validity of outcome measures","Types of sampling","ICF framework and SOAP notes"]}
 ];
 
 const LIB_BASE = [
@@ -595,6 +620,41 @@ const store = {
 };
 let sample = null, downloads = null, canImages = false, ctl = null, uid = 0;
 
+/* ================= diagrams ================= */
+const STAGES = ["Cause","What happens","Signs","Assess","Treat"];
+const STAGE_RX = [/cause|risk|trauma|overload|injury|smok|genetic|infection|ageing|aging|idiopathic|congenital|unknown|preceding|anaesthesia|indication|pain present|excess/i,
+  /patho|degenerat|inflamm|loss of|damage|compress|demyelin|tear|narrow|weak(en)?s|erodes|immune|irritation|herniat|deterior|ischaem|reduced lung|airflow|imbalance|interference|produce|cross/i,
+  /sign|symptom|feature|pain on|tingl|numb|swelling|stiff|weakness|tremor|gait|deformit|delayed|night|first-step|painful arc|breathless|asymmetr|retained|atelect|morning|ascending|relapse/i,
+  /assess|test|exam|screen|classif|grade|score|measure|x-ray|nerve conduction|monitor|identify|explain, position|choose|ask|ottawa|cluster/i,
+  /treat|manage|exercise|rehab|training|splint|education|mobilis|strength|brace|surgery|cast|stretch|return|prevent|apply|record|progress|phase|weeks|day 0|use during|reassess|community|care|clear|routine|review/i];
+const STAGE_MAP = {"frozen-shoulder":"112234","knee-oa":"011234","lbp":"233344","acl":"023444","subacromial-pain":"012344","tennis-elbow":"012344","carpal-tunnel":"012344","cervical-radiculopathy":"012334","lumbar-disc":"012334","ankylosing-spondylitis":"012234","rheumatoid-arthritis":"112234","tkr":"044444","thr":"044444","plantar-heel-pain":"012344","ankle-sprain":"012344","pfps":"002344","scoliosis":"012344","osteoporosis":"011234","stroke":"014344","parkinsons":"012234","sci":"013444","gbs":"012344","ms":"112234","bells-palsy":"122344","brachial-plexus":"032344","cp":"012344","dmd":"012244","ctev":"013444","copd":"011234","cardiac-rehab":"044344","airway-clearance":"134444","postop-chest":"011444","falls":"334444","pain-science":"011244"};
+const PROCESS = new Set(["gait-cycle","pnf","mmt","goniometry","tens","ultrasound","ift","maitland-grades","fitt","brunnstrom","levels-evidence"]);
+function stagesOf(a){
+  const flow = a.flow || [];
+  if (PROCESS.has(a.id) || a.stages === "steps") return null;
+  if (typeof a.stages === "string" && a.stages.length === flow.length) return [...a.stages].map(Number);
+  if (STAGE_MAP[a.id]) return [...STAGE_MAP[a.id]].map(Number);
+  let prev = 0;
+  return flow.map((f, i) => {
+    let k = STAGE_RX.findIndex(r => r.test(f));
+    if (k < 0) k = Math.min(4, Math.floor(i / flow.length * 5));
+    k = Math.max(prev, k); prev = k; return k;
+  });
+}
+const short = (t, n = 6) => { let x = String(t).split(/ \(|: |; |, (?=[a-z])/)[0]; const w = x.split(" "); return w.length > n ? w.slice(0, n).join(" ") + "..." : x; };
+function glanceData(a){
+  const sec = (a.exam||[]).find(x => /feature|clinical|types|stages|grades|phases|mechanism|principle|hierarchy|patterns/i.test(x.h)) || (a.exam||[])[1] || {p:[]};
+  const ev = a.evidence || [], bad = r => /avoid|negative|no better|worse|not recommended|little or no/i.test(r[1] + " " + r[2]);
+  return [
+    ["n-feat", sec.h || "Key points", (sec.p||[]).slice(0, 4).map(x => short(x, 7))],
+    ["n-ass", "Assess with", (a.outcomes||[]).slice(0, 4).map(o => short(o[0], 5))],
+    ["n-tx", "Best evidence", ev.filter(r => !bad(r)).slice(0, 4).map(r => short(r[0], 6))],
+    ["n-avoid", "Avoid or limited", ev.filter(bad).slice(0, 3).map(r => short(r[0], 6))],
+    ["n-flag", "Refer if", (a.flags||[]).slice(0, 3).map(f => short(f, 6))],
+    ["n-mem", "Remember", a.mnemonic && a.mnemonic.word ? [a.mnemonic.word] : []]
+  ].filter(n => n[2].length);
+}
+
 /* ================= answer rendering ================= */
 function renderAnswer(a, opts = {}){
   const id = "a" + (++uid);
@@ -602,7 +662,12 @@ function renderAnswer(a, opts = {}){
   const S = [];
   const add = (key, label, html) => { if (html) S.push({key, label, html}); };
   add("simple","Simple", `<p class="simple">${esc(a.simple)}</p>`);
-  if ((a.flow||[]).length) add("flow","Flow", `<ol class="flow">${a.flow.map((f,i)=>`<li><b>${i+1}</b>${esc(f)}</li>`).join("")}</ol>`);
+  if ((a.flow||[]).length) {
+    const st = stagesOf(a), used = st ? [...new Set(st)].sort() : [];
+    add("flow","Flowchart", `<p class="legend">${used.map(k=>`<span><i style="background:var(--${["flag","violet","saffron","primary","mint"][k]})"></i>${STAGES[k]}</span>`).join("")}</p><ol class="flow">${a.flow.map((f,i)=>`<li class="s${st?st[i]:3}"><b>${i+1}</b><span class="stg">${st?STAGES[st[i]]:"Step "+(i+1)}</span><span>${esc(f)}</span></li>`).join("")}</ol>`);
+  }
+  const gl = glanceData(a);
+  if (gl.length >= 3) add("glance","Diagram", `<div class="glance"><div class="hub">${esc(a.title)}</div>${gl.map(([c,h,items])=>`<div class="node ${c}"><h5>${esc(h)}</h5><ul>${items.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`).join("")}</div>`);
   if ((a.exam||[]).length) add("exam","Exam answer", `<div class="exam">${a.exam.map(s=>`<h4>${esc(s.h)}</h4><ul class="b">${(s.p||[]).map(p=>`<li>${esc(p)}</li>`).join("")}</ul>`).join("")}</div>${a.tip?`<p class="tip"><strong>For full marks: </strong>${esc(a.tip)}</p>`:""}`);
   if ((a.marking||[]).length) {
     const total = a.marking.reduce((t,[,m])=>t+(+m||0),0) || 1;
@@ -625,7 +690,7 @@ function renderAnswer(a, opts = {}){
   add("refs","References", `${(a.refs||[]).length?`<ol class="refs">${a.refs.map(r=>r.book?`<li>${esc(r.c)} <span class="pill tag">Textbook</span></li>`:`<li>${esc(r.c)} (${r.u?`<a href="${esc(r.u)}" target="_blank" rel="noopener">open</a>`:`<a href="${pubmed(r.q||r.c)}" target="_blank" rel="noopener">find on PubMed</a>`})</li>`).join("")}</ol>`:""}
     <p class="small" style="margin-top:8px">Read more: <a href="${pubmed(kw)}" target="_blank" rel="noopener">PubMed</a> · <a href="${physio(kw)}" target="_blank" rel="noopener">Physiopedia</a></p>
     ${opts.ai?`<p class="small" style="margin-top:6px">AI-written answer. Check each reference on PubMed before quoting it.</p>`:""}`);
-  const labels = {simple:"In simple words",flow:"The flow",exam:"How to write it in the exam",marks:"How marks are usually given",adv:"Advanced: evidence and research",mem:"Memory trick",ex:"Real-life example",flags:"Red flags",viva:"Viva questions",refs:"References"};
+  const labels = {simple:"In simple words",flow:"Flowchart: draw this in your answer",glance:"Diagram at a glance",exam:"How to write it in the exam",marks:"How marks are usually given",adv:"Advanced: evidence and research",mem:"Memory trick",ex:"Real-life example",flags:"Red flags",viva:"Viva questions",refs:"References"};
 
   const el = document.createElement("article");
   el.className = "sheet";
@@ -692,7 +757,44 @@ function buildPdf(list){
     text(a.title, 20, "bold", [18,26,51], 0, 2);
     text([a.marks ? a.marks + " marks" : "", a.qtype, a.subject, a.uni].filter(Boolean).join("  |  "), 9, "normal", [89,98,127], 0, 8);
     head("In simple words"); text(a.simple);
-    if ((a.flow||[]).length){ head("The flow"); a.flow.forEach((f,k)=>text((k+1)+". "+f, 10.5, "normal", [25,30,50], 6, 1)); }
+    if ((a.flow||[]).length){
+      head("Flowchart");
+      const st = stagesOf(a), COL = [[196,60,49],[112,72,200],[184,110,0],[47,79,224],[11,138,109]];
+      a.flow.forEach((f, k) => {
+        doc.setFont("helvetica","normal"); doc.setFontSize(10);
+        const lines = doc.splitTextToSize(ascii(f), CW - 120), h = 16 + lines.length * 12;
+        need(h + 16);
+        const c = COL[st ? st[k] : 3], x = M + 40, w = CW - 80;
+        doc.setFillColor(246,248,253); doc.setDrawColor(...c); doc.setLineWidth(1); doc.roundedRect(x, y, w, h, 6, 6, "FD");
+        doc.setFillColor(...c); doc.rect(x, y, 4, h, "F");
+        doc.circle(x + 20, y + h/2, 9, "F"); doc.setTextColor(255,255,255); doc.setFont("helvetica","bold"); doc.setFontSize(9); doc.text(String(k+1), x + 20, y + h/2 + 3, {align:"center"});
+        doc.setTextColor(...c); doc.setFontSize(7); doc.text((st ? STAGES[st[k]] : "Step " + (k+1)).toUpperCase(), x + 38, y + 11);
+        doc.setTextColor(25,30,50); doc.setFont("helvetica","normal"); doc.setFontSize(10); doc.text(lines, x + 38, y + 23);
+        y += h;
+        if (k < a.flow.length - 1) { doc.setDrawColor(150,158,185); doc.setLineWidth(1.2); doc.line(x + 20, y, x + 20, y + 12); doc.setFillColor(150,158,185); doc.triangle(x + 16, y + 9, x + 24, y + 9, x + 20, y + 14, "F"); y += 14; }
+      });
+      y += 6;
+    }
+    const gl = glanceData(a);
+    if (gl.length >= 3){
+      head("Diagram at a glance");
+      const GC = {"n-feat":[184,110,0],"n-ass":[47,79,224],"n-tx":[11,138,109],"n-avoid":[110,118,140],"n-flag":[196,60,49],"n-mem":[112,72,200]};
+      doc.setFont("helvetica","bold"); doc.setFontSize(11);
+      const tl = doc.splitTextToSize(ascii(a.title), CW - 120), th = 14 + tl.length * 13;
+      need(th + 20); doc.setFillColor(21,32,90); doc.roundedRect(M + 60, y, CW - 120, th, 8, 8, "F"); doc.setTextColor(243,245,255); doc.text(tl, W/2, y + 18, {align:"center"}); y += th + 10;
+      const cw = (CW - 12) / 2;
+      for (let i = 0; i < gl.length; i += 2) {
+        const pair = gl.slice(i, i + 2).map(([c, h, items]) => { doc.setFont("helvetica","normal"); doc.setFontSize(9.5); const ls = items.flatMap(t => doc.splitTextToSize("- " + ascii(t), cw - 16)); return {c, h, ls, hh: 24 + ls.length * 11.5}; });
+        const rh = Math.max(...pair.map(p => p.hh)); need(rh + 10);
+        pair.forEach((p, j) => {
+          const x = M + j * (cw + 12), c = GC[p.c] || [47,79,224];
+          doc.setDrawColor(219,225,239); doc.setFillColor(255,255,255); doc.roundedRect(x, y, cw, rh, 6, 6, "FD"); doc.setFillColor(...c); doc.rect(x + 1, y, cw - 2, 3.5, "F");
+          doc.setFont("helvetica","bold"); doc.setFontSize(8); doc.setTextColor(...c); doc.text(ascii(p.h).toUpperCase(), x + 8, y + 16);
+          doc.setFont("helvetica","normal"); doc.setFontSize(9.5); doc.setTextColor(25,30,50); doc.text(p.ls, x + 8, y + 29);
+        });
+        y += rh + 10;
+      }
+    }
     if ((a.exam||[]).length){ head("How to write it in the exam"); a.exam.forEach(s=>{ text(s.h, 11.5, "bold", [18,26,51], 0, 1); (s.p||[]).forEach(bullet); y += 3; }); if (a.tip) text("For full marks: " + a.tip, 10, "italic", [140,85,0]); }
     if ((a.marking||[]).length){ head("How marks are usually given"); a.marking.forEach(([p,m])=>bullet(p + ": " + m + " marks")); }
     if ((a.evidence||[]).length){ head("Evidence summary"); a.evidence.forEach(([iv,e,g])=>bullet(iv + " - " + e + " [" + g + "]")); if (a.evidenceSource) text("Source: " + a.evidenceSource, 9, "italic", [89,98,127]); }
@@ -713,7 +815,7 @@ function buildHtml(list){
   const li = arr => "<ul>" + arr.map(x => "<li>" + esc(x) + "</li>").join("") + "</ul>";
   const body = list.map(a => `<article><p class="m">Learn Anywhere</p><h1>${esc(a.title)}</h1><p class="m">${esc([a.marks ? a.marks + " marks" : "", a.qtype, a.subject, a.uni, a.lang].filter(Boolean).join(" | "))}</p>
     <h2>In simple words</h2><p>${esc(a.simple)}</p>
-    ${(a.flow||[]).length?`<h2>The flow</h2><ol>${a.flow.map(f=>`<li>${esc(f)}</li>`).join("")}</ol>`:""}
+    ${(a.flow||[]).length?`<h2>Flowchart</h2><ol>${(st=>a.flow.map((f,i)=>`<li><small>${st?STAGES[st[i]]:"Step "+(i+1)}</small><br>${esc(f)}</li>`).join(""))(stagesOf(a))}</ol>`:""}
     ${(a.exam||[]).length?`<h2>Exam answer</h2>${a.exam.map(s=>`<h3>${esc(s.h)}</h3>${li(s.p||[])}`).join("")}${a.tip?`<p><strong>For full marks:</strong> ${esc(a.tip)}</p>`:""}`:""}
     ${(a.marking||[]).length?`<h2>Marks</h2>${li(a.marking.map(([p,m])=>p+": "+m))}`:""}
     ${(a.evidence||[]).length?`<h2>Evidence</h2><table>${a.evidence.map(([i,e,g])=>`<tr><td>${esc(i)}</td><td>${esc(e)}</td><td>${esc(g)}</td></tr>`).join("")}</table>`:""}
@@ -899,11 +1001,16 @@ function renderShelf(){
   Object.values(BOOKS).concat(window.SHELF_EXTRA || []).forEach(b => (groups[b.s] = groups[b.s] || []).push(b));
   $("#shelfCount").textContent = Object.keys(BOOKS).length + (window.SHELF_EXTRA || []).length;
   $("#shelfList").innerHTML = Object.keys(groups).sort().map(g => `<h4>${esc(g)}</h4><ul class="b">${groups[g].map(b => `<li><strong>${esc(b.t)}</strong>${b.a ? ` <span class="small">${esc(b.a)}</span>` : ""}</li>`).join("")}</ul>`).join("");
+  $("#freeList").innerHTML = (window.FREE_READS || []).map(r => `<li><a href="${esc(r.u)}" target="_blank" rel="noopener"><strong>${esc(r.t)}</strong></a> <span class="small">${esc(r.d)}</span></li>`).join("");
+  const SY = window.SYLLABUS || { stages: [], links: [] }, count = k => LIB.filter(t => t.subject === k).length;
+  $("#sylStages").innerHTML = SY.stages.map(st => `<div class="sylrow"><h4>${esc(st.h)}</h4><p class="small">${esc(st.d)}</p><div class="suggest">${st.s.filter(count).map(k => `<button type="button" data-sub="${esc(k)}">${esc(k)} <b>${count(k)}</b></button>`).join("")}</div></div>`).join("");
+  $("#sylLinks").innerHTML = SY.links.map(([n, u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}</a></li>`).join("");
   const subs = [...new Set(LIB.map(t => t.subject))].sort();
   $("#libSubject").innerHTML = `<option value="">All subjects</option>` + subs.map(x => `<option>${esc(x)}</option>`).join("");
 }
 $("#libSearch").addEventListener("input", renderLib);
 $("#libSubject").addEventListener("change", renderLib);
+$("#sylStages").addEventListener("click", e => { const b = e.target.closest("[data-sub]"); if (!b) return; $("#libSearch").value = ""; $("#libSubject").value = b.dataset.sub; renderLib(); $("#libCards").scrollIntoView({ behavior: "smooth", block: "start" }); });
 $("#libCards").addEventListener("click", e => {
   const c = e.target.closest(".card"); if (!c) return;
   const it = allItems().find(x => x.id === c.dataset.id);

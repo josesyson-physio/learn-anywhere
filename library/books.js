@@ -45,3 +45,14 @@ window.SHELF_EXTRA = [
   { t: "Orthopaedic Manual Therapy", s: "Manual therapy" }
 ];
 window.LIB_EXTRA = window.LIB_EXTRA || [];
+// Free and legal places to read more. Links only; nothing is copied into the app.
+window.FREE_READS = [
+  { t: "Physiopedia", u: "https://www.physio-pedia.com/", d: "Free physiotherapy encyclopedia (CC BY-SA)" },
+  { t: "OpenStax Anatomy and Physiology 2e", u: "https://openstax.org/details/books/anatomy-and-physiology-2e", d: "Full free textbook (CC BY 4.0), PDF download allowed" },
+  { t: "NCBI Bookshelf (includes StatPearls)", u: "https://www.ncbi.nlm.nih.gov/books/", d: "Free medical books and chapters" },
+  { t: "PubMed Central", u: "https://www.ncbi.nlm.nih.gov/pmc/", d: "Free full-text research articles" },
+  { t: "PEDro", u: "https://pedro.org.au/", d: "Free database of physiotherapy trials and guidelines" },
+  { t: "NICE guidance", u: "https://www.nice.org.uk/guidance", d: "Free clinical guidelines" },
+  { t: "Cochrane Library", u: "https://www.cochranelibrary.com/", d: "Systematic reviews (free summaries)" },
+  { t: "WHO Rehabilitation", u: "https://www.who.int/health-topics/rehabilitation", d: "Free WHO rehabilitation resources" }
+];
