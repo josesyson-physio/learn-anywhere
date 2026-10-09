@@ -11,11 +11,12 @@
 <title>Learn Anywhere Physio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500&display=swap">
-<script src="vendor/jspdf.umd.min.js">
-if ("serviceWorker" in navigator && location.protocol !== "file:") navigator.serviceWorker.register("sw.js").catch(() => {});
-</script>
-</body>
-</html>
+<script src="vendor/jspdf.umd.min.js"></script>
+<script src="library/books.js"></script>
+<script src="library/msk.js"></script>
+<script src="library/neuro.js"></script>
+<script src="library/cardio.js"></script>
+<script src="library/principles.js"></script>
 <style>
 :root{color-scheme:light}
 body{margin:0;padding-top:env(safe-area-inset-top,0px)}
@@ -152,6 +153,9 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
 .viva details p{margin-top:6px}
 .refs{margin:0;padding-left:20px;font-size:.93rem}
 .refs li{margin:5px 0;overflow-wrap:anywhere}
+.related{margin-top:14px}.related h3{margin:0 0 8px;font-size:1rem}
+.lib-tools{display:flex;gap:8px;flex-wrap:wrap}.lib-tools input{flex:1 1 200px}.lib-tools select{flex:0 1 200px}
+.shelf{margin-top:18px}.shelf summary{cursor:pointer;font-weight:600}.shelf h4{margin:14px 0 4px}
 .actions{display:flex;flex-wrap:wrap;gap:8px;padding:14px 18px;background:var(--sunk);border-top:1px solid var(--line)}
 .reexplain{white-space:pre-wrap;background:var(--bg);border-radius:10px;padding:12px;font-size:.96rem;overflow-x:auto}
 
@@ -372,18 +376,22 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
   <!-- LIBRARY -->
   <section id="view-lib" class="view" hidden>
     <div class="row" style="justify-content:space-between">
-      <div><h2>Library</h2><p class="small">Ready answers work without internet. Answers you save appear here.</p></div>
+      <div><h2>Library</h2><p class="small">Ready answers that work without internet, written from standard physiotherapy textbooks and guidelines. <span id="libCount"></span></p></div>
       <button class="ghost" id="libPdf" type="button" hidden>Download library as PDF</button>
     </div>
-    <div class="lib-tools"><input id="libSearch" type="search" placeholder="Search: shoulder, red flags, evidence, viva"></div>
+    <div class="lib-tools"><input id="libSearch" type="search" placeholder="Search: stroke, knee, TENS, red flags, viva"><select id="libSubject" aria-label="Subject"></select></div>
     <p class="status" id="libStatus" aria-live="polite"></p>
     <div class="cards" id="libCards"></div>
     <div id="libAnswer"></div>
+    <details class="shelf"><summary>Reference shelf: <span id="shelfCount"></span> textbooks</summary>
+      <p class="small">Every topic is a summary written in our own words. Each one points to the chapters of these standard textbooks, plus real guidelines and trials, for deeper reading. No book text is copied.</p>
+      <div id="shelfList"></div>
+    </details>
   </section>
 
   <!-- QUIZ -->
   <section id="view-quiz" class="view" hidden>
-    <div><h2>Quick quiz</h2><p class="small">Exam-style MCQs from the library. Works offline.</p></div>
+    <div><h2>Quick quiz</h2><p class="small">10 random exam-style MCQs from the library each round. Works offline.</p></div>
     <div class="qcard" id="quiz"></div>
   </section>
 
@@ -394,7 +402,8 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
       <p>Good coaching and books cost money many students do not have. Learn Anywhere gives every physiotherapy student the same quality of explanation, for free, on any phone.</p>
       <p><strong>How answers are built.</strong> Choose your university, year, question type and marks. The answer follows the layout Indian BPT and MPT examiners expect: definition, pathophysiology, clinical features, assessment, phased management, diagram and conclusion. Advanced sections add evidence grades, outcome measures with clinically important change scores, recent trials and viva questions.</p>
       <p><strong>Marking guide.</strong> The marks split is a typical pattern for Indian health science university papers. Always check your own university's syllabus and previous question papers.</p>
-      <p><strong>References.</strong> Built-in topics cite real guidelines and trials. AI-written answers suggest references; check each one with the PubMed link before you quote it.</p>
+      <p><strong>References.</strong> Library topics are original summaries that point to standard textbooks (see the Reference shelf in the Library) and to real guidelines and trials you can open on PubMed. No book text is copied. Always read the chapter for depth.</p>
+      <p><strong>Free forever.</strong> No account, no fees, no ads. The library grows topic by topic and anyone can add to it on GitHub.</p>
       <p><strong>Low network.</strong> The library and quiz are inside the page. A new answer uses only a few kilobytes of text. You can download any answer, or the whole library, as a PDF to read offline.</p>
       <p>This is a study aid for students, not medical advice for patients.</p>
     </div>
@@ -417,7 +426,7 @@ const SUBJECTS = [
   {k:"Research", d:"Methods, statistics", s:["Levels of evidence","Reliability and validity of outcome measures","Types of sampling"]}
 ];
 
-const LIB = [
+const LIB_BASE = [
 {
   id:"frozen-shoulder", title:"Frozen shoulder (adhesive capsulitis)", subject:"Musculoskeletal", region:"Shoulder", marks:10,
   simple:"The shoulder capsule first becomes inflamed, then thick and tight. The shoulder hurts and slowly loses movement in every direction, most of all turning outwards. It usually recovers over 1 to 3 years, and physiotherapy matched to how irritable the shoulder is speeds this up.",
@@ -537,8 +546,10 @@ const LIB = [
   keywords:"anterior cruciate ligament rehabilitation"
 }
 ];
+const BOOKS = window.BOOKS || {};
+const LIB = [...LIB_BASE, ...(window.LIB_EXTRA || [])].map(prepTopic);
 
-const QUIZ = [
+const QUIZ_BASE = [
   {q:"Which movement is lost most in the capsular pattern of the shoulder?", o:["Internal rotation","Abduction","External rotation","Flexion"], a:2, w:"Shoulder capsular pattern: external rotation > abduction > internal rotation."},
   {q:"Which structure's contracture best explains early loss of shoulder external rotation in frozen shoulder?", o:["Glenoid labrum","Coracohumeral ligament and rotator interval","Supraspinatus tendon","Acromioclavicular ligament"], a:1, w:"The coracohumeral ligament and rotator interval tighten in ER and are thickened in adhesive capsulitis."},
   {q:"According to the Kelley 2013 CPG, which intervention has Grade A evidence for short-term relief in adhesive capsulitis?", o:["Ultrasound","Corticosteroid injection","Shortwave diathermy","Rest in a sling"], a:1, w:"Intra-articular corticosteroid injection has Grade A evidence for short-term pain and function."},
@@ -550,6 +561,27 @@ const QUIZ = [
   {q:"A Segond fracture is most associated with:", o:["PCL tear","ACL tear","Patellar dislocation","Medial meniscus tear alone"], a:1, w:"A lateral tibial plateau avulsion (Segond) strongly suggests ACL rupture."},
   {q:"A common limb symmetry index target for return to sport after ACL reconstruction is:", o:["50 percent","70 percent","90 percent or more","No target needed"], a:2, w:"Strength and hop tests at 90 percent or more of the other limb are commonly used criteria."}
 ];
+const QUIZ_POOL = [...QUIZ_BASE, ...LIB.flatMap(t => (t.mcq || []).map(([q, o, a, w]) => ({ q, o, a, w, t: t.title, s: t.subject })))];
+
+/* Library topics: turn textbook refs into citations and add a typical marks split */
+function prepTopic(t){
+  const refs = (t.refs || []).map(r => {
+    if (!r.b) return r;
+    const bk = BOOKS[r.b];
+    return bk ? { c: `${bk.a}. ${bk.t}. See: ${r.ch}.`, book: true } : { c: r.ch, book: true };
+  });
+  let marking = t.marking;
+  if (!marking && (t.exam || []).length) {
+    const raw = t.exam.map(x => [x.h, /manag|rehab|ponseti|technique|procedure|prescription|phases|stages|grades|patterns/i.test(x.h) ? 3 : 1]);
+    raw.push(["Diagram or flowchart", 1]);
+    const sum = raw.reduce((n, [, m]) => n + m, 0);
+    marking = raw.map(([h, m]) => [h, Math.max(0.5, Math.round(m / sum * 10 * 2) / 2)]);
+    const diff = 10 - marking.reduce((n, [, m]) => n + m, 0);
+    const big = marking.reduce((b, r, i) => r[1] > marking[b][1] ? i : b, 0);
+    marking[big][1] += diff;
+  }
+  return { marks: 10, ...t, refs, marking };
+}
 
 /* ================= helpers ================= */
 const $ = s => document.querySelector(s);
@@ -590,7 +622,7 @@ function renderAnswer(a, opts = {}){
   if ((a.flags||[]).length) add("flags","Red flags", `<div class="flags"><h3>Refer, do not treat</h3><ul class="b">${a.flags.map(f=>`<li>${esc(f)}</li>`).join("")}</ul></div>`);
   if ((a.viva||[]).length) add("viva","Viva", `<div class="viva">${a.viva.map(([q,ans])=>`<details><summary>${esc(q)}</summary><p>${esc(ans)}</p></details>`).join("")}</div>`);
   const kw = a.keywords || a.title;
-  add("refs","References", `${(a.refs||[]).length?`<ol class="refs">${a.refs.map(r=>`<li>${esc(r.c)} (${r.u?`<a href="${esc(r.u)}" target="_blank" rel="noopener">open</a>`:`<a href="${pubmed(r.q||r.c)}" target="_blank" rel="noopener">find on PubMed</a>`})</li>`).join("")}</ol>`:""}
+  add("refs","References", `${(a.refs||[]).length?`<ol class="refs">${a.refs.map(r=>r.book?`<li>${esc(r.c)} <span class="pill tag">Textbook</span></li>`:`<li>${esc(r.c)} (${r.u?`<a href="${esc(r.u)}" target="_blank" rel="noopener">open</a>`:`<a href="${pubmed(r.q||r.c)}" target="_blank" rel="noopener">find on PubMed</a>`})</li>`).join("")}</ol>`:""}
     <p class="small" style="margin-top:8px">Read more: <a href="${pubmed(kw)}" target="_blank" rel="noopener">PubMed</a> · <a href="${physio(kw)}" target="_blank" rel="noopener">Physiopedia</a></p>
     ${opts.ai?`<p class="small" style="margin-top:6px">AI-written answer. Check each reference on PubMed before quoting it.</p>`:""}`);
   const labels = {simple:"In simple words",flow:"The flow",exam:"How to write it in the exam",marks:"How marks are usually given",adv:"Advanced: evidence and research",mem:"Memory trick",ex:"Real-life example",flags:"Red flags",viva:"Viva questions",refs:"References"};
@@ -765,7 +797,7 @@ $("#askForm").addEventListener("submit", async e => {
   e.preventDefault();
   const q = $("#q").value.trim();
   if (!q && !photo) { setStatus("Type a topic or add a photo of the question.", true); return; }
-  if (!sample) { setStatus("New AI answers are not switched on in this version yet. Showing the closest library topic.", true); showLibMatch(q); return; }
+  if (!sample) { showLibMatch(q); return; }
   const lang = $("#lang").value, uni = $("#uni").value, level = $("#level").value, qtype = $("#qtype").value;
   const prompt = `You are an expert physiotherapy professor and examiner in India, teaching students who cannot afford coaching. Write an advanced, exam-ready, evidence-based answer.
 Student: ${level}, ${uni}. Question type: ${qtype}. Marks: ${marks}.
@@ -822,21 +854,56 @@ $("#suggest").addEventListener("click", e => { const b = e.target.closest("butto
 
 /* ================= library ================= */
 function allItems(){ return [...store.get(), ...LIB]; }
-function hay(it){ return [it.title, it.subject, it.region, it.simple, it.keywords, (it.flags||[]).join(" "), (it.evidence||[]).flat().join(" "), (it.viva||[]).flat().join(" "), it.mnemonic&&it.mnemonic.extra].join(" ").toLowerCase(); }
-function match(q){
-  const words = (q||"").toLowerCase().split(/\W+/).filter(w => w.length > 2);
-  let best = null, bestScore = 0;
-  for (const it of allItems()) { const h = hay(it); const sc = words.filter(w => h.includes(w)).length; if (sc > bestScore) { best = it; bestScore = sc; } }
-  return best;
+function hay(it){ return [it.title, (it.aliases||[]).join(" "), it.subject, it.region, it.simple, it.keywords, (it.flags||[]).join(" "), (it.evidence||[]).flat().join(" "), (it.viva||[]).flat().join(" "), it.mnemonic&&it.mnemonic.extra].join(" ").toLowerCase(); }
+const STOP = new Set("the and for with what are how does physiotherapy management explain write about its role describe discuss short note define".split(" "));
+function words(q){ return (q||"").toLowerCase().split(/[^a-z0-9']+/).filter(w => w.length > 1 && !STOP.has(w)); }
+function score(it, ws){
+  const top = [it.title, (it.aliases||[]).join(" "), it.id].join(" ").toLowerCase(), kw = (it.keywords + " " + it.subject + " " + it.region).toLowerCase(), h = hay(it);
+  let n = 0;
+  for (const w of ws) n += top.includes(w) ? 3 : kw.includes(w) ? 2 : h.includes(w) ? 1 : 0;
+  return n;
 }
-function showLibMatch(q){ const m = match(q); if (m) $("#answer").replaceChildren(renderAnswer(m, { badge: "From library" })); }
-function libItems(){ const q = $("#libSearch").value.trim().toLowerCase(); return allItems().filter(it => !q || hay(it).includes(q)); }
+function ranked(q){
+  const ws = words(q);
+  if (!ws.length) return [];
+  return allItems().map(it => [it, score(it, ws)]).filter(([, n]) => n > 0).sort((a, b) => b[1] - a[1]).map(([it]) => it);
+}
+function match(q){ return ranked(q)[0] || null; }
+function topicButtons(list){ return `<div class="suggest">${list.map(t => `<button type="button" data-open="${esc(t.id)}">${esc(t.title)}</button>`).join("")}</div>`; }
+function showLibMatch(q){
+  const r = ranked(q), box = $("#answer");
+  if (!r.length) {
+    box.innerHTML = `<article class="sheet"><div class="sheet-head"><h2>Not in the library yet</h2></div><section class="sec"><p>We could not find "${esc(q)}". Try a shorter name, such as "stroke" or "knee". These ${LIB.length} topics are ready:</p>${topicButtons(LIB)}</section></article>`;
+    setStatus("");
+    return;
+  }
+  box.replaceChildren(renderAnswer(r[0], { badge: "From library" }));
+  if (r.length > 1) { const rel = document.createElement("div"); rel.className = "related"; rel.innerHTML = `<h3>Related topics</h3>${topicButtons(r.slice(1, 6))}`; box.append(rel); }
+  setStatus("");
+  box.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+$("#answer").addEventListener("click", e => { const b = e.target.closest("[data-open]"); if (!b) return; const it = allItems().find(x => x.id === b.dataset.open); if (it) { $("#answer").replaceChildren(renderAnswer(it, { badge: "From library" })); $("#answer").scrollIntoView({ behavior: "smooth", block: "start" }); } });
+function libItems(){
+  const q = $("#libSearch").value.trim(), sub = $("#libSubject").value;
+  const base = q ? ranked(q) : allItems();
+  return base.filter(it => !sub || it.subject === sub);
+}
 function renderLib(){
   const items = libItems();
   $("#libCards").innerHTML = items.length ? items.map(it => `<button class="card" type="button" data-id="${esc(it.id)}"><span class="meta"><span class="pill tag">${esc(it.subject||"Topic")}</span>${it.marks?`<span class="pill marks">${esc(it.marks)} marks</span>`:""}${it.saved?'<span class="pill ok">Saved</span>':""}</span><span class="t">${esc(it.title)}</span><span class="s">${esc((it.simple||"").slice(0,110))}${(it.simple||"").length>110?"...":""}</span></button>`).join("")
-    : `<p class="small">No topic matches yet. Ask it on the Ask tab and save the answer.</p>`;
+    : `<p class="small">No topic matches yet. Try a shorter word, or pick a subject.</p>`;
+  $("#libCount").textContent = `${items.length} of ${allItems().length} topics`;
+}
+function renderShelf(){
+  const groups = {};
+  Object.values(BOOKS).concat(window.SHELF_EXTRA || []).forEach(b => (groups[b.s] = groups[b.s] || []).push(b));
+  $("#shelfCount").textContent = Object.keys(BOOKS).length + (window.SHELF_EXTRA || []).length;
+  $("#shelfList").innerHTML = Object.keys(groups).sort().map(g => `<h4>${esc(g)}</h4><ul class="b">${groups[g].map(b => `<li><strong>${esc(b.t)}</strong>${b.a ? ` <span class="small">${esc(b.a)}</span>` : ""}</li>`).join("")}</ul>`).join("");
+  const subs = [...new Set(LIB.map(t => t.subject))].sort();
+  $("#libSubject").innerHTML = `<option value="">All subjects</option>` + subs.map(x => `<option>${esc(x)}</option>`).join("");
 }
 $("#libSearch").addEventListener("input", renderLib);
+$("#libSubject").addEventListener("change", renderLib);
 $("#libCards").addEventListener("click", e => {
   const c = e.target.closest(".card"); if (!c) return;
   const it = allItems().find(x => x.id === c.dataset.id);
@@ -846,23 +913,24 @@ $("#libCards").addEventListener("click", e => {
 $("#libPdf").addEventListener("click", () => downloadAnswers(libItems(), "learn-anywhere-library", $("#libPdf"), $("#libStatus")));
 
 /* ================= quiz ================= */
-let qi = 0, score = 0;
+let qi = 0, qscore = 0, QUIZ = [];
+function newRound(){ QUIZ = QUIZ_POOL.map(x => [Math.random(), x]).sort((a, b) => a[0] - b[0]).slice(0, 10).map(([, x]) => x); qi = 0; qscore = 0; }
 function renderQuiz(){
   const box = $("#quiz");
   if (qi >= QUIZ.length) {
-    box.innerHTML = `<p class="qprog">Finished</p><p class="score">${score} / ${QUIZ.length}</p><p>${score >= 8 ? "Excellent. You are exam ready on these topics." : score >= 5 ? "Good base. Revise the ones you missed in the Library." : "Read the Library topics, then try again."}</p><div class="row"><button class="primary" type="button" id="qAgain">Try again</button></div>`;
-    $("#qAgain").onclick = () => { qi = 0; score = 0; renderQuiz(); };
+    box.innerHTML = `<p class="qprog">Finished</p><p class="score">${qscore} / ${QUIZ.length}</p><p>${qscore >= 8 ? "Excellent. You are exam ready on these topics." : qscore >= 5 ? "Good base. Revise the ones you missed in the Library." : "Read the Library topics, then try again."}</p><div class="row"><button class="primary" type="button" id="qAgain">New set of 10</button></div>`;
+    $("#qAgain").onclick = () => { newRound(); renderQuiz(); };
     return;
   }
   const it = QUIZ[qi];
-  box.innerHTML = `<p class="qprog">Question ${qi+1} of ${QUIZ.length} · Score ${score}</p><div class="qtrack"><i style="width:${qi/QUIZ.length*100}%"></i></div><p class="qq">${esc(it.q)}</p><div class="opts">${it.o.map((o,i)=>`<button class="opt" type="button" data-i="${i}">${esc(o)}</button>`).join("")}</div><div id="qAfter"></div>`;
+  box.innerHTML = `<p class="qprog">Question ${qi+1} of ${QUIZ.length} · Score ${qscore}</p><div class="qtrack"><i style="width:${qi/QUIZ.length*100}%"></i></div><p class="qq">${esc(it.q)}</p><div class="opts">${it.o.map((o,i)=>`<button class="opt" type="button" data-i="${i}">${esc(o)}</button>`).join("")}</div><div id="qAfter"></div>`;
   box.querySelector(".opts").addEventListener("click", e => {
     const b = e.target.closest(".opt"); if (!b || box.dataset.done === String(qi)) return;
     box.dataset.done = String(qi);
     const pick = +b.dataset.i;
-    if (pick === it.a) score++;
+    if (pick === it.a) qscore++;
     box.querySelectorAll(".opt").forEach((x,i) => { if (i === it.a) x.classList.add("right"); else if (i === pick) x.classList.add("wrong"); });
-    $("#qAfter").innerHTML = `<p class="why">${pick === it.a ? "<strong>Correct.</strong> " : "<strong>Not quite.</strong> "}${esc(it.w)}</p><div class="row" style="margin-top:10px"><button class="primary" type="button" id="qNext">${qi+1 < QUIZ.length ? "Next question" : "See score"}</button></div>`;
+    $("#qAfter").innerHTML = `<p class="why">${pick === it.a ? "<strong>Correct.</strong> " : "<strong>Not quite.</strong> "}${esc(it.w)}</p>${it.t?`<p class="small">Topic: ${esc(it.t)}</p>`:""}<div class="row" style="margin-top:10px"><button class="primary" type="button" id="qNext">${qi+1 < QUIZ.length ? "Next question" : "See score"}</button></div>`;
     $("#qNext").onclick = () => { qi++; renderQuiz(); };
   });
 }
@@ -877,7 +945,7 @@ document.querySelector("nav.tabs").addEventListener("click", e => { const b = e.
 
 function showExample(){ $("#answer").replaceChildren(renderAnswer({...LIB[0], uni:"MUHS (Maharashtra)", qtype:"Long essay"}, { badge: "Example answer" })); }
 $("#q").value = "Physiotherapy management of frozen shoulder";
-renderSubjects(); showExample(); renderLib(); renderQuiz();
+renderSubjects(); showExample(); renderShelf(); renderLib(); newRound(); renderQuiz();
 try { const t = localStorage.getItem("la-tab"); if (views.includes(t)) show(t); } catch {}
 
 (async () => {
@@ -890,6 +958,7 @@ try { const t = localStorage.getItem("la-tab"); if (views.includes(t)) show(t); 
       setTimeout(() => URL.revokeObjectURL(url), 4000);
     } };
     $("#libPdf").hidden = false;
+    $("#askBtn").textContent = "Find my answer";
     showExample();
     return;
   }
