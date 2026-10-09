@@ -1,7 +1,7 @@
 // Offline support: cache the app shell on install, serve it cache-first,
 // and cache Google Fonts the first time they load.
-const VERSION = "la-v2";
-const SHELL = ["./", "index.html", "manifest.webmanifest", "vendor/jspdf.umd.min.js", "icons/icon.svg", "icons/icon-192.png", "icons/icon-512.png", "icons/logo-animated.svg"];
+const VERSION = "la-v3";
+const SHELL = ["./", "index.html", "manifest.webmanifest", "vendor/jspdf.umd.min.js", "icons/icon.svg", "icons/icon-192.png", "icons/icon-512.png", "icons/logo-animated.svg","library/books.js","library/msk.js","library/neuro.js","library/cardio.js","library/principles.js"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));

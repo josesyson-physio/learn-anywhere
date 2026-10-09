@@ -1,0 +1,127 @@
+// Cardio-respiratory and geriatrics topics. Written in Learn Anywhere's own words.
+window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
+{
+  id:"copd", title:"COPD and pulmonary rehabilitation", subject:"Cardio-respiratory", region:"Lungs",
+  aliases:["COPD","chronic bronchitis","emphysema","pulmonary rehab","breathlessness","pursed lip breathing"],
+  simple:"COPD is long-term lung damage, mostly from smoking or smoke from cooking fires, that narrows the airways and causes breathlessness. Pulmonary rehabilitation, a supervised exercise and education programme, is one of the most effective treatments: people walk further, feel less breathless and go to hospital less.",
+  flow:["Smoking, biomass smoke, occupational dust","Airway inflammation and alveolar destruction","Airflow limitation (FEV1/FVC under 0.7), hyperinflation","Breathlessness, cough, sputum, reduced exercise","Assess mMRC, 6MWT, CAT","Pulmonary rehab: aerobic and strength training, breathing control, education"],
+  exam:[
+    {h:"Definition", p:["A common, preventable, treatable lung disease with persistent respiratory symptoms and airflow limitation due to airway and alveolar abnormalities (GOLD)."]},
+    {h:"Pathophysiology", p:["Chronic bronchitis: mucus hypersecretion and airway narrowing. Emphysema: alveolar wall destruction and loss of elastic recoil.","Air trapping and hyperinflation flatten the diaphragm, increasing work of breathing."]},
+    {h:"Assessment", p:["Spirometry (post-bronchodilator FEV1/FVC under 0.7), mMRC dyspnoea scale, CAT score.","6-minute walk test, SpO2 at rest and exercise, Borg scale, posture and breathing pattern."]},
+    {h:"Pulmonary rehabilitation", p:["6-12 weeks, at least twice weekly supervised: aerobic (walking, cycling) at 60-80% of peak work or Borg 4-6, plus resistance training.","Breathing control, pursed-lip breathing, positions of ease (forward lean sitting).","Airway clearance (ACBT) when sputum is a problem; inspiratory muscle training in selected patients.","Education: inhaler technique, smoking cessation, energy conservation, action plan for exacerbations."]},
+    {h:"Conclusion", p:["Pulmonary rehabilitation improves breathlessness, exercise capacity and quality of life, and is recommended after exacerbation."]}
+  ],
+  tip:"Draw a normal vs emphysematous alveolus. Make a FITT table for pulmonary rehab.",
+  evidence:[["Pulmonary rehabilitation","Improves exercise capacity and quality of life","High"],["Rehab after exacerbation","Reduces readmission","Moderate"],["Inspiratory muscle training alone","Benefit in weak inspiratory muscles","Moderate"]],
+  evidenceSource:"GOLD report and Cochrane review (McCarthy et al., 2015)",
+  outcomes:[["6-minute walk test","Exercise capacity (MCID about 30 m)"],["mMRC","Breathlessness grade"],["CAT","Health status"],["Borg scale","Exertional dyspnoea"]],
+  recent:["GOLD reports continue to rank pulmonary rehabilitation among the most cost-effective treatments for COPD.","Low-cost home-based and tele-rehab models give similar results where centres are not available."],
+  mnemonic:{word:"PURSE", items:[["P","Pursed-lip breathing"],["U","Use positions of ease"],["R","Resistance training"],["S","Smoking cessation"],["E","Endurance walking"]], extra:"Pink puffer (emphysema) vs blue bloater (bronchitis)."},
+  example:"A 65-year-old former beedi smoker gets breathless walking 100 m (mMRC 3). His 6MWT is 280 m with SpO2 falling from 94% to 88%.",
+  flags:["SpO2 under 88% on exertion (needs oxygen assessment)","Chest pain, haemoptysis, sudden worsening (medical review)","Signs of right heart failure: ankle swelling, raised JVP"],
+  viva:[["What is pursed-lip breathing?","Breathing out slowly through pursed lips to create back pressure that keeps airways open."],["Minimal important difference for 6MWT in COPD?","About 25-35 metres."],["Why the forward lean position?","It improves diaphragm length-tension and lets accessory muscles work."]],
+  refs:[{b:"frownfelter",ch:"Chronic obstructive pulmonary disease"},{b:"irwin",ch:"Pulmonary rehabilitation"},{b:"acsm",ch:"Pulmonary disease"},{b:"cashMed",ch:"Chronic lung disease"},{c:"Global Initiative for Chronic Obstructive Lung Disease (GOLD). Global Strategy for the Diagnosis, Management and Prevention of COPD.", u:"https://goldcopd.org/"}],
+  keywords:"pulmonary rehabilitation COPD",
+  mcq:[["Spirometry diagnosis of COPD:",["FEV1/FVC over 0.9","Post-bronchodilator FEV1/FVC under 0.7","FVC under 50% only","Normal spirometry"],1,"Persistent airflow limitation."],["Most effective non-drug treatment for COPD:",["Bed rest","Pulmonary rehabilitation","Ultrasound","Postural drainage alone"],1,"Strong evidence."]]
+},
+{
+  id:"cardiac-rehab", title:"Cardiac rehabilitation after MI and CABG", subject:"Cardio-respiratory", region:"Heart",
+  aliases:["myocardial infarction","heart attack","CABG","bypass surgery","phase 1 cardiac rehab","sternal precautions"],
+  simple:"After a heart attack or bypass surgery, cardiac rehabilitation helps people return to activity safely through supervised exercise, education and lifestyle change. It reduces the chance of dying from heart disease and of going back to hospital.",
+  flow:["MI, angioplasty or CABG","Phase I (in hospital): early mobilisation, breathing, education","Phase II (outpatient, 6-12 weeks): supervised exercise","Monitor HR, BP, RPE, symptoms","Phase III/IV: long-term maintenance","Risk factor control: smoking, BP, diabetes, diet, stress"],
+  exam:[
+    {h:"Definition", p:["A coordinated programme of exercise, education and psychological support to help people with heart disease recover and reduce future risk."]},
+    {h:"Phases", p:["Phase I: inpatient, sitting, standing, walking, stairs before discharge; 1-2 METs to about 3-4 METs.","Phase II: outpatient supervised exercise 2-3 times a week for 6-12 weeks.","Phase III/IV: community and lifelong maintenance."]},
+    {h:"Exercise prescription", p:["Aerobic: 3-5 days a week, moderate intensity (40-80% HR reserve or RPE 11-14), 20-60 minutes with warm-up and cool-down.","Resistance training 2-3 days a week once stable.","After CABG: sternal precautions about 6-8 weeks (avoid heavy pushing, pulling or lifting with arms), breathing exercises and supported cough."]},
+    {h:"Stop exercise if", p:["Chest pain, severe breathlessness, dizziness, drop in systolic BP over 10 mmHg with increasing load, new arrhythmia, SpO2 drop."]},
+    {h:"Conclusion", p:["Cardiac rehab reduces cardiovascular mortality and readmission and improves quality of life."]}
+  ],
+  tip:"Draw a 4-phase timeline. Add FITT and a list of stop criteria in a box.",
+  evidence:[["Exercise-based cardiac rehab","Reduces cardiovascular death and admissions","High"],["Home-based programmes","Similar to centre-based","Moderate"],["Resistance training","Safe and improves strength","Moderate"]],
+  evidenceSource:"Cochrane review (Dibben et al., 2021) and ACSM guidelines",
+  outcomes:[["6-minute walk test","Functional capacity"],["Peak VO2 / METs","Fitness"],["HADS","Anxiety and depression"],["MacNew questionnaire","Quality of life"]],
+  recent:["Dibben et al. (Cochrane 2021) confirmed reduced cardiovascular mortality and hospital admissions with exercise-based cardiac rehab."],
+  mnemonic:{word:"Talk test", items:[["Can talk","Moderate intensity: correct"],["Can sing","Too easy"],["Cannot speak","Too hard"]], extra:"RPE 11-14 on the Borg 6-20 scale."},
+  example:"A 55-year-old man, 5 days after CABG, is walking 100 m on the ward. HR rises from 80 to 98 with RPE 12, and he has sternal pain on coughing.",
+  flags:["Chest pain at rest or unstable angina","Sternal click or wound discharge (sternal instability or infection)","Resting HR over about 120, uncontrolled BP, new arrhythmia"],
+  viva:[["What is a MET?","Energy cost at rest, about 3.5 ml O2/kg/min."],["What are sternal precautions?","Avoid heavy lifting, pushing or pulling with the arms for about 6-8 weeks after median sternotomy."],["Why use RPE in patients on beta-blockers?","Beta-blockers blunt heart rate response, so HR targets are less reliable."]],
+  refs:[{b:"acsm",ch:"Cardiac rehabilitation"},{b:"irwin",ch:"Cardiac rehabilitation"},{b:"frownfelter",ch:"Cardiac surgery"},{b:"ehrman",ch:"Myocardial infarction"},{c:"Dibben G, et al. Exercise-based cardiac rehabilitation for coronary heart disease. Cochrane Database Syst Rev. 2021;CD001800.", q:"Dibben exercise-based cardiac rehabilitation coronary heart disease Cochrane 2021"}],
+  keywords:"cardiac rehabilitation exercise",
+  mcq:[["Target RPE (Borg 6-20) in cardiac rehab:",["6-8","11-14","17-19","20"],1,"Moderate intensity."],["Sternal precautions mainly limit:",["Walking","Heavy arm lifting, pushing, pulling","Breathing exercises","Leg exercises"],1,"Protects healing sternum."]]
+},
+{
+  id:"airway-clearance", title:"Airway clearance techniques", subject:"Cardio-respiratory", region:"Lungs",
+  aliases:["ACBT","postural drainage","huffing","chest physiotherapy","bronchiectasis","sputum clearance","PEP"],
+  simple:"When the lungs make too much mucus, as in bronchiectasis or cystic fibrosis, special breathing techniques help move it up and out. The active cycle of breathing technique, positions, devices and huffing make coughing more effective and less tiring.",
+  flow:["Excess or retained secretions","Assess: auscultation, sputum, X-ray, cough strength","Choose technique: ACBT, autogenic drainage, PEP, oscillating PEP","Gravity-assisted positions if tolerated","Huff and cough to clear","Daily routine, hydration, exercise"],
+  exam:[
+    {h:"Indications", p:["Bronchiectasis, cystic fibrosis, COPD with sputum, post-operative retained secretions, neuromuscular weakness with weak cough."]},
+    {h:"Active cycle of breathing technique (ACBT)", p:["Breathing control (relaxed tidal breathing).","Thoracic expansion exercises (deep breaths, may add hold or percussion).","Forced expiration technique (huffs from low to high lung volume), then cough."]},
+    {h:"Other techniques", p:["Gravity-assisted drainage positions based on affected lobe.","Autogenic drainage, PEP mask, oscillating PEP (flutter, acapella).","Manual techniques: percussion and vibration.","Assisted cough and cough assist devices for neuromuscular patients."]},
+    {h:"Contraindications and precautions", p:["Head-down tilt: avoid with raised ICP, recent haemoptysis, reflux, heart failure, recent eye or brain surgery.","Percussion: avoid over fractures, osteoporosis, bleeding disorders, unstable patients."]},
+    {h:"Conclusion", p:["Choose a technique the patient can do independently every day; ACBT is simple and effective."]}
+  ],
+  tip:"Draw the ACBT cycle as a circle: breathing control, thoracic expansion, breathing control, FET.",
+  evidence:[["Airway clearance in bronchiectasis","Improves sputum clearance and quality of life","Moderate"],["No single technique superior","Choose by preference","Moderate"],["Exercise as adjunct","Helps clearance and fitness","Moderate"]],
+  evidenceSource:"BTS guideline for bronchiectasis (Hill et al., 2019) and Cochrane reviews",
+  outcomes:[["Sputum weight or volume","Clearance"],["LCQ (Leicester Cough Questionnaire)","Cough impact"],["Auscultation","Added sounds"]],
+  recent:["BTS bronchiectasis guidelines recommend teaching airway clearance to all patients with chronic productive cough."],
+  mnemonic:{word:"ACBT = B-T-B-F", items:[["B","Breathing control"],["T","Thoracic expansion"],["B","Breathing control"],["F","Forced expiration (huff)"]], extra:"Huff from a medium breath clears middle airways; from a big breath clears upper airways."},
+  example:"A 40-year-old woman with bronchiectasis coughs up a cup of thick sputum each morning. Crackles at the right lower zone.",
+  flags:["Haemoptysis (avoid percussion and head-down positions)","Pneumothorax not drained","Unstable cardiovascular status"],
+  viva:[["What is a huff?","A forced expiration with an open glottis, moving secretions up the airways."],["Position for right lower lobe posterior segment drainage?","Prone, with foot of bed raised (head down) if tolerated."],["Name a contraindication to head-down tilt.","Raised intracranial pressure."]],
+  refs:[{b:"frownfelter",ch:"Airway clearance"},{b:"irwin",ch:"Airway clearance techniques"},{b:"cashMed",ch:"Chest physiotherapy"},{c:"Hill AT, et al. British Thoracic Society guideline for bronchiectasis in adults. Thorax. 2019;74(Suppl 1):1-69.", q:"British Thoracic Society guideline bronchiectasis adults 2019"}],
+  keywords:"airway clearance bronchiectasis",
+  mcq:[["Last component of ACBT:",["Thoracic expansion","Forced expiration technique","Incentive spirometry","Percussion"],1,"Huffing then coughing."],["Head-down tilt is avoided in:",["Bronchiectasis","Raised intracranial pressure","Healthy athletes","Asthma at rest"],1,"Can raise ICP further."]]
+},
+{
+  id:"postop-chest", title:"Post-operative chest physiotherapy (abdominal and thoracic surgery)", subject:"Cardio-respiratory", region:"Lungs",
+  aliases:["post-operative pulmonary complications","atelectasis","incentive spirometry","thoracotomy","upper abdominal surgery"],
+  simple:"After chest or upper abdominal surgery, pain, anaesthesia and lying in bed make people breathe shallowly, so parts of the lungs collapse and secretions collect. Getting up early, deep breathing and effective coughing prevent chest complications.",
+  flow:["Anaesthesia, pain, supine position","Reduced lung volumes (FRC), weak cough","Atelectasis, retained secretions, pneumonia","Pre-op education and inspiratory training","Early mobilisation, deep breathing, supported cough","Shoulder exercise after thoracotomy, progress walking"],
+  exam:[
+    {h:"Post-operative pulmonary complications", p:["Atelectasis, retained secretions, pneumonia, respiratory failure.","Risk: upper abdominal or thoracic incision, smoking, COPD, obesity, age, long anaesthesia."]},
+    {h:"Pre-operative physiotherapy", p:["Education about early mobilisation, deep breathing and supported coughing; inspiratory muscle training for high-risk patients."]},
+    {h:"Post-operative physiotherapy", p:["Early mobilisation (sit out and walk on day 0-1): the most important intervention.","Deep breathing with inspiratory hold, thoracic expansion, incentive spirometry if useful.","Supported cough or huff with a pillow over the wound; good pain control.","Positioning (upright sitting); shoulder ROM after thoracotomy; leg exercises."]},
+    {h:"Assessment", p:["Pain, SpO2, respiratory rate, auscultation, cough, chest X-ray, mobility."]},
+    {h:"Conclusion", p:["Pre-operative education and early mobilisation reduce pulmonary complications."]}
+  ],
+  tip:"Draw the lung volumes graph showing FRC reduced after surgery. List interventions with 'mobilise' at the top.",
+  evidence:[["Pre-op education and breathing training (LIPPSMAck-POP)","Halved pulmonary complications after upper abdominal surgery","High"],["Early mobilisation","Reduces complications and stay","Moderate"],["Incentive spirometry alone","Little added benefit","Low"]],
+  evidenceSource:"Boden et al. BMJ 2018 (LIPPSMAck-POP)",
+  outcomes:[["SpO2 and respiratory rate","Gas exchange"],["Melbourne Group Score","Post-operative pulmonary complication"],["Mobility milestones","Recovery"]],
+  recent:["LIPPSMAck-POP (Boden et al., BMJ 2018): a single 30-minute pre-operative physiotherapy session halved post-operative pulmonary complications."],
+  mnemonic:{word:"MOVE", items:[["M","Mobilise early"],["O","Optimise pain relief"],["V","Volume: deep breaths"],["E","Expectorate: supported cough"]], extra:"Mobilisation is the best lung expansion technique."},
+  example:"A 58-year-old smoker is day 1 after open cholecystectomy. Breathing is shallow because of pain, SpO2 92% on room air, reduced breath sounds at both bases.",
+  flags:["Sudden breathlessness and chest pain (pulmonary embolism)","Falling SpO2 despite treatment, rising temperature (pneumonia)","Wound dehiscence"],
+  viva:[["Why does FRC fall after surgery?","Anaesthesia, supine posture, pain and diaphragm dysfunction."],["Best single intervention to prevent PPCs?","Early mobilisation with education."],["How to support a cough?","Press a folded pillow or towel over the incision during the cough."]],
+  refs:[{b:"frownfelter",ch:"Surgery and the pulmonary system"},{b:"cashMed",ch:"Abdominal and thoracic surgery"},{b:"irwin",ch:"Acute care"},{c:"Boden I, et al. Preoperative physiotherapy for the prevention of respiratory complications after upper abdominal surgery. BMJ. 2018;360:j5916.", q:"Boden preoperative physiotherapy respiratory complications BMJ 2018"}],
+  keywords:"postoperative pulmonary complications physiotherapy",
+  mcq:[["Most important intervention to prevent PPCs:",["Bed rest","Early mobilisation","Percussion","Head-down tilt"],1,"Mobilisation expands the lungs."],["Lung volume reduced after upper abdominal surgery:",["Residual volume increases only","Functional residual capacity","Dead space only","Tidal volume increases"],1,"FRC falls, causing atelectasis."]]
+},
+{
+  id:"falls", title:"Falls prevention in older adults", subject:"Geriatrics", region:"Whole body",
+  aliases:["falls","fall risk","Otago","balance in elderly","geriatric","fear of falling"],
+  simple:"Falls are a main cause of injury and loss of independence in older people. Most have several causes: weak legs, poor balance, medicines, poor vision and home hazards. Balance and strength exercise, done often and for long enough, prevents falls.",
+  flow:["Ask about falls; screen with gait and balance test","Multifactorial assessment: strength, balance, vision, medicines, home, feet, BP","Exercise: balance and functional strength at least 3 h/week","Home hazard modification, footwear","Teach how to get up from the floor","Review regularly; address fear of falling"],
+  exam:[
+    {h:"Risk factors", p:["Intrinsic: muscle weakness, balance and gait disorders, previous falls, cognitive impairment, poor vision, postural hypotension, incontinence, multiple medicines (especially sedatives).","Extrinsic: poor lighting, loose rugs, slippery floors, unsafe footwear, no grab rails."]},
+    {h:"Assessment", p:["Timed Up and Go (12 seconds or more suggests risk), Berg Balance Scale, 30-second chair stand, 4-stage balance test, gait speed.","Falls Efficacy Scale-International (fear of falling)."]},
+    {h:"Physiotherapy management", p:["Balance training that challenges stability (narrow base, stepping, weight shifts), functional strengthening (sit-to-stand, step-ups), progressive and ongoing.","Otago Exercise Programme or tai chi; at least 3 hours a week.","Teach backward chaining to get up from the floor, use of walking aids.","Home safety advice; refer for vision, medicine review and footwear."]},
+    {h:"Conclusion", p:["Exercise with balance as a main component reduces falls by about a quarter; multifactorial programmes help high-risk people."]}
+  ],
+  tip:"Draw a pie of intrinsic and extrinsic risk factors. Include a cut-off table for outcome measures.",
+  evidence:[["Balance and functional exercise","Reduces rate of falls by about 24%","High"],["Tai chi","Reduces falls","Moderate"],["Home hazard modification","Reduces falls in high-risk people","Moderate"]],
+  evidenceSource:"Sherrington et al. Cochrane 2019 and World Falls Guidelines (Montero-Odasso et al., 2022)",
+  outcomes:[["Timed Up and Go","Mobility and falls risk"],["Berg Balance Scale","Balance (under 45 suggests risk)"],["FES-I","Fear of falling"],["30-second chair stand","Leg strength"]],
+  recent:["World Falls Guidelines (Age Ageing 2022) recommend stratifying risk and offering progressive balance and strength exercise to all at risk."],
+  mnemonic:{word:"I HATE FALLING", items:[["I","Inflammation of joints"],["H","Hypotension (postural)"],["A","Auditory and visual problems"],["T","Tremor (Parkinson's)"],["E","Equilibrium problems"],["F","Foot problems"],["A","Arrhythmia"],["L","Leg length or weakness"],["L","Lack of conditioning"],["I","Illness"],["N","Nutrition poor"],["G","Gait disturbance"]], extra:"Otago: strength, balance and walking, 3 times a week."},
+  example:"An 80-year-old widow living alone has fallen twice in 6 months. TUG is 18 seconds, she takes a sleeping tablet and her bathroom has no rail.",
+  flags:["Fall with loss of consciousness or new neurology","Long lie on the floor (rhabdomyolysis, pressure areas)","Unexplained repeated falls (cardiac cause)"],
+  viva:[["What TUG time suggests falls risk?","12 seconds or more (community-dwelling older adults)."],["How much exercise prevents falls?","Balance and strength exercise for at least 3 hours a week, ongoing."],["What is backward chaining?","Teaching getting up from the floor step by step, starting from the final step."]],
+  refs:[{b:"shumway",ch:"Aging and postural control"},{b:"osullivan",ch:"Geriatric rehabilitation"},{b:"acsm",ch:"Older adults"},{c:"Montero-Odasso M, et al. World guidelines for falls prevention and management for older adults. Age Ageing. 2022;51(9):afac205.", q:"World guidelines falls prevention older adults 2022"}],
+  keywords:"falls prevention exercise older adults",
+  mcq:[["TUG cut-off for falls risk in community elderly:",["5 s","12 s or more","2 s","30 s only"],1,"12 seconds or more."],["Exercise component most important for falls prevention:",["Stretching only","Balance training","Upper limb only","Ultrasound"],1,"Balance challenge is essential."]]
+}
+]);
