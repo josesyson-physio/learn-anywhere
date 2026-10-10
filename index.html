@@ -18,6 +18,11 @@
 <script src="library/cardio.js"></script>
 <script src="library/principles.js"></script>
 <script src="library/syllabus.js"></script>
+<script src="library/mgr-electro.js"></script>
+<script src="library/mgr-exercise.js"></script>
+<script src="library/mgr-ortho.js"></script>
+<script src="library/mgr-neuro-cardio.js"></script>
+<script src="library/mgr-map.js"></script>
 <style>
 :root{color-scheme:light}
 body{margin:0;padding-top:env(safe-area-inset-top,0px)}
@@ -170,7 +175,8 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
 .refs li{margin:5px 0;overflow-wrap:anywhere}
 .related{margin-top:14px}.related h3{margin:0 0 8px;font-size:1rem}
 .lib-tools{display:flex;gap:8px;flex-wrap:wrap}.lib-tools input{flex:1 1 200px}.lib-tools select{flex:0 1 200px}
-.shelf{margin-top:18px}.sylrow{margin:10px 0 14px}.sylrow h4{margin:0}.sylrow p{margin:2px 0 6px}.suggest button b{color:var(--primary);margin-left:4px}.shelf summary{cursor:pointer;font-weight:600}.shelf h4{margin:14px 0 4px}
+.shelf{margin-top:18px}
+.mgrsub{border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin:8px 0;background:var(--surface)}.mgrsub summary{display:flex;justify-content:space-between;gap:10px;cursor:pointer;font-weight:600}.mgrsub h5{margin:12px 0 4px;font:700 .74rem var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}.mgrlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}.mgrlist button{all:unset;cursor:pointer;color:var(--primary);font-weight:600;display:block;padding:3px 0}.mgrlist button::before{content:"\2713  ";color:var(--mint)}.mgrlist button:focus-visible{outline:2px solid var(--primary)}.mgrlist .todo{color:var(--muted);padding:3px 0}.mgrlist .todo::before{content:"\25CB  "}#mgrYears{margin:8px 0}.sylrow{margin:10px 0 14px}.sylrow h4{margin:0}.sylrow p{margin:2px 0 6px}.suggest button b{color:var(--primary);margin-left:4px}.shelf summary{cursor:pointer;font-weight:600}.shelf h4{margin:14px 0 4px}
 .actions{display:flex;flex-wrap:wrap;gap:8px;padding:14px 18px;background:var(--sunk);border-top:1px solid var(--line)}
 .reexplain{white-space:pre-wrap;background:var(--bg);border-radius:10px;padding:12px;font-size:.96rem;overflow-x:auto}
 
@@ -394,6 +400,11 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
       <div><h2>Library</h2><p class="small">Ready answers that work without internet, written from standard physiotherapy textbooks and guidelines. <span id="libCount"></span></p></div>
       <button class="ghost" id="libPdf" type="button" hidden>Download library as PDF</button>
     </div>
+    <details class="shelf" id="mgrMap"><summary>Dr. MGR Medical University: BPT syllabus, topic by topic</summary>
+      <p class="small" id="mgrMeta"></p>
+      <div class="seg" id="mgrYears" role="group" aria-label="Year"></div>
+      <div id="mgrBody"></div>
+    </details>
     <details class="shelf" id="sylMap"><summary>Syllabus map: BPT and MPT</summary>
       <p class="small">Common subjects across Indian universities. Tap a subject to see its topics. Always check your own university's syllabus for your batch.</p>
       <div id="sylStages"></div>
@@ -1036,6 +1047,22 @@ function renderShelf(){
 }
 $("#libSearch").addEventListener("input", renderLib);
 $("#libSubject").addEventListener("change", renderLib);
+/* Dr. MGR syllabus, topic by topic */
+let mgrYear = "I";
+function renderMgr(){
+  const M = window.MGR_BPT; if (!M) { $("#mgrMap").hidden = true; return; }
+  const ids = new Set(LIB.map(t => t.id)), ok = id => id && ids.has(id);
+  const all = M.years.flatMap(y => y.s.flatMap(s => s.u.flatMap(u => u.k)));
+  $("#mgrMeta").textContent = `${M.regulation} regulations (revised January 2022). ${all.filter(k => ok(k[1])).length} of ${all.length} syllabus topics have a ready answer. Exam pattern: ${M.pattern}`;
+  $("#mgrYears").innerHTML = M.years.map(y => `<button type="button" data-y="${esc(y.y)}" aria-pressed="${y.y === mgrYear}">Year ${esc(y.y)}</button>`).join("");
+  const y = M.years.find(x => x.y === mgrYear) || M.years[0];
+  $("#mgrBody").innerHTML = y.s.map(s => {
+    const ks = s.u.flatMap(u => u.k), n = ks.filter(k => ok(k[1])).length;
+    return `<details class="mgrsub"><summary><span>${esc(s.n)}</span><span class="small">${s.e ? "" : "Not examined · "}${n}/${ks.length} ready</span></summary>${s.u.length ? s.u.map(u => `<h5>${esc(u.t)}</h5><ul class="mgrlist">${u.k.map(([t, id]) => ok(id) ? `<li><button type="button" data-open-lib="${esc(id)}">${esc(t)}</button></li>` : `<li class="todo">${esc(t)}</li>`).join("")}</ul>`).join("") : `<p class="small">No detailed syllabus in the regulations.</p>`}</details>`;
+  }).join("");
+}
+$("#mgrYears").addEventListener("click", e => { const b = e.target.closest("[data-y]"); if (!b) return; mgrYear = b.dataset.y; renderMgr(); });
+$("#mgrBody").addEventListener("click", e => { const b = e.target.closest("[data-open-lib]"); if (!b) return; const it = allItems().find(x => x.id === b.dataset.openLib); if (!it) return; $("#libAnswer").replaceChildren(renderAnswer({...it, uni: "Tamil Nadu Dr. M.G.R. Medical University"}, {})); $("#libAnswer").scrollIntoView({ behavior: "smooth", block: "start" }); });
 $("#sylStages").addEventListener("click", e => { const b = e.target.closest("[data-sub]"); if (!b) return; $("#libSearch").value = ""; $("#libSubject").value = b.dataset.sub; renderLib(); $("#libCards").scrollIntoView({ behavior: "smooth", block: "start" }); });
 $("#libCards").addEventListener("click", e => {
   const c = e.target.closest(".card"); if (!c) return;
@@ -1078,7 +1105,7 @@ document.querySelector("nav.tabs").addEventListener("click", e => { const b = e.
 
 function showExample(){ $("#answer").replaceChildren(renderAnswer({...LIB[0], uni:"MUHS (Maharashtra)", qtype:"Long essay"}, { badge: "Example answer" })); }
 $("#q").value = "Physiotherapy management of frozen shoulder";
-renderSubjects(); showExample(); renderShelf(); renderLib(); newRound(); renderQuiz();
+renderSubjects(); showExample(); renderShelf(); renderMgr(); renderLib(); newRound(); renderQuiz();
 try { const t = localStorage.getItem("la-tab"); if (views.includes(t)) show(t); } catch {}
 
 (async () => {
