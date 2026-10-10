@@ -1,7 +1,7 @@
 // PG Diploma in Early Intervention, Paper II Child Development. Written in Learn Anywhere's own words.
 window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
 {
-  id:"growth-development-principles", title:"Growth and development: concepts, principles, stages, tasks and hazards", subject:"Child development", region:"Paper II Child Development", stages:"steps",
+  id:"growth-development-principles", title:"Growth and development: concepts, principles, stages, tasks and hazards", subject:"Early Intervention: Child development", region:"Paper II Child Development", stages:"steps",
   aliases:["principles of development","laws of development","cephalocaudal proximodistal","developmental tasks Havighurst","nature and nurture","factors affecting development","developmental hazards"],
   simple:"Growth is the increase in body size that we can measure, such as weight and height. Development is the gain in skills and abilities, such as walking, talking and making friends. Development follows predictable rules and is shaped by both the genes a child is born with and the care and surroundings the child grows up in.",
   flow:["Growth: measurable increase in size (quantitative)","Development: progressive gain in function and skill (qualitative)","Follows laws: cephalocaudal, proximodistal, general to specific","Unfolds in stages, each with expected developmental tasks","Shaped by heredity and environment acting together","Hazards spotted early allow timely early intervention"],
@@ -27,7 +27,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Head control develops before sitting. This illustrates the:",["Proximodistal law","Cephalocaudal law","Law of individual differences","General to specific law"],1,"Control spreads from head downward."],["Developmental tasks were described by:",["Piaget","Havighurst","Bowlby","Parten"],1,"Havighurst linked tasks to each life period."]]
 },
 {
-  id:"development-theories", title:"Theories of development: psychoanalytic (Freud, Erikson) and Bronfenbrenner's ecological theory", subject:"Child development", region:"Paper II Child Development", stages:"steps",
+  id:"development-theories", title:"Theories of development: psychoanalytic (Freud, Erikson) and Bronfenbrenner's ecological theory", subject:"Early Intervention: Child development", region:"Paper II Child Development", stages:"steps",
   aliases:["Freud psychosexual stages","Erikson psychosocial stages","psychoanalytic theory","Bronfenbrenner ecological systems","microsystem mesosystem","trust vs mistrust"],
   simple:"Freud believed that early childhood experiences, especially how basic needs are met, shape personality. Erikson said that at each age the child faces a social challenge, such as learning to trust. Bronfenbrenner showed that a child grows inside layers of surroundings, from family to community to culture, and all of them matter.",
   flow:["Freud: id, ego, superego and psychosexual stages","Oral, anal, phallic, latency, genital stages","Erikson: eight psychosocial crises across the lifespan","Trust, autonomy and initiative crises fall in early childhood","Bronfenbrenner: micro, meso, exo, macro and chronosystems","Early intervention works on the child and every system"],
@@ -53,7 +53,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Autonomy vs shame and doubt is seen at about:",["Birth-1 year","1-3 years","3-6 years","6-11 years"],1,"Toddlers want to do things for themselves."],["A parent's workplace policy affecting the child belongs to the:",["Microsystem","Mesosystem","Exosystem","Chronosystem"],2,"The child is not in that setting but is affected by it."]]
 },
 {
-  id:"perceptual-development", title:"Sensory-perceptual development: sensation, perception, attention and memory", subject:"Child development", region:"Paper II Child Development", stages:"steps",
+  id:"perceptual-development", title:"Sensory-perceptual development: sensation, perception, attention and memory", subject:"Early Intervention: Child development", region:"Paper II Child Development", stages:"steps",
   aliases:["sensation and perception","perceptual development in infancy","visual cliff","depth perception","attention in infants","memory development","habituation"],
   simple:"Sensation is picking up light, sound, touch and taste through the sense organs. Perception is the brain making sense of that information, such as knowing a face is mother's face. Babies are born ready to sense and quickly learn to perceive, pay attention and remember.",
   flow:["Sensation: receptors detect stimuli","Perception: brain organises and interprets sensations","Newborn senses work; vision is the least mature","Depth, face and speech perception develop in first year","Attention and memory grow from habituation to recall","Rich multisensory play supports perceptual growth"],
@@ -79,7 +79,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["The visual cliff experiment studied:",["Colour vision","Depth perception","Hearing","Object permanence"],1,"Gibson and Walk, 1960."],["Reduced response to a repeated stimulus is called:",["Sensitisation","Habituation","Accommodation","Assimilation"],1,"It shows recognition memory."]]
 },
 {
-  id:"motor-development", title:"Motor development: principles, sequence, motor skills and handedness", subject:"Child development", region:"Paper II Child Development", stages:"steps",
+  id:"motor-development", title:"Motor development: principles, sequence, motor skills and handedness", subject:"Early Intervention: Child development", region:"Paper II Child Development", stages:"steps",
   aliases:["gross motor development","fine motor development","sequence of motor development","prehension","handedness","hand dominance"],
   simple:"Motor development is how a baby gains control of body movement, from lifting the head to running and drawing. It follows the same order in almost all children, though timing varies. Hand preference settles in the preschool years.",
   flow:["Reflex movements give way to voluntary control","Head control, rolling, sitting, crawling, standing, walking","Grasp moves from palmar to pincer","Gross skills refine into running, jumping, hopping","Hand preference emerges and stabilises by 4-6 years","Practice in play strengthens every motor skill"],
@@ -105,7 +105,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["A child normally copies a circle at about:",["18 months","3 years","5 years","6 years"],1,"Cross at 4, square about 4-5, triangle 5."],["Clear hand preference at 8 months suggests:",["Gifted motor skill","Possible weakness of the other hand","Normal left-handedness","Visual impairment"],1,"Early handedness is a red flag for hemiplegia or plexus injury."]]
 },
 {
-  id:"cognitive-development", title:"Cognitive development: Piaget, Vygotsky and information processing", subject:"Child development", region:"Paper II Child Development", stages:"steps",
+  id:"cognitive-development", title:"Cognitive development: Piaget, Vygotsky and information processing", subject:"Early Intervention: Child development", region:"Paper II Child Development", stages:"steps",
   aliases:["Piaget stages","sensorimotor stage","object permanence","Vygotsky ZPD","scaffolding","information processing","cognition and language"],
   simple:"Cognition means thinking, understanding, remembering and problem solving. Piaget said children build knowledge by exploring, passing through stages. Vygotsky said children learn best with help from a more skilled person, just beyond what they can do alone.",
   flow:["Cognition: thinking, reasoning, memory, problem solving","Piaget: schemas adapt by assimilation and accommodation","Sensorimotor, preoperational, concrete, formal operational stages","Vygotsky: social learning, ZPD and scaffolding","Information processing: attention, memory, speed, strategies","Play and talk at home build cognition and language"],
@@ -131,7 +131,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Object permanence develops in which Piagetian stage?",["Sensorimotor","Preoperational","Concrete operational","Formal operational"],0,"It emerges in the second half of the first year."],["Adult help that is gradually withdrawn is called:",["Assimilation","Scaffolding","Centration","Habituation"],1,"A Vygotskian idea."]]
 },
 {
-  id:"social-development", title:"Social development and socialization", subject:"Child development", region:"Paper II Child Development", stages:"steps",
+  id:"social-development", title:"Social development and socialization", subject:"Early Intervention: Child development", region:"Paper II Child Development", stages:"steps",
   aliases:["socialization","agents of socialization","social smile","stranger anxiety","peer relations","social behaviour patterns"],
   simple:"Social development is how a child learns to get along with other people and follow the ways of the family and community. It starts with the baby's first smile and grows through play with family, friends and school. Parents, siblings, peers, school, media and culture all teach the child how to behave.",
   flow:["Infant responds to faces and smiles socially","Stranger anxiety and attachment by 6-9 months","Toddler imitates, plays alongside other children","Preschooler shares, cooperates, follows rules","Agents: family, peers, school, media, culture","Interventionist builds social skills in daily routines"],
@@ -156,7 +156,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["The social smile usually appears at about:",["Birth","6-8 weeks","6 months","1 year"],1,"An early social milestone."],["The most important agent of primary socialization is:",["School","Media","Family","Peers"],2,"The family teaches the first social rules."]]
 },
 {
-  id:"emotional-development", title:"Emotional development: components, patterns, theories and emotional deprivation", subject:"Child development", region:"Paper II Child Development", stages:"steps",
+  id:"emotional-development", title:"Emotional development: components, patterns, theories and emotional deprivation", subject:"Early Intervention: Child development", region:"Paper II Child Development", stages:"steps",
   aliases:["components of emotion","common emotional patterns","James-Lange theory","Cannon-Bard theory","emotional deprivation","temper tantrums"],
   simple:"An emotion is a feeling such as joy, fear or anger, with body changes and an urge to act. Babies show basic emotions early and learn more complex ones like shame and pride by 2-3 years. Children who do not get love and attention can suffer emotional deprivation, which harms growth and learning.",
   flow:["Emotion: feeling, body change, expression, action","Basic emotions early; self-conscious emotions by 2-3 years","Common patterns: fear, anger, joy, jealousy, affection","James-Lange: body change comes before feeling","Cannon-Bard: body change and feeling occur together","Deprivation of love harms growth, language and behaviour"],
@@ -182,7 +182,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["According to Cannon-Bard theory, emotional feeling and bodily arousal:",["Occur together","Body change comes first","Feeling comes first","Are both caused by the cortex alone"],0,"The thalamus signals both simultaneously."],["Self-conscious emotions such as shame appear at about:",["Birth","3 months","18-36 months","6 years"],2,"They need self-awareness."]]
 },
 {
-  id:"attachment-parenting", title:"Attachment, bonding, family influences and parenting styles", subject:"Child development", region:"Paper II Child Development", stages:"steps",
+  id:"attachment-parenting", title:"Attachment, bonding, family influences and parenting styles", subject:"Early Intervention: Child development", region:"Paper II Child Development", stages:"steps",
   aliases:["Bowlby attachment","Ainsworth strange situation","mother-infant interaction","Baumrind parenting styles","child rearing practices","sibling relationships","parental attitudes"],
   simple:"Attachment is the strong emotional tie a baby forms with the people who care for it. Babies whose caregivers respond warmly and consistently become securely attached and explore with confidence. The way parents bring up a child, how warm and how firm they are, shapes the child's behaviour and development.",
   flow:["Bonding: parent's tie to the newborn","Attachment: infant's tie to caregiver, built over the first year","Ainsworth: secure, avoidant, resistant, disorganized","Family, siblings, home and parental attitudes shape development","Baumrind: authoritative, authoritarian, permissive, uninvolved","Coach responsive, warm and firm parenting"],
@@ -208,7 +208,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["High warmth and high control describes which style?",["Authoritarian","Authoritative","Permissive","Uninvolved"],1,"Associated with best child outcomes."],["An infant who ignores the mother on reunion is classified as:",["Secure","Insecure-avoidant","Resistant","Disorganized"],1,"Avoidant infants show little response to reunion."]]
 },
 {
-  id:"play-development", title:"Play: definition, components, types, stages and influence on development", subject:"Child development", region:"Paper II Child Development", stages:"steps",
+  id:"play-development", title:"Play: definition, components, types, stages and influence on development", subject:"Early Intervention: Child development", region:"Paper II Child Development", stages:"steps",
   aliases:["Parten stages of play","types of play","Piaget play stages","pretend play","play therapy","play in children with disabilities"],
   simple:"Play is any activity a child does for fun, by choice, for its own sake. Through play children move, think, talk, make friends and express feelings. Play changes from playing alone to playing together with rules as the child grows.",
   flow:["Play: voluntary, enjoyable, intrinsically motivated activity","Components: motivation, control, reality suspension, process","Piaget: functional, symbolic, games with rules","Parten: unoccupied, solitary, onlooker, parallel, associative, cooperative","Play builds motor, cognitive, language, social, emotional skills","Adapt toys and play for children with disabilities"],

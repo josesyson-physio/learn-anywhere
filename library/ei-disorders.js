@@ -1,7 +1,7 @@
 // PGDEI Paper I Neurobiology, units IV-V: causes and prevention, developmental disabilities. Written in Learn Anywhere's own words.
 window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
 {
-  id:"risk-factors-dd", title:"Determinants of risk for developmental disabilities", subject:"Neurobiology", region:"Whole child", stages:"steps",
+  id:"risk-factors-dd", title:"Determinants of risk for developmental disabilities", subject:"Early Intervention: Neurobiology", region:"Whole child", stages:"steps",
   aliases:["high risk infant","risk factors","at risk baby","established risk","biological risk","environmental risk","Tjossem"],
   simple:"Some babies are more likely than others to develop a disability because of things that happen before conception, in pregnancy, at birth, after birth or in the home environment. Knowing these risk factors tells us which babies to follow closely and screen early. Risks add up, so a baby with several risks needs the closest watch.",
   flow:["List risks by timing: preconceptual, prenatal, natal, postnatal, psychosocial","Group the child: established, biological or environmental risk","Register high-risk babies at discharge (SNCU, NICU, DEIC)","Screen development at regular visits (TDSC, DASII)","Start early intervention and family support at once","Re-screen; cumulative risks need closer follow-up"],
@@ -27,7 +27,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["A child with Down syndrome is in which risk category?",["Environmental","Biological","Established","Psychosocial"],2,"A diagnosed condition with a known link to delay is established risk."],["Which is a natal risk factor?",["Consanguinity","Birth asphyxia","Maternal rubella","Lead exposure"],1,"Asphyxia occurs during labour and delivery."]]
 },
 {
-  id:"developmental-abnormalities", title:"Developmental abnormalities: structural, biochemical and behavioural", subject:"Neurobiology", region:"Brain and spinal cord", stages:"012344",
+  id:"developmental-abnormalities", title:"Developmental abnormalities: structural, biochemical and behavioural", subject:"Early Intervention: Neurobiology", region:"Brain and spinal cord", stages:"012344",
   aliases:["congenital anomalies","neural tube defect","hydrocephalus","microcephaly","cleft lip palate","inborn errors of metabolism","congenital hypothyroidism"],
   simple:"Some children are born with problems in the structure of the body, such as an open spine or a large head with fluid, or with chemical problems in how the body works, such as a missing thyroid hormone. Others show unusual behaviour. Many of these can be found early and treated or managed so that the child develops as well as possible.",
   flow:["Genes, teratogens, infections, nutrient deficiency in early pregnancy","Faulty formation of brain, spine, face or body chemistry","Visible defect, abnormal head size, poor feeding, delay","Assess: anomaly scan, OFC chart, newborn screening, imaging","Surgery, hormone or diet therapy, early intervention","Lifelong follow-up of development, family support"],
@@ -54,7 +54,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Which neural tube defect involves neural tissue in the sac?",["Spina bifida occulta","Meningocele","Myelomeningocele","Lipoma"],2,"Myelomeningocele contains spinal cord or roots and causes paralysis."],["The preventable biochemical cause of ID found by newborn TSH screening is:",["Phenylketonuria","Congenital hypothyroidism","Galactosaemia","G6PD deficiency"],1,"TSH screening detects congenital hypothyroidism."]]
 },
 {
-  id:"prevention-disability", title:"Prevention of developmental disabilities: levels and periods", subject:"Neurobiology", region:"Community", stages:"steps",
+  id:"prevention-disability", title:"Prevention of developmental disabilities: levels and periods", subject:"Early Intervention: Neurobiology", region:"Community", stages:"steps",
   aliases:["levels of prevention","primary prevention","secondary prevention","tertiary prevention","family planning","genetic guidance","prevention of mental retardation"],
   simple:"Prevention means stopping a disability from happening, finding it early, or reducing its effects. Primary prevention stops the cause (e.g. vaccines, folic acid), secondary prevention finds problems early and treats them, and tertiary prevention reduces the impact through rehabilitation. Each can act before, during or after birth.",
   flow:["Primary: remove the cause (vaccines, folic acid, iodine, safe delivery)","Secondary: detect early (newborn and developmental screening)","Tertiary: limit disability (therapy, aids, inclusion)","Prenatal: antenatal care, nutrition, avoid teratogens","Natal and postnatal: skilled birth, newborn care, nutrition, safety","Family planning and counselling across all stages"],
@@ -80,7 +80,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Newborn screening for congenital hypothyroidism is:",["Primary prevention","Secondary prevention","Tertiary prevention","Primordial prevention"],1,"Early detection and prompt treatment is secondary prevention."],["Rubella vaccination of girls prevents:",["Spina bifida","Congenital rubella syndrome","Fragile X","Kernicterus"],1,"Primary prevention of CRS with deafness, cataract and ID."]]
 },
 {
-  id:"immunization", checked:"Schedule matches the MoHFW National Immunization Schedule (including fIPV-3 at 9-12 months), checked 10 October 2026. Always follow the latest schedule from MoHFW or your state health department.", title:"Immunization: Universal Immunization Programme and prevention of disability", subject:"Neurobiology", region:"Community", stages:"steps",
+  id:"immunization", checked:"Schedule matches the MoHFW National Immunization Schedule (including fIPV-3 at 9-12 months), checked 10 October 2026. Always follow the latest schedule from MoHFW or your state health department.", title:"Immunization: Universal Immunization Programme and prevention of disability", subject:"Early Intervention: Neurobiology", region:"Community", stages:"steps",
   aliases:["UIP","vaccination schedule India","national immunization schedule","cold chain","Mission Indradhanush","vaccines","NIS"],
   simple:"Vaccines teach the body to fight infections before the child meets them. India's Universal Immunization Programme gives free vaccines to every child and pregnant woman. Several of these infections, such as measles, rubella, polio, meningitis and Japanese encephalitis, can leave children with lasting disabilities, so vaccination is also disability prevention.",
   flow:["Birth: BCG, OPV-0, Hepatitis B birth dose","6, 10, 14 weeks: OPV, Pentavalent, Rotavirus; fIPV and PCV at 6 and 14","9-12 months: MR-1, JE-1, PCV booster, fIPV-3, Vitamin A","16-24 months: MR-2, JE-2, DPT and OPV boosters","5-6 years DPT booster; Td at 10 and 16 years","Keep vaccines at 2-8 degrees C through the cold chain"],
@@ -106,7 +106,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Which vaccine is given at 9 months under UIP?",["BCG","MR-1","Td","Rotavirus-1"],1,"Measles-rubella first dose at 9-12 months."],["The VVM shows the vaccine should be discarded when:",["The inner square is lighter than the circle","The inner square matches or is darker than the circle","The vial is cold","The label is faded"],1,"Matching or darker square means cumulative heat damage."]]
 },
 {
-  id:"genetic-counselling", title:"Genetic studies, genetic syndromes and genetic counselling", subject:"Neurobiology", region:"Genetics", stages:"steps",
+  id:"genetic-counselling", title:"Genetic studies, genetic syndromes and genetic counselling", subject:"Early Intervention: Neurobiology", region:"Genetics", stages:"steps",
   aliases:["genetic counseling","Down syndrome","fragile X","chromosomal disorders","prenatal diagnosis","pedigree","inheritance patterns"],
   simple:"Many developmental disabilities have a genetic cause, such as an extra chromosome in Down syndrome. Genetic studies find the cause, and genetic counselling explains it to the family, tells them the chance of it happening again, and helps them make their own choices. A clear diagnosis also guides health checks and early intervention.",
   flow:["Take history and draw a three-generation pedigree","Examine the child for dysmorphic features","Order tests: karyotype, FISH, microarray, DNA tests","Confirm diagnosis and explain the cause simply","Give recurrence risk and options, non-directively","Support, refer to early intervention, follow up"],
@@ -133,7 +133,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Recurrence risk for an autosomal recessive disorder when both parents are carriers:",["50 percent","25 percent","100 percent","10 percent"],1,"Each pregnancy has a 1 in 4 chance."],["Hand-wringing and regression in a girl at 12 months suggest:",["Turner syndrome","Rett syndrome","Klinefelter syndrome","Fragile X"],1,"Rett syndrome, MECP2 mutation."]]
 },
 {
-  id:"childhood-epilepsy", title:"Epilepsy in childhood, febrile seizures, sleep and activity problems", subject:"Neurobiology", region:"Brain", stages:"012344",
+  id:"childhood-epilepsy", title:"Epilepsy in childhood, febrile seizures, sleep and activity problems", subject:"Early Intervention: Neurobiology", region:"Brain", stages:"012344",
   aliases:["seizures","fits","febrile convulsion","West syndrome","infantile spasms","status epilepticus","sleep problems"],
   simple:"Epilepsy means a tendency to have repeated seizures because of abnormal electrical activity in the brain. In young children seizures may come with fever, or as sudden jerks in clusters called infantile spasms, which are an emergency for development. Families need to know seizure first aid, give medicines regularly and keep up play and learning. Sleep problems and very high or very low activity levels are common in children with disabilities and can be helped with routines.",
   flow:["Brain injury, malformation, genetic, infection, metabolic or unknown cause","Abnormal synchronous neuronal firing","Seizure: jerking, stiffening, staring, spasms; fever in febrile seizures","Assess: eyewitness history, video, EEG, MRI, development","Antiseizure medicine, ACTH or steroids for spasms, first aid","Family training, safe play, sleep routines, follow-up"],
@@ -161,7 +161,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Hypsarrhythmia on EEG is typical of:",["Absence epilepsy","West syndrome","Febrile seizure","Rett syndrome"],1,"Chaotic high-voltage background seen with infantile spasms."],["During a tonic-clonic seizure you should:",["Put a spoon in the mouth","Restrain the limbs","Time it and protect the head","Give water"],2,"Nothing in the mouth; protect, time and recover on side."]]
 },
 {
-  id:"autism", title:"Autism spectrum disorder in young children", subject:"Neurobiology", region:"Brain", stages:"012344",
+  id:"autism", title:"Autism spectrum disorder in young children", subject:"Early Intervention: Neurobiology", region:"Brain", stages:"012344",
   aliases:["ASD","autism","pervasive developmental disorder","M-CHAT","ISAA","INDT-ASD","social communication disorder"],
   simple:"Autism is a lifelong difference in brain development that affects how a child communicates, relates to others and plays, often with repetitive behaviours and unusual reactions to sounds, touch or sights. Signs usually show by 1-2 years. Early, play-based intervention where parents learn to join the child's interests helps communication and social skills.",
   flow:["Genetic and prenatal factors shape early brain development","Atypical social attention, communication and sensory processing","Poor eye contact, no pointing, delayed speech, repetitive play","Screen with M-CHAT-R/F; diagnose with DSM-5, INDT-ASD; ISAA","Early parent-mediated intervention: ESDM, JASPER, PACT","Speech, OT, preschool inclusion and family support"],
@@ -188,7 +188,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["M-CHAT-R/F score indicating high risk:",["0-2","3-7","8-20","Any score above 1"],2,"8-20 is high risk; refer directly for diagnosis."],["Which is NOT a DSM-5 domain B feature?",["Insistence on sameness","Sensory hyper-reactivity","Deficits in nonverbal communication","Restricted intense interests"],2,"Nonverbal communication belongs to domain A."]]
 },
 {
-  id:"adhd", title:"Attention deficit hyperactivity disorder in young children", subject:"Neurobiology", region:"Brain", stages:"012344",
+  id:"adhd", title:"Attention deficit hyperactivity disorder in young children", subject:"Early Intervention: Neurobiology", region:"Brain", stages:"012344",
   aliases:["ADHD","hyperactivity","hyperkinetic disorder","attention deficit","inattention","behavioural parent training","impulsivity"],
   simple:"ADHD is a brain-based condition where a child is much more inattentive, overactive or impulsive than other children of the same age, at home and at school. In preschoolers it is hard to tell from normal liveliness, so careful assessment is needed. Parent training in behaviour management is the first treatment for young children.",
   flow:["Genetic and prenatal factors (preterm birth, alcohol, smoking)","Weak frontal-striatal control of attention and inhibition","Inattention, hyperactivity, impulsivity in two or more settings","Assess: DSM-5 criteria, rating scales, rule out hearing, sleep, ID","Parent training, classroom strategies; medicine if severe","Monitor behaviour, learning, safety and family stress"],
@@ -215,7 +215,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Minimum duration of symptoms for ADHD diagnosis:",["1 month","3 months","6 months","12 months"],2,"Symptoms must persist for at least 6 months."],["First-line treatment for a 4-year-old with ADHD:",["Methylphenidate","Parent training in behaviour management","Sugar-free diet","Sensory integration"],1,"AAP 2019 recommends PTBM first for preschoolers."]]
 },
 {
-  id:"intellectual-disability", title:"Intellectual disability (mental retardation)", subject:"Neurobiology", region:"Brain", stages:"012344",
+  id:"intellectual-disability", title:"Intellectual disability (mental retardation)", subject:"Early Intervention: Neurobiology", region:"Brain", stages:"012344",
   aliases:["mental retardation","MR","intellectual developmental disorder","global developmental delay","slow learner","IQ","behaviour modification"],
   simple:"Intellectual disability means a child learns, reasons and solves problems much more slowly than others and needs help with everyday skills like self-care, communication and social behaviour, starting in childhood. Under 5 years it is usually called global developmental delay. Early stimulation, step-by-step teaching and good family support help the child reach his or her best.",
   flow:["Genetic, prenatal, perinatal, postnatal and environmental causes","Limited intellectual and adaptive functioning from early childhood","Delayed milestones, slow learning, poor self-help, behaviour problems","Assess: IQ or DQ, adaptive behaviour, cause, hearing and vision","Early stimulation, task-analysed teaching, behaviour modification","Inclusive school, certification, family training and support"],
@@ -242,7 +242,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["In ICD-10, an IQ of 42 is:",["Mild","Moderate","Severe","Profound"],1,"Moderate is 35-49."],["Rewarding small successive approximations of a target behaviour is:",["Chaining","Shaping","Extinction","Time-out"],1,"Shaping reinforces closer and closer approximations."]]
 },
 {
-  id:"multiple-disabilities", title:"Multiple disabilities and deafblindness", subject:"Neurobiology", region:"Whole child", stages:"012344",
+  id:"multiple-disabilities", title:"Multiple disabilities and deafblindness", subject:"Early Intervention: Neurobiology", region:"Whole child", stages:"012344",
   aliases:["multiple handicaps","deafblind","MDVI","cerebral palsy with intellectual disability","transdisciplinary approach","dual sensory impairment","CHARGE"],
   simple:"A child with multiple disabilities has two or more disabilities together, such as cerebral palsy with intellectual disability, or loss of both hearing and vision (deafblindness). The disabilities multiply each other's effects, so the child needs a single team plan built around the family. Touch, routine and special communication methods help these children learn.",
   flow:["Congenital rubella, CMV, prematurity, asphyxia, genetic syndromes (CHARGE)","Damage to several systems: motor, cognitive, vision, hearing","Delays in movement, communication, learning, feeding","Functional vision, hearing, motor and communication assessment","Transdisciplinary team, one primary interventionist, home routines","Communication systems, aids, inclusion and family support"],

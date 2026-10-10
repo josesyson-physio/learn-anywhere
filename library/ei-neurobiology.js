@@ -1,7 +1,7 @@
 // PGDEI Paper I Neurobiology, units I-III (anatomy, senses, growth, nutrition, newborn, plasticity, screening). Written in Learn Anywhere's own words.
 window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
 {
-  id:"cns-anatomy", title:"Gross anatomy and functions of the nervous system (CNS, PNS, ANS)", subject:"Neurobiology", region:"Nervous system", stages:"steps",
+  id:"cns-anatomy", title:"Gross anatomy and functions of the nervous system (CNS, PNS, ANS)", subject:"Early Intervention: Neurobiology", region:"Nervous system", stages:"steps",
   aliases:["CNS anatomy","lobes of brain","basal ganglia","cerebellum","brainstem","reflex arc","autonomic nervous system"],
   simple:"The nervous system has a central part (brain and spinal cord) and a peripheral part (cranial and spinal nerves). Each brain region has typical jobs: the frontal lobe plans movement and behaviour, the cerebellum smooths movement, the brainstem keeps us breathing and awake. Knowing where a part lies helps us understand why a baby with damage there shows particular delays.",
   flow:["Divide: CNS (brain, spinal cord) and PNS (cranial, spinal nerves)","Cerebrum: four lobes, basal ganglia, limbic system","Cerebellum and brainstem: midbrain, pons, medulla","Spinal cord: grey and white matter, reflex arc","Ascending sensory and descending motor pathways","ANS: sympathetic and parasympathetic control of organs"],
@@ -28,7 +28,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Broca's area lies in the:",["Temporal lobe","Frontal lobe","Occipital lobe","Parietal lobe"],1,"Broca's area in the inferior frontal gyrus controls speech production."],["Damage to the basal ganglia in kernicterus typically causes:",["Ataxic CP","Dyskinetic CP","Spastic diplegia","Flaccid paralysis"],1,"Bilirubin deposits in the globus pallidus and subthalamic nucleus give dyskinetic movements."]]
 },
 {
-  id:"neuron-synapse", title:"Neuron, neuroglia, synapse and neurotransmission", subject:"Neurobiology", region:"Nervous system", stages:"steps",
+  id:"neuron-synapse", title:"Neuron, neuroglia, synapse and neurotransmission", subject:"Early Intervention: Neurobiology", region:"Nervous system", stages:"steps",
   aliases:["neuron structure","neuroglia","synapse","action potential","nerve impulse","neurotransmitters","myelin"],
   simple:"A neuron is a nerve cell with a cell body, branches called dendrites that receive signals, and a long axon that sends them. Signals travel along the axon as an electrical wave and pass to the next cell across a tiny gap, the synapse, using chemicals called neurotransmitters. Glial cells support, feed and insulate neurons.",
   flow:["Cell basics: membrane, nucleus, organelles","Neuron: dendrites, cell body, axon, terminals","Glia: astrocytes, oligodendrocytes, microglia, Schwann cells","Resting potential, threshold, action potential","Saltatory conduction along myelinated axons","Synapse: transmitter release, receptor, response, removal"],
@@ -54,7 +54,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["The resting membrane potential of a neuron is about:",["+30 mV","0 mV","-70 mV","-120 mV"],2,"Maintained by the Na-K pump and potassium leak channels."],["Myelin in the peripheral nervous system is formed by:",["Astrocytes","Oligodendrocytes","Schwann cells","Microglia"],2,"Each Schwann cell myelinates one segment of one axon."]]
 },
 {
-  id:"neuroembryology", title:"Neuroembryology, brain development, myelination and maturation", subject:"Neurobiology", region:"Nervous system", stages:"steps",
+  id:"neuroembryology", title:"Neuroembryology, brain development, myelination and maturation", subject:"Early Intervention: Neurobiology", region:"Nervous system", stages:"steps",
   aliases:["neural tube formation","neurulation","brain development","myelination","neuronal migration","cortical subcortical organisation","maturation"],
   simple:"The brain starts as a flat plate of cells that folds into a tube in the fourth week after conception. Over pregnancy, cells multiply, move to their places, connect and later get wrapped in myelin. Myelination and pruning continue for years, which is why the young child's brain can still be shaped by experience.",
   flow:["Germinal, embryonic, fetal periods of prenatal life","Neural plate folds to neural tube (weeks 3-4)","Three then five brain vesicles form","Proliferation, migration, organisation of neurons","Myelination: caudal to rostral, sensory before motor","Synapse growth and pruning; cortical control matures"],
@@ -80,7 +80,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Failure of the caudal neuropore to close causes:",["Anencephaly","Spina bifida","Hydrocephalus only","Microcephaly"],1,"Caudal closure failure gives spina bifida; cranial failure gives anencephaly."],["Which statement on myelination is correct?",["Motor before sensory","Rostral before caudal","Sensory before motor","Completed at birth"],2,"Sensory pathways myelinate before motor ones and myelination continues for years."]]
 },
 {
-  id:"special-senses-development", title:"Special senses: development, function, abnormalities and early identification", subject:"Neurobiology", region:"Senses", stages:"steps",
+  id:"special-senses-development", title:"Special senses: development, function, abnormalities and early identification", subject:"Early Intervention: Neurobiology", region:"Senses", stages:"steps",
   aliases:["vision development","hearing development","vestibular","tactile","proprioception","kinaesthesia","sensory impairment early identification"],
   simple:"Babies learn about the world through seeing, hearing, touch, balance and the sense of body position. These senses start working before birth but keep developing for years. Finding a sensory problem early, such as deafness or poor vision, lets us help the child before speech and learning fall behind.",
   flow:["Senses develop in utero: touch first, then vestibular, hearing, vision","Receptor to pathway to thalamus to cortex","Abnormality: congenital, perinatal or acquired causes","Early signs and screening: OAE/BERA, red reflex, fixation","Refer for diagnosis, aids and specialist services","Home-based multisensory stimulation with family"],
@@ -107,7 +107,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["A child should turn the head toward a sound source by about:",["1 month","6 months","18 months","3 years"],1,"Lateral localisation of sound is usually present by about 6 months."],["White pupillary reflex in an infant needs:",["Observation only","Urgent eye referral","Hearing test","Spectacles"],1,"Leukocoria may be retinoblastoma or cataract."]]
 },
 {
-  id:"sensory-processing", title:"Sensory processing and sensory integration (Ayres)", subject:"Neurobiology", region:"Senses", stages:"steps",
+  id:"sensory-processing", title:"Sensory processing and sensory integration (Ayres)", subject:"Early Intervention: Neurobiology", region:"Senses", stages:"steps",
   aliases:["sensory integration","Ayres","processing of information","adaptive response","sensory modulation","sensory registration","SI theory"],
   simple:"Sensory processing is how the brain takes in, filters, organises and combines information from the senses so the child can respond in a useful way. Jean Ayres called the final useful action an 'adaptive response'. When this process does not work well, children may over-react, under-react or be clumsy.",
   flow:["Sensory input from receptors","Registration and filtration (attend or ignore)","Organisation and modulation of the input","Integration across senses with past experience","Adaptive response: purposeful action","Feedback refines next input (a loop)"],
@@ -133,7 +133,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["In Ayres's theory the final product of sensory processing is:",["Registration","Adaptive response","Habituation","Filtration"],1,"A purposeful response that also generates new feedback."],["Which senses did Ayres emphasise as foundational?",["Smell, taste, vision","Tactile, vestibular, proprioceptive","Hearing and vision only","Pain and temperature"],1,"The near senses form the base of the building blocks."]]
 },
 {
-  id:"growth-monitoring", title:"Growth: principles, normal pattern, growth charts and monitoring", subject:"Neurobiology", region:"Whole child", stages:"steps",
+  id:"growth-monitoring", title:"Growth: principles, normal pattern, growth charts and monitoring", subject:"Early Intervention: Neurobiology", region:"Whole child", stages:"steps",
   aliases:["growth monitoring","WHO growth charts","principles of growth","anthropometry","stunting wasting","child health practices","MCP card"],
   simple:"Growth means increase in body size, measured by weight, length and head size. It follows a predictable pattern, fastest in the first year. Plotting a child's measurements on WHO charts at every visit shows early if the child is falling behind so that feeding or illness can be corrected.",
   flow:["Know principles and normal growth pattern","Measure weight, length/height, head circumference, MUAC","Plot on WHO growth standards (MCP card)","Interpret: trend, centile/Z-score, falter, cross lines","Find factors: feeding, illness, hygiene, family","Counsel family, treat, refer, re-measure"],
@@ -159,7 +159,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Low height-for-age indicates:",["Wasting","Stunting","Overweight","Microcephaly"],1,"Stunting reflects chronic undernutrition."],["Birth weight usually doubles by about:",["2 months","5 months","12 months","24 months"],1,"About 5 months; triples by 1 year."]]
 },
 {
-  id:"child-nutrition", title:"Child nutrition: breastfeeding, complementary feeding, deficiencies and feeding in disability", subject:"Neurobiology", region:"Whole child", stages:"steps",
+  id:"child-nutrition", title:"Child nutrition: breastfeeding, complementary feeding, deficiencies and feeding in disability", subject:"Early Intervention: Neurobiology", region:"Whole child", stages:"steps",
   aliases:["breastfeeding","weaning","complementary feeding","PEM","malnutrition","micronutrient deficiency","feeding problems cerebral palsy"],
   simple:"Good nutrition is needed for body growth and brain development, especially in the first 1000 days from conception to age 2. Babies should be breastfed only for the first 6 months, then given soft home foods while breastfeeding continues. Children with disabilities often have feeding difficulties and need extra support to avoid malnutrition.",
   flow:["Nutrients: macronutrients and micronutrients","Breastfeed within 1 hour; exclusive for 6 months","Complementary feeding from 6 months, continue breastfeeding to 2 years","Balanced diet from local food groups","Recognise PEM and vitamin A, iron, iodine deficiency","Adapt feeding for disability; refer and follow up"],
@@ -185,7 +185,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["SAM in a 2-year-old is diagnosed when MUAC is below:",["12.5 cm","11.5 cm","13.5 cm","10 cm"],1,"MUAC below 11.5 cm in 6-59 months indicates SAM."],["Oedema with skin and hair changes suggests:",["Marasmus","Kwashiorkor","Rickets","Scurvy"],1,"Kwashiorkor is the oedematous form of PEM."]]
 },
 {
-  id:"high-risk-newborn", title:"High-risk newborn, medically fragile babies and common childhood illnesses", subject:"Neurobiology", region:"Newborn", stages:"steps",
+  id:"high-risk-newborn", title:"High-risk newborn, medically fragile babies and common childhood illnesses", subject:"Early Intervention: Neurobiology", region:"Newborn", stages:"steps",
   aliases:["high risk infant","preterm low birth weight","birth asphyxia HIE","neonatal jaundice","NICU graduate","medically fragile","newborn care"],
   simple:"Some babies are at higher risk of developmental problems because they were born early, very small, did not breathe well at birth, had severe jaundice, or needed intensive care. These babies need careful newborn care and regular follow-up so that any delay is picked up and treated early.",
   flow:["Essential newborn care: warmth, breathing, breastfeeding, cord, eyes","Identify risk: preterm, LBW, asphyxia, jaundice, sepsis, NICU stay","Stabilise: SNCU care, KMC, monitor complications","Discharge with family training and risk register","Follow-up: growth, neuro exam, vision, hearing, development","Early intervention for delays; manage common illnesses"],
@@ -211,7 +211,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Very low birth weight is defined as below:",["2500 g","2000 g","1500 g","1000 g"],2,"Below 1000 g is extremely LBW."],["Jaundice appearing within 24 hours of birth is:",["Always physiological","Pathological until proven otherwise","Due to breast milk","Ignored"],1,"Early jaundice needs urgent evaluation."]]
 },
 {
-  id:"neuroplasticity-ei", title:"Rationale of early intervention: neurohabilitation, plasticity, critical periods and neuronal repair", subject:"Neurobiology", region:"Nervous system", stages:"steps",
+  id:"neuroplasticity-ei", title:"Rationale of early intervention: neurohabilitation, plasticity, critical periods and neuronal repair", subject:"Early Intervention: Neurobiology", region:"Nervous system", stages:"steps",
   aliases:["neuroplasticity","neurohabilitation","critical period","sensitive period","imprinting","neuronal repair","rationale of early intervention"],
   simple:"The young brain changes its connections in response to experience, a property called plasticity. Some abilities develop best during certain windows of time, called critical or sensitive periods. Early intervention uses this window to support the child's brain while it is most changeable.",
   flow:["Brain builds and prunes synapses rapidly in early years","Experience-expectant and experience-dependent plasticity","Critical/sensitive periods: vision, hearing, language, attachment","Injury: repair by sprouting, reorganisation, unmasking","Neurohabilitation: guide development through early enriched input","Family-centred early intervention during these windows"],
@@ -237,7 +237,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Hubel and Wiesel's kitten experiments demonstrated:",["Imprinting","A critical period for vision","Kennard principle","Peripheral nerve regeneration"],1,"Early monocular deprivation caused permanent cortical loss of vision from that eye."],["Neurohabilitation means:",["Restoring a lost function","Helping a developing brain acquire new functions","Surgery on nerves","Drug therapy"],1,"Rehabilitation restores; habilitation develops functions not yet gained."]]
 },
 {
-  id:"screening-investigations", title:"Screening and investigations: newborn screening, genetic, biochemical, imaging, EEG, hearing and ROP", subject:"Neurobiology", region:"Whole child", stages:"steps",
+  id:"screening-investigations", title:"Screening and investigations: newborn screening, genetic, biochemical, imaging, EEG, hearing and ROP", subject:"Early Intervention: Neurobiology", region:"Whole child", stages:"steps",
   aliases:["newborn screening","karyotype","chromosomal microarray","cranial ultrasound","MRI brain","EEG","BERA OAE"],
   simple:"Screening tests check apparently healthy babies to find hidden conditions early, such as low thyroid or hearing loss. Investigations like blood tests, gene tests, brain scans and EEG help find the cause of a delay or disability. Knowing the cause helps treatment, prognosis and counselling for future pregnancies.",
   flow:["Screen all newborns: heel prick, hearing, red reflex, ROP if preterm","Developmental surveillance and screening at visits","Clinical evaluation guides choice of tests","Genetic and biochemical tests for cause","Imaging, EEG, BERA, eye exam for brain and senses","Explain results, counsel family, start intervention"],
