@@ -37,7 +37,25 @@ window.BOOKS = {
   higgs: { a: "Higgs J, Jensen GM, Loftus S, Christensen N (eds.)", t: "Clinical Reasoning in the Health Professions", s: "Clinical reasoning" },
   jewell: { a: "Jewell DV", t: "Guide to Evidence-Based Physical Therapist Practice", s: "Research" },
   cameron: { a: "Cameron MH", t: "Physical Agents in Rehabilitation", s: "Electrotherapy" },
-  mageeMSK: { a: "Magee DJ, Zachazewski JE, Quillen WS, Manske RC (eds.)", t: "Pathology and Intervention in Musculoskeletal Rehabilitation", s: "Musculoskeletal" }
+  mageeMSK: { a: "Magee DJ, Zachazewski JE, Quillen WS, Manske RC (eds.)", t: "Pathology and Intervention in Musculoskeletal Rehabilitation", s: "Musculoskeletal" },
+  // Early intervention and child development (PG Diploma in Early Intervention reading list and standard texts)
+  finnie: { a: "Bower E (ed.), after Finnie NR", t: "Finnie's Handling the Young Child with Cerebral Palsy at Home", s: "Paediatrics" },
+  shepherd: { a: "Shepherd RB", t: "Physiotherapy in Paediatrics", s: "Paediatrics" },
+  bundy: { a: "Bundy AC, Lane SJ (eds.)", t: "Sensory Integration: Theory and Practice", s: "Occupational therapy" },
+  caseSmith: { a: "Case-Smith J, O'Brien JC", t: "Occupational Therapy for Children and Adolescents", s: "Occupational therapy" },
+  hurlock: { a: "Hurlock EB", t: "Child Development", s: "Child development" },
+  berk: { a: "Berk LE", t: "Child Development", s: "Child development" },
+  batshaw: { a: "Batshaw ML, Roizen NJ, Pellegrino L (eds.)", t: "Children with Disabilities", s: "Early intervention" },
+  nelson: { a: "Kliegman RM, et al.", t: "Nelson Textbook of Pediatrics", s: "Paediatrics" },
+  ghai: { a: "Paul VK, Bagga A (eds.)", t: "Ghai Essential Pediatrics", s: "Paediatrics" },
+  guyton: { a: "Hall JE", t: "Guyton and Hall Textbook of Medical Physiology", s: "Physiology" },
+  inderbir: { a: "Singh I", t: "Textbook of Human Neuroanatomy", s: "Anatomy" },
+  owens: { a: "Owens RE", t: "Language Development: An Introduction", s: "Speech and language" },
+  hanen: { a: "Weitzman E (Hanen Centre)", t: "It Takes Two to Talk", s: "Speech and language" },
+  turnbull: { a: "Turnbull A, Turnbull HR, et al.", t: "Families, Professionals, and Exceptionality", s: "Family and community" },
+  dunst: { a: "Dunst CJ, Trivette CM, Deal AG", t: "Enabling and Empowering Families", s: "Family and community" },
+  emery: { a: "Turnpenny PD, Ellard S", t: "Emery's Elements of Medical Genetics", s: "Genetics" },
+  park: { a: "Park K", t: "Park's Textbook of Preventive and Social Medicine", s: "Community medicine" }
 };
 // Shelf entries the user listed that topics don't cite directly.
 window.SHELF_EXTRA = [

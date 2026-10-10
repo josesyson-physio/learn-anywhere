@@ -23,6 +23,12 @@
 <script src="library/mgr-ortho.js"></script>
 <script src="library/mgr-neuro-cardio.js"></script>
 <script src="library/mgr-map.js"></script>
+<script src="library/ei-neurobiology.js"></script>
+<script src="library/ei-disorders.js"></script>
+<script src="library/ei-child-dev.js"></script>
+<script src="library/ei-therapy.js"></script>
+<script src="library/ei-speech-family.js"></script>
+<script src="library/pgdei-map.js"></script>
 <style>
 :root{color-scheme:light}
 body{margin:0;padding-top:env(safe-area-inset-top,0px)}
@@ -176,7 +182,7 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
 .related{margin-top:14px}.related h3{margin:0 0 8px;font-size:1rem}
 .lib-tools{display:flex;gap:8px;flex-wrap:wrap}.lib-tools input{flex:1 1 200px}.lib-tools select{flex:0 1 200px}
 .shelf{margin-top:18px}
-.mgrsub{border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin:8px 0;background:var(--surface)}.mgrsub summary{display:flex;justify-content:space-between;gap:10px;cursor:pointer;font-weight:600}.mgrsub h5{margin:12px 0 4px;font:700 .74rem var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}.mgrlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}.mgrlist button{all:unset;cursor:pointer;color:var(--primary);font-weight:600;display:block;padding:3px 0}.mgrlist button::before{content:"\2713  ";color:var(--mint)}.mgrlist button:focus-visible{outline:2px solid var(--primary)}.mgrlist .todo{color:var(--muted);padding:3px 0}.mgrlist .todo::before{content:"\25CB  "}#mgrYears{margin:8px 0}.sylrow{margin:10px 0 14px}.sylrow h4{margin:0}.sylrow p{margin:2px 0 6px}.suggest button b{color:var(--primary);margin-left:4px}.shelf summary{cursor:pointer;font-weight:600}.shelf h4{margin:14px 0 4px}
+.mgrsub{border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin:8px 0;background:var(--surface)}.mgrsub summary{display:flex;justify-content:space-between;gap:10px;cursor:pointer;font-weight:600}.mgrsub h5{margin:12px 0 4px;font:700 .74rem var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}.mgrlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}.mgrlist button{all:unset;cursor:pointer;color:var(--primary);font-weight:600;display:block;padding:3px 0}.mgrlist button::before{content:"\2713  ";color:var(--mint)}.mgrlist button:focus-visible{outline:2px solid var(--primary)}.mgrlist .todo{color:var(--muted);padding:3px 0}.mgrlist .todo::before{content:"\25CB  "}#mgrYears,#mgrCourse{margin:8px 0;flex-wrap:wrap}.sylrow{margin:10px 0 14px}.sylrow h4{margin:0}.sylrow p{margin:2px 0 6px}.suggest button b{color:var(--primary);margin-left:4px}.shelf summary{cursor:pointer;font-weight:600}.shelf h4{margin:14px 0 4px}
 .actions{display:flex;flex-wrap:wrap;gap:8px;padding:14px 18px;background:var(--sunk);border-top:1px solid var(--line)}
 .reexplain{white-space:pre-wrap;background:var(--bg);border-radius:10px;padding:12px;font-size:.96rem;overflow-x:auto}
 
@@ -400,7 +406,8 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
       <div><h2>Library</h2><p class="small">Ready answers that work without internet, written from standard physiotherapy textbooks and guidelines. <span id="libCount"></span></p></div>
       <button class="ghost" id="libPdf" type="button" hidden>Download library as PDF</button>
     </div>
-    <details class="shelf" id="mgrMap"><summary>Dr. MGR Medical University: BPT syllabus, topic by topic</summary>
+    <details class="shelf" id="mgrMap"><summary>University syllabus, topic by topic: Dr. MGR BPT, PG Diploma in Early Intervention</summary>
+      <div class="seg" id="mgrCourse" role="group" aria-label="Course"></div>
       <p class="small" id="mgrMeta"></p>
       <div class="seg" id="mgrYears" role="group" aria-label="Year"></div>
       <div id="mgrBody"></div>
@@ -669,6 +676,7 @@ function glanceData(a){
 
 /* ================= writing for the marks ================= */
 const PATTERNS = {
+  "Osmania University (with NIEPID, Secunderabad)": "PG Diploma in Early Intervention: each theory paper is 3 hours, 60 marks external plus 20 internal. Write long answers with definition, types, core content, identification, early intervention and the family's role.",
   "Tamil Nadu Dr. M.G.R. Medical University": "Dr. MGR BPT papers: 10 x 2-mark short answers, 10 x 5-mark short notes and 2 x 15-mark essays (3 hours, 100 marks). MPT (2018-19): 2 x 20-mark essays and 10 x 6-mark short notes."
 };
 function scaleMarking(a, n){
@@ -1048,21 +1056,27 @@ function renderShelf(){
 $("#libSearch").addEventListener("input", renderLib);
 $("#libSubject").addEventListener("change", renderLib);
 /* Dr. MGR syllabus, topic by topic */
-let mgrYear = "I";
+let mgrYear = "I", mgrCourse = "mgr";
+const COURSES = () => [window.MGR_BPT && {...window.MGR_BPT, key: "mgr", label: "Dr. MGR BPT", university: "Tamil Nadu Dr. M.G.R. Medical University", note: "revised January 2022"}, ...(window.COURSE_MAPS || [])].filter(Boolean);
 function renderMgr(){
-  const M = window.MGR_BPT; if (!M) { $("#mgrMap").hidden = true; return; }
+  const CS = COURSES(); if (!CS.length) { $("#mgrMap").hidden = true; return; }
+  const M = CS.find(c => c.key === mgrCourse) || CS[0];
   const ids = new Set(LIB.map(t => t.id)), ok = id => id && ids.has(id);
   const all = M.years.flatMap(y => y.s.flatMap(s => s.u.flatMap(u => u.k)));
-  $("#mgrMeta").textContent = `${M.regulation} regulations (revised January 2022). ${all.filter(k => ok(k[1])).length} of ${all.length} syllabus topics have a ready answer. Exam pattern: ${M.pattern}`;
-  $("#mgrYears").innerHTML = M.years.map(y => `<button type="button" data-y="${esc(y.y)}" aria-pressed="${y.y === mgrYear}">Year ${esc(y.y)}</button>`).join("");
+  $("#mgrCourse").innerHTML = CS.map(c => `<button type="button" data-c="${esc(c.key)}" aria-pressed="${c === M}">${esc(c.label)}</button>`).join("");
+  $("#mgrMeta").textContent = `${M.university}, ${M.course}: ${M.regulation}${M.note ? " (" + M.note + ")" : ""}. ${all.filter(k => ok(k[1])).length} of ${all.length} syllabus topics have a ready answer. Exam pattern: ${M.pattern}`;
+  if (!M.years.some(y => y.y === mgrYear)) mgrYear = M.years[0].y;
+  $("#mgrYears").innerHTML = M.years.map(y => `<button type="button" data-y="${esc(y.y)}" aria-pressed="${y.y === mgrYear}">${M.key === "mgr" ? "Year " : ""}${esc(y.y)}</button>`).join("");
   const y = M.years.find(x => x.y === mgrYear) || M.years[0];
+  $("#mgrBody").dataset.uni = M.university;
   $("#mgrBody").innerHTML = y.s.map(s => {
     const ks = s.u.flatMap(u => u.k), n = ks.filter(k => ok(k[1])).length;
     return `<details class="mgrsub"><summary><span>${esc(s.n)}</span><span class="small">${s.e ? "" : "Not examined · "}${n}/${ks.length} ready</span></summary>${s.u.length ? s.u.map(u => `<h5>${esc(u.t)}</h5><ul class="mgrlist">${u.k.map(([t, id]) => ok(id) ? `<li><button type="button" data-open-lib="${esc(id)}">${esc(t)}</button></li>` : `<li class="todo">${esc(t)}</li>`).join("")}</ul>`).join("") : `<p class="small">No detailed syllabus in the regulations.</p>`}</details>`;
   }).join("");
 }
+$("#mgrCourse").addEventListener("click", e => { const b = e.target.closest("[data-c]"); if (!b) return; mgrCourse = b.dataset.c; renderMgr(); });
 $("#mgrYears").addEventListener("click", e => { const b = e.target.closest("[data-y]"); if (!b) return; mgrYear = b.dataset.y; renderMgr(); });
-$("#mgrBody").addEventListener("click", e => { const b = e.target.closest("[data-open-lib]"); if (!b) return; const it = allItems().find(x => x.id === b.dataset.openLib); if (!it) return; $("#libAnswer").replaceChildren(renderAnswer({...it, uni: "Tamil Nadu Dr. M.G.R. Medical University"}, {})); $("#libAnswer").scrollIntoView({ behavior: "smooth", block: "start" }); });
+$("#mgrBody").addEventListener("click", e => { const b = e.target.closest("[data-open-lib]"); if (!b) return; const it = allItems().find(x => x.id === b.dataset.openLib); if (!it) return; $("#libAnswer").replaceChildren(renderAnswer({...it, uni: $("#mgrBody").dataset.uni}, {})); $("#libAnswer").scrollIntoView({ behavior: "smooth", block: "start" }); });
 $("#sylStages").addEventListener("click", e => { const b = e.target.closest("[data-sub]"); if (!b) return; $("#libSearch").value = ""; $("#libSubject").value = b.dataset.sub; renderLib(); $("#libCards").scrollIntoView({ behavior: "smooth", block: "start" }); });
 $("#libCards").addEventListener("click", e => {
   const c = e.target.closest(".card"); if (!c) return;
