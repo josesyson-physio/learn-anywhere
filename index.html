@@ -29,6 +29,12 @@
 <script src="library/ei-therapy.js"></script>
 <script src="library/ei-speech-family.js"></script>
 <script src="library/pgdei-map.js"></script>
+<script src="library/relate-1.js"></script>
+<script src="library/relate-2.js"></script>
+<script src="library/relate-3.js"></script>
+<script src="library/relate-4.js"></script>
+<script src="library/relate-5.js"></script>
+<script src="library/relate-6.js"></script>
 <style>
 :root{color-scheme:light}
 body{margin:0;padding-top:env(safe-area-inset-top,0px)}
@@ -105,6 +111,33 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 @media (prefers-reduced-motion:reduce){.burst{display:none}}
 .qstreak{font:700 .85rem var(--body);color:#c2410c}
 
+/* open-door motion graphic */
+.opendoor{margin:2px 0 0;background:rgba(255,255,255,.55);border-radius:16px;padding:8px 10px}
+.opendoor svg{width:100%;height:auto;display:block;max-height:120px}
+.opendoor figcaption{font:600 .84rem/1.35 var(--body);color:var(--hero-ink);margin-top:4px}
+.od-book path{fill:#fff;stroke:#7c2d12;stroke-width:2.5;stroke-linejoin:round}
+.od-bar rect{fill:#7c2d12;opacity:.8}
+.od-dot{fill:#2457f5;opacity:0}
+.od-people circle{fill:#fff;stroke:#7c2d12;stroke-width:2.5}
+.od-plus{stroke:#2457f5;stroke-width:4;stroke-linecap:round;fill:none;opacity:0}
+@media (prefers-reduced-motion:no-preference){
+  .od-bar .b1{animation:od-up 7s ease-in-out infinite}.od-bar .b2{animation:od-down 7s ease-in-out infinite}
+  .od-dot.d0{animation:od-go 7s ease-in-out infinite}
+  .od-dot.d1{--tx:122px;--ty:-37px}.od-dot.d2{--tx:90px;--ty:0}.od-dot.d3{--tx:122px;--ty:0}.od-dot.d4{--tx:154px;--ty:0}.od-dot.d5{--tx:122px;--ty:37px}
+  .od-dot.d1,.od-dot.d2,.od-dot.d3,.od-dot.d4,.od-dot.d5{animation:od-split 7s ease-in-out infinite}
+  .od-people circle{animation:od-light 7s ease-in-out infinite}
+  .od-plus{animation:od-plus 7s ease-in-out infinite}
+  .od-book{animation:od-glow 7s ease-in-out infinite;transform-origin:48px 60px}
+}
+@media (prefers-reduced-motion:reduce){.od-people circle{fill:#2457f5}.od-plus{opacity:1}}
+@keyframes od-glow{0%,8%{transform:scale(1)}12%{transform:scale(1.08)}18%,100%{transform:scale(1)}}
+@keyframes od-up{0%,20%{transform:none}32%,80%{transform:translateY(-16px)}92%,100%{transform:none}}
+@keyframes od-down{0%,20%{transform:none}32%,80%{transform:translateY(16px)}92%,100%{transform:none}}
+@keyframes od-go{0%,8%{opacity:0;transform:none}12%{opacity:1;transform:none}22%{opacity:1;transform:translateX(26px)}34%,100%{opacity:0;transform:translateX(60px)}}
+@keyframes od-split{0%,33%{opacity:0;transform:none}36%{opacity:1;transform:none}52%{opacity:1;transform:translate(var(--tx),var(--ty))}56%,100%{opacity:0;transform:translate(var(--tx),var(--ty))}}
+@keyframes od-light{0%,52%{fill:#fff}58%,88%{fill:#2457f5}96%,100%{fill:#fff}}
+@keyframes od-plus{0%,60%{opacity:0}68%,88%{opacity:1}96%,100%{opacity:0}}
+
 /* hero */
 .hero{margin-top:16px;background:var(--sunrise);box-shadow:var(--shadow);color:var(--hero-ink);border-radius:20px;padding:22px 20px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden}
 .hero::after{content:"";position:absolute;right:-70px;top:-70px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,#fff6 0,#fff0 70%)}
@@ -177,6 +210,33 @@ select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px 
 .flow b{grid-row:span 2;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--c);color:var(--surface);font:800 .95rem var(--display)}
 .flow .stg{font:600 .68rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c)}
 .flow .s0{--c:var(--flag)}.flow .s1{--c:var(--violet)}.flow .s2{--c:var(--saffron)}.flow .s3{--c:var(--primary)}.flow .s4{--c:var(--mint)}
+.path-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:14px}
+.strip{display:flex;flex-wrap:wrap;gap:6px;margin:0}
+.strip span{display:inline-flex;align-items:center;gap:5px;font:700 .74rem var(--body);padding:5px 10px 5px 7px;border-radius:999px;background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--c)}
+.strip svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.testme{flex:none;padding:6px 12px!important;font-size:.85rem!important}
+.testme[aria-pressed="true"]{background:var(--ink)!important;color:var(--surface)!important;border-color:var(--ink)!important}
+.path{list-style:none;margin:0;padding:0;position:relative}
+.path::before{content:"";position:absolute;left:21px;top:22px;bottom:22px;width:4px;border-radius:4px;background:linear-gradient(var(--flag),var(--violet),var(--saffron),var(--primary),var(--mint));opacity:.35}
+.path li{display:grid;grid-template-columns:46px 1fr;gap:10px;align-items:start;position:relative}
+.path li+li{margin-top:12px}
+.path .node{width:46px;height:46px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;box-shadow:0 0 0 4px var(--surface),0 8px 16px -8px var(--c);position:relative;z-index:1}
+.path .node svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.path .step{background:var(--surface);border:2px solid color-mix(in srgb,var(--c) 30%,var(--line));border-radius:16px 16px 16px 4px;padding:10px 14px 12px;position:relative;transition:filter .2s}
+.path .no{position:absolute;right:12px;top:6px;font:800 1.5rem/1 var(--display);color:color-mix(in srgb,var(--c) 22%,transparent)}
+.path .stg{font:700 .68rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--c)}
+.path p{margin:2px 0 0;font-weight:600;font-size:1.02rem;line-height:1.4;padding-right:28px}
+.path li.hide .step p{filter:blur(7px);user-select:none;cursor:pointer}
+.path li.hide .step::after{content:"Tap to reveal";position:absolute;right:12px;bottom:8px;font:700 .7rem var(--body);color:var(--c)}
+@media (prefers-reduced-motion:no-preference){.path li{animation:stepin .45s ease-out both}.path li:nth-child(2){animation-delay:.06s}.path li:nth-child(3){animation-delay:.12s}.path li:nth-child(4){animation-delay:.18s}.path li:nth-child(5){animation-delay:.24s}.path li:nth-child(6){animation-delay:.3s}@keyframes stepin{from{opacity:0;transform:translateX(-10px)}}}
+.notexam{display:flex;gap:8px;align-items:flex-start;font:700 .82rem var(--body);color:#9a3412;background:#fff1e0;border:1px dashed #fb923c;border-radius:12px;padding:8px 12px;margin:0 0 10px}
+.notexam svg{width:16px;height:16px;flex:none;margin-top:2px;fill:none;stroke:currentColor;stroke-width:2.2}
+:root[data-theme="dark"] .notexam{background:#3b2412;color:#ffc58f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .notexam{background:#3b2412;color:#ffc58f}}
+.relate{font-size:1.08rem;line-height:1.6}
+.breaks{margin-top:8px}
+.play{background:repeating-linear-gradient(-45deg,color-mix(in srgb,var(--violet) 7%,var(--surface)) 0 12px,var(--surface) 12px 24px);border:2px dashed color-mix(in srgb,var(--violet) 45%,transparent);border-radius:16px;padding:14px 16px}
+.play>p:first-child{font-weight:600;font-size:1.02rem;margin-bottom:6px}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:0 0 12px;font-size:.8rem;color:var(--muted)}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
 .glance{display:grid;gap:22px 12px;grid-template-columns:1fr 1fr;position:relative;padding-top:6px}
@@ -387,7 +447,17 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
   </style>
 </svg><h1 class="brand">Learn <span>Anywhere</span></h1></div>
     <p class="mission">Free physiotherapy learning for every student in India and beyond.</p>
-    <p>Ask any topic. Get an answer written the way your university examiners expect, backed by evidence, with a memory trick and viva questions.</p>
+    <figure class="opendoor" aria-label="Animation: knowledge from a book passes an opening barrier and reaches every person">
+      <svg viewBox="0 0 320 110" role="img" aria-hidden="true">
+        <g class="od-book"><path d="M18 40c10-6 22-6 30 0v40c-8-6-20-6-30 0zM48 40c8-6 20-6 30 0v40c-10-6-22-6-30 0z"/></g>
+        <g class="od-bar"><rect class="b1" x="112" y="18" width="10" height="36" rx="5"/><rect class="b2" x="112" y="56" width="10" height="36" rx="5"/></g>
+        <circle class="od-dot d0" cx="80" cy="55" r="6"/>
+        <circle class="od-dot d1" cx="140" cy="55" r="5"/><circle class="od-dot d2" cx="140" cy="55" r="5"/><circle class="od-dot d3" cx="140" cy="55" r="5"/><circle class="od-dot d4" cx="140" cy="55" r="5"/><circle class="od-dot d5" cx="140" cy="55" r="5"/>
+        <g class="od-people"><circle class="p1" cx="262" cy="18" r="9"/><circle class="p2" cx="230" cy="55" r="9"/><circle class="p3" cx="262" cy="55" r="9"/><circle class="p4" cx="294" cy="55" r="9"/><circle class="p5" cx="262" cy="92" r="9"/>
+          <path class="od-plus" d="M262 27v19M262 64v19M239 55h14M271 55h14"/></g>
+      </svg>
+      <figcaption>Knowledge should cross every barrier: money, place, language, network. Everyone deserves everything.</figcaption>
+    </figure>
     <div class="stats"><span>Free forever</span><span>BPT · MPT</span><span>Library works offline</span></div>
   </header>
 
@@ -495,6 +565,8 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
       <p><strong>References.</strong> Library topics are original summaries that point to standard textbooks (see the Reference shelf in the Library) and to real guidelines and trials you can open on PubMed. No book text is copied. Always read the chapter for depth.</p>
       <p><strong>Free forever.</strong> No account, no fees, no ads. The library grows topic by topic and anyone can add to it on GitHub.</p>
       <p><strong>Low network.</strong> The library and quiz are inside the page. A new answer uses only a few kilobytes of text. You can download any answer, or the whole library, as a PDF to read offline.</p>
+      <p><strong>Why this exists.</strong> Education should never stop at a barrier: money, distance, language, a slow network or a missed class. The animation at the top shows it: light from one book gets past a barrier, splits, and reaches every person, who together make the plus. Knowledge grows when it is shared.</p>
+      <p><strong>Use it fairly.</strong> Use it to learn, revise and teach, and share it freely. Please do not sell it, put it behind a paywall, copy from it during an exam, or use it to treat patients without a qualified clinician. The "Understand it like a friend" examples are for understanding only: write the proper terms in your exam.</p>
       <p><strong>Built to help you remember.</strong> Every subject has its own colour and picture, shown on its cards and at the top of every answer, so your visual memory links them. Each topic shows its memory key word large. The daily goal (3 topics), study streak, levels and "Mark as learned" ticks keep you coming back. After 25 minutes the app reminds you to take a short break, and late at night it reminds you that sleep is when memory is saved. Your progress stays on your phone only.</p>
       <p><strong>Safety.</strong> This is a study aid for students, not medical advice for patients. Answers are written carefully from standard textbooks and guidelines, but mistakes are possible and practice changes. Before using any dose, vaccine schedule, drug, electrotherapy parameter or exercise prescription with a real patient, check it against current official guidance (MoHFW, WHO, NICE, your university syllabus) and a qualified clinician. Spotted an error? Report it on GitHub and it will be corrected for everyone.</p>
     </div>
@@ -755,9 +827,12 @@ function renderAnswer(a, opts = {}){
   const S = [];
   const add = (key, label, html) => { if (html) S.push({key, label, html}); };
   add("simple","Simple", `<p class="simple">${esc(a.simple)}</p>`);
+  const R = (window.RELATE || {})[a.id];
+  if (R) add("relate","Like a friend", `<p class="notexam">${svgI("spark")} For understanding only. Do not write this in your exam: examiners want the proper terms from "How to write it in the exam".</p><p class="relate">${esc(R.r)}</p>${R.b ? `<p class="small breaks"><b>Where the comparison stops:</b> ${esc(R.b.replace(/^The analogy breaks because\s*/i, ""))}</p>` : ""}`);
   if ((a.flow||[]).length) {
     const st = stagesOf(a), used = st ? [...new Set(st)].sort() : [];
-    add("flow","Flowchart", `<p class="legend">${used.map(k=>`<span><i style="background:var(--${["flag","violet","saffron","primary","mint"][k]})"></i>${STAGES[k]}</span>`).join("")}</p><ol class="flow">${a.flow.map((f,i)=>`<li class="s${st?st[i]:3}"><b>${i+1}</b><span class="stg">${st?STAGES[st[i]]:"Step "+(i+1)}</span><span>${esc(f)}</span></li>`).join("")}</ol>`);
+    const SK = ["flag","violet","saffron","primary","mint"], SI = ["bolt","gear","eye","search","treat"];
+    add("flow","Flowchart", `<div class="path-top">${used.length ? `<p class="strip">${used.map(k=>`<span style="--c:var(--${SK[k]})">${svgI(SI[k])}${STAGES[k]}</span>`).join("")}</p>` : ""}<button type="button" class="ghost testme" aria-pressed="false">Test me</button></div><ol class="path">${a.flow.map((f,i)=>{ const k = st ? st[i] : null; return `<li style="--c:var(--${k===null?"primary":SK[k]})"><span class="node">${svgI(k===null?"spark":SI[k])}</span><div class="step"><span class="no">${String(i+1).padStart(2,"0")}</span><span class="stg">${k===null?"Step "+(i+1):STAGES[k]}</span><p>${esc(f)}</p></div></li>`; }).join("")}</ol><p class="small recall-note" hidden>Recall each step in your head, then tap it to check.</p>`);
   }
   const gl = glanceData(a);
   if (gl.length >= 3) add("glance","Diagram", `<div class="glance"><div class="hub">${esc(a.title)}</div>${gl.map(([c,h,items])=>`<div class="node ${c}"><h5>${esc(h)}</h5><ul>${items.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`).join("")}</div>`);
@@ -777,13 +852,14 @@ function renderAnswer(a, opts = {}){
   const m = a.mnemonic || {};
   if (m.word) add("mem","Memory trick", `<p class="mnem">${esc(m.word)}</p>${(m.items||[]).length?`<ul class="mnem-list">${m.items.map(([k,v])=>`<li><b>${esc(k)}</b> ${esc(v)}</li>`).join("")}</ul>`:""}${m.extra?`<p class="small" style="margin-top:8px">${esc(m.extra)}</p>`:""}`);
   if (a.example) add("ex","Example", `<p>${esc(a.example)}</p>`);
+  if (R && R.p) add("play","Think and play", `<div class="play"><p>${esc(R.p)}</p><p class="small">A thinking game to spark new ideas. Discuss, draw, design or observe. Never try treatments or tests on people.</p></div>`);
   if ((a.flags||[]).length) add("flags","Red flags", `<div class="flags"><h3>Refer, do not treat</h3><ul class="b">${a.flags.map(f=>`<li>${esc(f)}</li>`).join("")}</ul></div>`);
   if ((a.viva||[]).length) add("viva","Viva", `<div class="viva">${a.viva.map(([q,ans])=>`<details><summary>${esc(q)}</summary><p>${esc(ans)}</p></details>`).join("")}</div>`);
   const kw = a.keywords || a.title;
   add("refs","References", `${(a.refs||[]).length?`<ol class="refs">${a.refs.map(r=>r.book?`<li>${esc(r.c)} <span class="pill tag">Textbook</span></li>`:`<li>${esc(r.c)} (${r.u?`<a href="${esc(r.u)}" target="_blank" rel="noopener">open</a>`:`<a href="${pubmed(r.q||r.c)}" target="_blank" rel="noopener">find on PubMed</a>`})</li>`).join("")}</ol>`:""}
     <p class="small" style="margin-top:8px">Read more: <a href="${pubmed(kw)}" target="_blank" rel="noopener">PubMed</a> · <a href="${physio(kw)}" target="_blank" rel="noopener">Physiopedia</a></p>
     ${opts.ai?`<p class="small" style="margin-top:6px">AI-written answer. Check each reference on PubMed before quoting it.</p>`:""}`);
-  const labels = {simple:"In simple words",flow:"Flowchart: draw this in your answer",glance:"Diagram at a glance",exam:"How to write it in the exam",marks:"Write it for your marks",adv:"Advanced: evidence and research",mem:"Memory trick",ex:"Real-life example",flags:"Red flags",viva:"Viva questions",refs:"References"};
+  const labels = {relate:"Understand it like a friend",play:"Think and play",simple:"In simple words",flow:"Flowchart: draw this in your answer",glance:"Diagram at a glance",exam:"How to write it in the exam",marks:"Write it for your marks",adv:"Advanced: evidence and research",mem:"Memory trick",ex:"Real-life example",flags:"Red flags",viva:"Viva questions",refs:"References"};
 
   const el = document.createElement("article");
   el.className = "sheet"; el.style.setProperty("--sc", subjOf(a.subject)[0]);
@@ -800,6 +876,9 @@ function renderAnswer(a, opts = {}){
     <div class="actions"></div>`;
   const wf = el.querySelector(".wfor");
   if (wf) wf.addEventListener("click", e => { const b = e.target.closest("[data-w]"); if (!b) return; wf.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false")); el.querySelector(".wguide").innerHTML = writeGuide(a, +b.dataset.w); });
+  const tm = el.querySelector(".testme");
+  if (tm) tm.onclick = () => { const on = tm.getAttribute("aria-pressed") !== "true"; tm.setAttribute("aria-pressed", on); tm.textContent = on ? "Show all" : "Test me"; el.querySelectorAll(".path li").forEach(li => li.classList.toggle("hide", on)); el.querySelector(".recall-note").hidden = !on; };
+  el.querySelectorAll(".path li").forEach(li => li.addEventListener("click", () => li.classList.remove("hide")));
   el.querySelectorAll(".jump a").forEach(l => l.addEventListener("click", e => { e.preventDefault(); el.querySelector(l.getAttribute("href")).scrollIntoView({behavior:"smooth",block:"start"}); }));
 
   const actions = el.querySelector(".actions");
@@ -1173,7 +1252,11 @@ const ICONS = {
   spark:"M12 3v6M12 15v6M3 12h6M15 12h6",
   flame:"M12 22c4 0 7-3 7-7 0-4-3-6-4-10-2 2-3 4-3 6-1-1-2-2-2-4-3 3-5 5-5 8 0 4 3 7 7 7z",
   star:"M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z",
-  check:"M5 12l5 5 9-10"
+  check:"M5 12l5 5 9-10",
+  gear:"M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1",
+  eye:"M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z",
+  search:"M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4.2-4.2",
+  treat:"M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10zM12 9v6M9 12h6"
 };
 const SUBJ = {
   "Musculoskeletal":["#e8590c","bone"], "Neurology":["#7048e8","brain"], "Cardio-respiratory":["#e03131","heart"],
