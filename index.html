@@ -18,6 +18,11 @@
 <script src="library/cardio.js"></script>
 <script src="library/principles.js"></script>
 <script src="library/syllabus.js"></script>
+<script src="library/mgr-electro.js"></script>
+<script src="library/mgr-exercise.js"></script>
+<script src="library/mgr-ortho.js"></script>
+<script src="library/mgr-neuro-cardio.js"></script>
+<script src="library/mgr-map.js"></script>
 <style>
 :root{color-scheme:light}
 body{margin:0;padding-top:env(safe-area-inset-top,0px)}
@@ -144,6 +149,7 @@ select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px 
 ul.b{margin:0;padding-left:20px}
 ul.b li{margin:3px 0}
 .markbar{display:flex;flex-direction:column;gap:6px}
+.wfor{margin-bottom:12px;flex-wrap:wrap}.wguide>p{margin:0 0 10px}.model{margin-top:12px;border:1px dashed var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}.model h5{margin:0 0 6px;font:700 .72rem var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--mint)}.model p{margin:0 0 6px}
 .markrow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;font-size:.95rem}
 .markrow .bar{grid-column:1 / -1;height:6px;border-radius:6px;background:var(--sunk);overflow:hidden}
 .markrow .bar i{display:block;height:100%;background:var(--saffron-bright)}
@@ -169,7 +175,8 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
 .refs li{margin:5px 0;overflow-wrap:anywhere}
 .related{margin-top:14px}.related h3{margin:0 0 8px;font-size:1rem}
 .lib-tools{display:flex;gap:8px;flex-wrap:wrap}.lib-tools input{flex:1 1 200px}.lib-tools select{flex:0 1 200px}
-.shelf{margin-top:18px}.sylrow{margin:10px 0 14px}.sylrow h4{margin:0}.sylrow p{margin:2px 0 6px}.suggest button b{color:var(--primary);margin-left:4px}.shelf summary{cursor:pointer;font-weight:600}.shelf h4{margin:14px 0 4px}
+.shelf{margin-top:18px}
+.mgrsub{border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin:8px 0;background:var(--surface)}.mgrsub summary{display:flex;justify-content:space-between;gap:10px;cursor:pointer;font-weight:600}.mgrsub h5{margin:12px 0 4px;font:700 .74rem var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}.mgrlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}.mgrlist button{all:unset;cursor:pointer;color:var(--primary);font-weight:600;display:block;padding:3px 0}.mgrlist button::before{content:"\2713  ";color:var(--mint)}.mgrlist button:focus-visible{outline:2px solid var(--primary)}.mgrlist .todo{color:var(--muted);padding:3px 0}.mgrlist .todo::before{content:"\25CB  "}#mgrYears{margin:8px 0}.sylrow{margin:10px 0 14px}.sylrow h4{margin:0}.sylrow p{margin:2px 0 6px}.suggest button b{color:var(--primary);margin-left:4px}.shelf summary{cursor:pointer;font-weight:600}.shelf h4{margin:14px 0 4px}
 .actions{display:flex;flex-wrap:wrap;gap:8px;padding:14px 18px;background:var(--sunk);border-top:1px solid var(--line)}
 .reexplain{white-space:pre-wrap;background:var(--bg);border-radius:10px;padding:12px;font-size:.96rem;overflow-x:auto}
 
@@ -393,6 +400,11 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
       <div><h2>Library</h2><p class="small">Ready answers that work without internet, written from standard physiotherapy textbooks and guidelines. <span id="libCount"></span></p></div>
       <button class="ghost" id="libPdf" type="button" hidden>Download library as PDF</button>
     </div>
+    <details class="shelf" id="mgrMap"><summary>Dr. MGR Medical University: BPT syllabus, topic by topic</summary>
+      <p class="small" id="mgrMeta"></p>
+      <div class="seg" id="mgrYears" role="group" aria-label="Year"></div>
+      <div id="mgrBody"></div>
+    </details>
     <details class="shelf" id="sylMap"><summary>Syllabus map: BPT and MPT</summary>
       <p class="small">Common subjects across Indian universities. Tap a subject to see its topics. Always check your own university's syllabus for your batch.</p>
       <div id="sylStages"></div>
@@ -655,6 +667,29 @@ function glanceData(a){
   ].filter(n => n[2].length);
 }
 
+/* ================= writing for the marks ================= */
+const PATTERNS = {
+  "Tamil Nadu Dr. M.G.R. Medical University": "Dr. MGR BPT papers: 10 x 2-mark short answers, 10 x 5-mark short notes and 2 x 15-mark essays (3 hours, 100 marks). MPT (2018-19): 2 x 20-mark essays and 10 x 6-mark short notes."
+};
+function scaleMarking(a, n){
+  const total = a.marking.reduce((t, [, m]) => t + (+m || 0), 0) || 1;
+  const rows = a.marking.map(([p, m]) => [p, Math.max(0.5, Math.round((+m || 0) / total * n * 2) / 2)]);
+  const diff = n - rows.reduce((t, [, m]) => t + m, 0), big = rows.reduce((b, r, i) => r[1] > rows[b][1] ? i : b, 0);
+  rows[big][1] += diff; return rows;
+}
+function writeGuide(a, n){
+  const ex = a.exam || [], def = ((ex[0] || {}).p || [])[0] || a.simple;
+  const feat = (ex.find(x => /feature|clinical|types|stages|grades|phases|principle|mechanism/i.test(x.h)) || ex[1] || {p: []}).p || [];
+  const man = (ex.find(x => /manag|rehab|treatment|programme|prescription|technique/i.test(x.h)) || {p: []}).p || [];
+  const bar = rows => `<div class="markbar">${rows.map(([p, m]) => `<div class="markrow"><span>${esc(p)}</span><b>${esc(m)}</b><span class="bar"><i style="width:${Math.round(m / n * 100)}%"></i></span></div>`).join("")}</div>`;
+  const pat = PATTERNS[a.uni || ($("#uni") && $("#uni").value)] || "";
+  let h;
+  if (n === 2) h = `<p><strong>Short answer (3-4 lines).</strong> Definition plus two key points. No diagram needed.</p>${bar([["Definition", 1], ["Two key points", 1]])}<div class="model"><h5>Model answer</h5><p>${esc(def)}</p><ul class="b">${feat.slice(0, 2).map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`;
+  else if (n <= 6) h = `<p><strong>Short note (about one page).</strong> Definition, ${n === 6 ? "4-5" : "3-4"} key points, a small flowchart or labelled diagram${n === 6 ? ", and one line of evidence" : ""}.</p>${bar(n === 6 ? [["Definition", 1], ["Key points", 2], ["Management", 1.5], ["Diagram", 1], ["Evidence", 0.5]] : [["Definition", 1], ["Key points", 2], ["Management", 1], ["Diagram or flowchart", 1]])}<div class="model"><h5>Model short note</h5><p>${esc(def)}</p><ul class="b">${feat.slice(0, 3).concat(man.slice(0, n === 6 ? 2 : 1)).map(x => `<li>${esc(x)}</li>`).join("")}</ul>${a.mnemonic && a.mnemonic.word ? `<p class="small">Memory trick: ${esc(a.mnemonic.word)}</p>` : ""}${n === 6 && (a.evidence || [])[0] ? `<p class="small">Evidence: ${esc(a.evidence[0][0])}, ${esc(a.evidence[0][1]).toLowerCase()}.</p>` : ""}</div>`;
+  else h = `<p><strong>${n === 20 ? "MPT long essay" : "Long essay"} (${n === 20 ? "5-6" : "4-5"} pages).</strong> Use every heading in the exam answer above, draw the flowchart and one labelled diagram, give management in phases with dosage${n === 20 ? ", and add evidence grades, outcome measures, recent advances and references" : ", and finish with a conclusion"}.</p>${bar(scaleMarking(a, n))}`;
+  return h + (pat ? `<p class="small" style="margin-top:10px">${esc(pat)}</p>` : `<p class="small" style="margin-top:10px">Typical split for Indian health science university papers. Check your syllabus and past papers.</p>`);
+}
+
 /* ================= answer rendering ================= */
 function renderAnswer(a, opts = {}){
   const id = "a" + (++uid);
@@ -670,8 +705,8 @@ function renderAnswer(a, opts = {}){
   if (gl.length >= 3) add("glance","Diagram", `<div class="glance"><div class="hub">${esc(a.title)}</div>${gl.map(([c,h,items])=>`<div class="node ${c}"><h5>${esc(h)}</h5><ul>${items.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`).join("")}</div>`);
   if ((a.exam||[]).length) add("exam","Exam answer", `<div class="exam">${a.exam.map(s=>`<h4>${esc(s.h)}</h4><ul class="b">${(s.p||[]).map(p=>`<li>${esc(p)}</li>`).join("")}</ul>`).join("")}</div>${a.tip?`<p class="tip"><strong>For full marks: </strong>${esc(a.tip)}</p>`:""}`);
   if ((a.marking||[]).length) {
-    const total = a.marking.reduce((t,[,m])=>t+(+m||0),0) || 1;
-    add("marks","Marks", `<div class="markbar">${a.marking.map(([p,m])=>`<div class="markrow"><span>${esc(p)}</span><b>${esc(m)}</b><span class="bar"><i style="width:${Math.round((+m||0)/total*100)}%"></i></span></div>`).join("")}</div><p class="small" style="margin-top:10px">Typical split for ${esc(a.uni || "Indian health science university")} papers. Check your syllabus and past papers.</p>`);
+    const opts = [2, 5, 6, 15, 20], start = opts.includes(+a.marks) && a.marks !== 10 ? +a.marks : opts.includes(marks) ? marks : 15;
+    add("marks","Marks", `<div class="seg wfor" role="group" aria-label="Write it for">${opts.map(n=>`<button type="button" data-w="${n}" aria-pressed="${n===start}">${n} marks</button>`).join("")}</div><div class="wguide">${writeGuide(a, start)}</div>`);
   }
   const ev = a.evidence||[], oc = a.outcomes||[], rc = a.recent||[];
   if (ev.length || oc.length || rc.length || a.patho) {
@@ -690,7 +725,7 @@ function renderAnswer(a, opts = {}){
   add("refs","References", `${(a.refs||[]).length?`<ol class="refs">${a.refs.map(r=>r.book?`<li>${esc(r.c)} <span class="pill tag">Textbook</span></li>`:`<li>${esc(r.c)} (${r.u?`<a href="${esc(r.u)}" target="_blank" rel="noopener">open</a>`:`<a href="${pubmed(r.q||r.c)}" target="_blank" rel="noopener">find on PubMed</a>`})</li>`).join("")}</ol>`:""}
     <p class="small" style="margin-top:8px">Read more: <a href="${pubmed(kw)}" target="_blank" rel="noopener">PubMed</a> · <a href="${physio(kw)}" target="_blank" rel="noopener">Physiopedia</a></p>
     ${opts.ai?`<p class="small" style="margin-top:6px">AI-written answer. Check each reference on PubMed before quoting it.</p>`:""}`);
-  const labels = {simple:"In simple words",flow:"Flowchart: draw this in your answer",glance:"Diagram at a glance",exam:"How to write it in the exam",marks:"How marks are usually given",adv:"Advanced: evidence and research",mem:"Memory trick",ex:"Real-life example",flags:"Red flags",viva:"Viva questions",refs:"References"};
+  const labels = {simple:"In simple words",flow:"Flowchart: draw this in your answer",glance:"Diagram at a glance",exam:"How to write it in the exam",marks:"Write it for your marks",adv:"Advanced: evidence and research",mem:"Memory trick",ex:"Real-life example",flags:"Red flags",viva:"Viva questions",refs:"References"};
 
   const el = document.createElement("article");
   el.className = "sheet";
@@ -703,6 +738,8 @@ function renderAnswer(a, opts = {}){
     ${S.map(s=>`<section class="sec" id="${id}-${s.key}"><h3>${esc(labels[s.key])}</h3>${s.html}</section>`).join("")}
     <section class="sec" data-re hidden><h3 data-re-title>Explained again</h3><div class="reexplain"></div></section>
     <div class="actions"></div>`;
+  const wf = el.querySelector(".wfor");
+  if (wf) wf.addEventListener("click", e => { const b = e.target.closest("[data-w]"); if (!b) return; wf.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false")); el.querySelector(".wguide").innerHTML = writeGuide(a, +b.dataset.w); });
   el.querySelectorAll(".jump a").forEach(l => l.addEventListener("click", e => { e.preventDefault(); el.querySelector(l.getAttribute("href")).scrollIntoView({behavior:"smooth",block:"start"}); }));
 
   const actions = el.querySelector(".actions");
@@ -1010,6 +1047,22 @@ function renderShelf(){
 }
 $("#libSearch").addEventListener("input", renderLib);
 $("#libSubject").addEventListener("change", renderLib);
+/* Dr. MGR syllabus, topic by topic */
+let mgrYear = "I";
+function renderMgr(){
+  const M = window.MGR_BPT; if (!M) { $("#mgrMap").hidden = true; return; }
+  const ids = new Set(LIB.map(t => t.id)), ok = id => id && ids.has(id);
+  const all = M.years.flatMap(y => y.s.flatMap(s => s.u.flatMap(u => u.k)));
+  $("#mgrMeta").textContent = `${M.regulation} regulations (revised January 2022). ${all.filter(k => ok(k[1])).length} of ${all.length} syllabus topics have a ready answer. Exam pattern: ${M.pattern}`;
+  $("#mgrYears").innerHTML = M.years.map(y => `<button type="button" data-y="${esc(y.y)}" aria-pressed="${y.y === mgrYear}">Year ${esc(y.y)}</button>`).join("");
+  const y = M.years.find(x => x.y === mgrYear) || M.years[0];
+  $("#mgrBody").innerHTML = y.s.map(s => {
+    const ks = s.u.flatMap(u => u.k), n = ks.filter(k => ok(k[1])).length;
+    return `<details class="mgrsub"><summary><span>${esc(s.n)}</span><span class="small">${s.e ? "" : "Not examined · "}${n}/${ks.length} ready</span></summary>${s.u.length ? s.u.map(u => `<h5>${esc(u.t)}</h5><ul class="mgrlist">${u.k.map(([t, id]) => ok(id) ? `<li><button type="button" data-open-lib="${esc(id)}">${esc(t)}</button></li>` : `<li class="todo">${esc(t)}</li>`).join("")}</ul>`).join("") : `<p class="small">No detailed syllabus in the regulations.</p>`}</details>`;
+  }).join("");
+}
+$("#mgrYears").addEventListener("click", e => { const b = e.target.closest("[data-y]"); if (!b) return; mgrYear = b.dataset.y; renderMgr(); });
+$("#mgrBody").addEventListener("click", e => { const b = e.target.closest("[data-open-lib]"); if (!b) return; const it = allItems().find(x => x.id === b.dataset.openLib); if (!it) return; $("#libAnswer").replaceChildren(renderAnswer({...it, uni: "Tamil Nadu Dr. M.G.R. Medical University"}, {})); $("#libAnswer").scrollIntoView({ behavior: "smooth", block: "start" }); });
 $("#sylStages").addEventListener("click", e => { const b = e.target.closest("[data-sub]"); if (!b) return; $("#libSearch").value = ""; $("#libSubject").value = b.dataset.sub; renderLib(); $("#libCards").scrollIntoView({ behavior: "smooth", block: "start" }); });
 $("#libCards").addEventListener("click", e => {
   const c = e.target.closest(".card"); if (!c) return;
@@ -1052,7 +1105,7 @@ document.querySelector("nav.tabs").addEventListener("click", e => { const b = e.
 
 function showExample(){ $("#answer").replaceChildren(renderAnswer({...LIB[0], uni:"MUHS (Maharashtra)", qtype:"Long essay"}, { badge: "Example answer" })); }
 $("#q").value = "Physiotherapy management of frozen shoulder";
-renderSubjects(); showExample(); renderShelf(); renderLib(); newRound(); renderQuiz();
+renderSubjects(); showExample(); renderShelf(); renderMgr(); renderLib(); newRound(); renderQuiz();
 try { const t = localStorage.getItem("la-tab"); if (views.includes(t)) show(t); } catch {}
 
 (async () => {
