@@ -155,7 +155,7 @@ select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px 
 ul.b{margin:0;padding-left:20px}
 ul.b li{margin:3px 0}
 .markbar{display:flex;flex-direction:column;gap:6px}
-.wfor{margin-bottom:12px;flex-wrap:wrap}.wguide>p{margin:0 0 10px}.model{margin-top:12px;border:1px dashed var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}.model h5{margin:0 0 6px;font:700 .72rem var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--mint)}.model p{margin:0 0 6px}
+.wfor{margin-bottom:12px;flex-wrap:wrap}.wguide>p{margin:0 0 10px}.safety{margin:10px 0 0;padding:8px 12px;border-left:3px solid #c2410c;background:var(--bg);border-radius:8px;font-size:.82rem;color:var(--muted)}.safety b{color:#c2410c}.model{margin-top:12px;border:1px dashed var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}.model h5{margin:0 0 6px;font:700 .72rem var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--mint)}.model p{margin:0 0 6px}
 .markrow{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;font-size:.95rem}
 .markrow .bar{grid-column:1 / -1;height:6px;border-radius:6px;background:var(--sunk);overflow:hidden}
 .markrow .bar i{display:block;height:100%;background:var(--saffron-bright)}
@@ -448,7 +448,7 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
       <p><strong>References.</strong> Library topics are original summaries that point to standard textbooks (see the Reference shelf in the Library) and to real guidelines and trials you can open on PubMed. No book text is copied. Always read the chapter for depth.</p>
       <p><strong>Free forever.</strong> No account, no fees, no ads. The library grows topic by topic and anyone can add to it on GitHub.</p>
       <p><strong>Low network.</strong> The library and quiz are inside the page. A new answer uses only a few kilobytes of text. You can download any answer, or the whole library, as a PDF to read offline.</p>
-      <p>This is a study aid for students, not medical advice for patients.</p>
+      <p><strong>Safety.</strong> This is a study aid for students, not medical advice for patients. Answers are written carefully from standard textbooks and guidelines, but mistakes are possible and practice changes. Before using any dose, vaccine schedule, drug, electrotherapy parameter or exercise prescription with a real patient, check it against current official guidance (MoHFW, WHO, NICE, your university syllabus) and a qualified clinician. Spotted an error? Report it on GitHub and it will be corrected for everyone.</p>
     </div>
   </section>
 </div>
@@ -699,6 +699,7 @@ function writeGuide(a, n){
 }
 
 /* ================= answer rendering ================= */
+const SAFETY = "For study and exam revision only, not medical advice. Doses, schedules, drug and electrotherapy parameters and guidelines change over time: check them against current official guidance (MoHFW, WHO, NICE, your university) and a qualified clinician before using them with a patient.";
 function renderAnswer(a, opts = {}){
   const id = "a" + (++uid);
   const marks = a.marks ? a.marks + " marks" : "Full";
@@ -742,6 +743,7 @@ function renderAnswer(a, opts = {}){
       <div class="meta"><span class="pill marks">${esc(marks)}</span>${a.qtype?`<span class="pill">${esc(a.qtype)}</span>`:""}${a.subject?`<span class="pill tag">${esc(a.subject)}</span>`:""}${a.lang&&a.lang!=="English"?`<span class="pill">${esc(a.lang)}</span>`:""}${opts.badge?`<span class="pill ok">${esc(opts.badge)}</span>`:""}</div>
       <h2>${esc(a.title)}</h2>
     </div>
+    <p class="safety" role="note"><b>Safety:</b> ${esc(SAFETY)}${a.checked ? `<br><b>Checked:</b> ${esc(a.checked)}` : ""}</p>
     <nav class="jump" aria-label="Sections">${S.map(s=>`<a href="#${id}-${s.key}">${esc(s.label)}</a>`).join("")}</nav>
     ${S.map(s=>`<section class="sec" id="${id}-${s.key}"><h3>${esc(labels[s.key])}</h3>${s.html}</section>`).join("")}
     <section class="sec" data-re hidden><h3 data-re-title>Explained again</h3><div class="reexplain"></div></section>
@@ -800,7 +802,8 @@ function buildPdf(list){
     if (i > 0) { doc.addPage(); y = M; }
     text("LEARN ANYWHERE  |  free physiotherapy learning", 8, "bold", [184,110,0], 0, 6);
     text(a.title, 20, "bold", [18,26,51], 0, 2);
-    text([a.marks ? a.marks + " marks" : "", a.qtype, a.subject, a.uni].filter(Boolean).join("  |  "), 9, "normal", [89,98,127], 0, 8);
+    text([a.marks ? a.marks + " marks" : "", a.qtype, a.subject, a.uni].filter(Boolean).join("  |  "), 9, "normal", [89,98,127], 0, 4);
+    text("Safety: " + SAFETY + (a.checked ? " Checked: " + a.checked : ""), 8.5, "italic", [150,60,20], 0, 8);
     head("In simple words"); text(a.simple);
     if ((a.flow||[]).length){
       head("Flowchart");
@@ -858,7 +861,7 @@ function buildPdf(list){
 function buildHtml(list){
   const css = "body{font:16px/1.6 system-ui,sans-serif;max-width:760px;margin:0 auto;padding:24px 16px;color:#121a33}h1{font-size:1.6rem}h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:#2f4fe0;margin-top:22px}h3{font-size:1rem;margin:12px 0 4px}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #dde;padding:6px;text-align:left}.m{color:#59627f;font-size:.9rem}hr{margin:40px 0}";
   const li = arr => "<ul>" + arr.map(x => "<li>" + esc(x) + "</li>").join("") + "</ul>";
-  const body = list.map(a => `<article><p class="m">Learn Anywhere</p><h1>${esc(a.title)}</h1><p class="m">${esc([a.marks ? a.marks + " marks" : "", a.qtype, a.subject, a.uni, a.lang].filter(Boolean).join(" | "))}</p>
+  const body = list.map(a => `<article><p class="m">Learn Anywhere</p><h1>${esc(a.title)}</h1><p class="m">${esc([a.marks ? a.marks + " marks" : "", a.qtype, a.subject, a.uni, a.lang].filter(Boolean).join(" | "))}</p><p class="m"><b>Safety:</b> ${esc(SAFETY)}${a.checked ? " Checked: " + esc(a.checked) : ""}</p>
     <h2>In simple words</h2><p>${esc(a.simple)}</p>
     ${(a.flow||[]).length?`<h2>Flowchart</h2><ol>${(st=>a.flow.map((f,i)=>`<li><small>${st?STAGES[st[i]]:"Step "+(i+1)}</small><br>${esc(f)}</li>`).join(""))(stagesOf(a))}</ol>`:""}
     ${(a.exam||[]).length?`<h2>Exam answer</h2>${a.exam.map(s=>`<h3>${esc(s.h)}</h3>${li(s.p||[])}`).join("")}${a.tip?`<p><strong>For full marks:</strong> ${esc(a.tip)}</p>`:""}`:""}
