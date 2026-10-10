@@ -1,7 +1,7 @@
 // PGDEI Papers IV and V (speech-language-communication; family and community) and the IEIP practical. Written in Learn Anywhere's own words.
 window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
 {
-  id:"speech-language-basics", title:"Communication, language and speech: basic concepts and the speech mechanism", subject:"Speech and language", region:"Speech and language", stages:"steps",
+  id:"speech-language-basics", title:"Communication, language and speech: basic concepts and the speech mechanism", subject:"Early Intervention: Speech and language", region:"Speech and language", stages:"steps",
   aliases:["communication language speech","components of language","phonology morphology syntax semantics pragmatics","speech production mechanism","anatomy of speech","form content use"],
   simple:"Communication is any sharing of messages, language is the rule-based code we use to share them, and speech is the spoken, motor way of producing that code. Language has five parts: sounds, word parts, sentence rules, meaning and social use. Speech needs breathing, voice, resonance and articulation working together under brain control.",
   flow:["Idea and intent to communicate (cognition)","Language coded in the brain: form, content, use","Respiration supplies air from the lungs","Phonation: vocal folds vibrate in the larynx","Resonance and articulation shape sounds in mouth and nose","Hearing and feedback monitor and correct the message"],
@@ -27,7 +27,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["The social use of language, such as turn taking and requesting, is called:",["Semantics","Pragmatics","Morphology","Phonology"],1,"Pragmatics covers the rules for using language in social context."],["Vibration of the vocal folds to produce voice is:",["Respiration","Resonance","Phonation","Articulation"],2,"Phonation happens at the larynx when the vocal folds vibrate."]]
 },
 {
-  id:"speech-language-development", title:"Speech and language development from birth: prerequisites, acquisition and stages", subject:"Speech and language", region:"Speech and language", stages:"steps",
+  id:"speech-language-development", title:"Speech and language development from birth: prerequisites, acquisition and stages", subject:"Early Intervention: Speech and language", region:"Speech and language", stages:"steps",
   aliases:["language milestones","stages of speech development","prelinguistic stage","babbling","first words","prerequisites for speech"],
   simple:"Babies learn to talk by hearing language, watching faces and taking turns with caring adults. They move from crying and cooing to babbling, first words around one year, two-word phrases by two and simple sentences by three. Good hearing, an intact brain and speech organs, and a talking environment are all needed.",
   flow:["Prerequisites: hearing, vision, brain, oral structures, social environment","Birth-3 months: crying, cooing, social smile","4-12 months: babbling, gestures, joint attention","12-18 months: first words, pointing to ask","18-24 months: word spurt, two-word phrases","2-5 years: sentences, grammar, clear speech, conversation"],
@@ -53,7 +53,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Two-word combinations typically appear by about:",["9 months","12 months","24 months","36 months"],2,"Most children combine two words by 18-24 months; absence at 24 months is a red flag."],["Which is a prerequisite for spoken language?",["Walking","Adequate hearing","Toilet training","Reading"],1,"Hearing is the main input and feedback channel for spoken language."]]
 },
 {
-  id:"communication-disorders", title:"Communication disorders in young children: nature, causes, prevalence and classification", subject:"Speech and language", region:"Speech and language", stages:"steps",
+  id:"communication-disorders", title:"Communication disorders in young children: nature, causes, prevalence and classification", subject:"Early Intervention: Speech and language", region:"Speech and language", stages:"steps",
   aliases:["speech and language disorders","classification of communication disorders","delayed speech","hearing impairment in children","DLD","causes of speech delay"],
   simple:"A communication disorder is a problem with hearing, understanding or using language, or with producing speech. In young children it may come from hearing loss, intellectual disability, autism, cerebral palsy, cleft palate, poor stimulation or unknown causes. Problems are grouped as language, speech sound, fluency, voice, resonance and hearing disorders.",
   flow:["Risk factors: prenatal, perinatal, postnatal, environmental","Disorder affects hearing, language, speech or social use","Signs: delayed milestones, unclear speech, poor understanding","Classify: language, speech sound, fluency, voice, resonance, hearing","Screen hearing; refer to SLP and audiologist","Early, family-based intervention and follow-up"],
@@ -79,7 +79,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Childhood apraxia of speech is mainly a problem of:",["Hearing","Motor planning of speech","Vocal fold vibration","Vocabulary only"],1,"CAS is a disorder of planning and programming speech movements."],["Under RPwD Act 2016, 'deaf' refers to a hearing loss in speech frequencies of:",["26 dB in one ear","40 dB in both ears","70 dB or more in both ears","90 dB in one ear"],2,"The Act defines deaf as 70 dB or more in speech frequencies in both ears."]]
 },
 {
-  id:"speech-language-assessment", title:"Speech and language assessment in early intervention", subject:"Speech and language", region:"Speech and language", stages:"steps",
+  id:"speech-language-assessment", title:"Speech and language assessment in early intervention", subject:"Early Intervention: Speech and language", region:"Speech and language", stages:"steps",
   aliases:["REELS","language assessment tools","informal assessment","family centred assessment","assessment vs evaluation","LEST"],
   simple:"Assessment means collecting information about how a child hears, understands, uses and produces language, so we can decide whether there is a problem and what to work on. We use formal tests, checklists, observation of play and parent report. Families take part as partners, and results are shared with them clearly and kindly.",
   flow:["Referral concern and case history","Hearing screen and oral-motor examination","Formal tools (REELS, LEST) and informal observation","Parent report and family priorities","Interpret, write report, share results with family","Plan goals; re-assess and evaluate outcomes"],
@@ -105,7 +105,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["REELS is designed for children aged:",["Birth to 3 years","3 to 6 years","6 to 12 years","Adolescents"],0,"REELS covers emergent language from birth to about 3 years."],["Which is an informal assessment method?",["Standardised norm-referenced test","Language sample analysis","Audiometry","IQ test"],1,"Language sampling in play is informal and gives natural data."]]
 },
 {
-  id:"speech-language-intervention", title:"Speech and language intervention in early intervention: techniques, goals and parent guidance", subject:"Speech and language", region:"Speech and language", stages:"steps",
+  id:"speech-language-intervention", title:"Speech and language intervention in early intervention: techniques, goals and parent guidance", subject:"Early Intervention: Speech and language", region:"Speech and language", stages:"steps",
   aliases:["parallel talk","self talk","expansion","language stimulation techniques","speech therapy goals","parent guidance speech"],
   simple:"Intervention turns assessment findings into goals and daily practice. Parents and therapists use simple strategies such as talking about what they or the child are doing, copying and expanding the child's words, and waiting for the child to take a turn. Goals are set for the short and long term, progress is checked, and children who need more are referred to a speech-language pathologist.",
   flow:["Link assessment findings to needs and priorities","Set long-term goals and SMART short-term objectives","Choose strategies: self talk, parallel talk, expansion, modelling","Coach parents to use them in daily routines","Monitor data; refer to SLP or audiologist when needed","Evaluate child and family outcomes; revise the plan"],
@@ -131,7 +131,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["A child says 'ball fall'; the adult says 'The ball fell down'. This is:",["Self talk","Expansion","Parallel talk","Sabotage"],1,"Expansion restates the child's words in a fuller grammatical form."],["Which short-term objective is SMART?",["Improve speech","Talk better at home","Name 5 family members in 4 of 5 trials within 6 weeks","Say more words"],2,"It is specific, measurable and time-bound."]]
 },
 {
-  id:"aac", title:"Augmentative and alternative communication (AAC) for young children", subject:"Speech and language", region:"Speech and language", stages:"steps",
+  id:"aac", title:"Augmentative and alternative communication (AAC) for young children", subject:"Early Intervention: Speech and language", region:"Speech and language", stages:"steps",
   aliases:["AAC","PECS","communication board","speech generating device","sign language","alternative communication"],
   simple:"AAC means any way of communicating that adds to or replaces speech: gestures, signs, pictures, communication boards or talking devices. It helps children with CP, autism, severe hearing loss or intellectual disability express needs now. Using AAC does not stop speech; it often helps speech grow.",
   flow:["Identify child who cannot meet needs through speech","Assess motor, vision, hearing, cognition, family priorities","Choose unaided or aided, low or high technology system","Select vocabulary and access method (point, eye gaze, switch)","Model AAC in daily routines; train family and teachers","Review, expand vocabulary and upgrade system as child grows"],
@@ -157,7 +157,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["A picture communication board is an example of:",["Unaided AAC","Aided low-tech AAC","High-tech AAC","Speech therapy only"],1,"Boards need an external aid but no electronics."],["Regarding AAC and speech, evidence shows that AAC:",["Stops speech developing","Does not hinder and may help speech","Should start only after 5 years","Is only for adults"],1,"Reviews (Millar et al. 2006) found no harm and frequent gains."]]
 },
 {
-  id:"family-systems", title:"The family and the child: types, life cycle, dynamics and family systems", subject:"Family and community", region:"Family and community", stages:"steps",
+  id:"family-systems", title:"The family and the child: types, life cycle, dynamics and family systems", subject:"Early Intervention: Family and community", region:"Family and community", stages:"steps",
   aliases:["family systems theory","types of family","family life cycle","family dynamics","joint family","effect of disabled child on family","coping"],
   simple:"A family is a group of people linked by birth, marriage or choice who care for each other and raise children. Families change over a life cycle and work as a system, so what happens to one member, such as the birth of a child with a disability, affects everyone. Understanding a family's roles, culture, resources and coping helps the interventionist support the child through the family.",
   flow:["Define family and identify its type","Map life-cycle stage, members, roles and hierarchy","Understand culture, communication and decision making","List resources, strengths, supports and needs","Assess impact of the child's disability and coping","Plan support that fits the family system"],
@@ -183,7 +183,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["In Turnbull's framework, providing affection and self-esteem are family:",["Characteristics","Interactions","Functions","Life-cycle stages"],2,"Family functions include affection, self-esteem, daily care, economics and others."],["The Double ABCX model is a model of:",["Language acquisition","Family stress and adaptation","Motor control","Group dynamics"],1,"McCubbin and Patterson's model explains family adaptation to stress."]]
 },
 {
-  id:"parental-reactions", title:"Parents of a child with developmental delay: reactions, stress and support", subject:"Family and community", region:"Family and community", stages:"steps",
+  id:"parental-reactions", title:"Parents of a child with developmental delay: reactions, stress and support", subject:"Early Intervention: Family and community", region:"Family and community", stages:"steps",
   aliases:["parental reactions","stages of grief disability","parental stress","parent training","parent to parent support","chronic sorrow"],
   simple:"When parents learn their baby has a delay or disability, they often feel shock, denial, guilt, anger and sadness before slowly adapting. Many face stress, tiredness, money worries and depression, and their confidence can drop. Parent training and meeting other parents who have been through the same help them cope and help the child.",
   flow:["Diagnosis or suspicion of delay","Shock and denial","Guilt, anger, sadness and blame","Gradual adaptation and reorganisation","Ongoing stress; chronic sorrow at milestones","Support: training, counselling, parent-to-parent groups"],
@@ -209,7 +209,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["The first stage in Drotar's model is:",["Denial","Shock","Anger","Adaptation"],1,"Drotar's sequence starts with shock."],["Recurring grief at milestones in parents of a child with disability is called:",["Chronic sorrow","Psychosis","Denial","Burnout"],0,"Olshansky termed this chronic sorrow; it is a normal reaction."]]
 },
 {
-  id:"counselling-ei", title:"Counselling in early intervention: case work, family therapy, marital counselling and breaking the news", subject:"Family and community", region:"Family and community", stages:"steps",
+  id:"counselling-ei", title:"Counselling in early intervention: case work, family therapy, marital counselling and breaking the news", subject:"Early Intervention: Family and community", region:"Family and community", stages:"steps",
   aliases:["case work","Biestek principles","family therapy","marital counselling","breaking bad news","SPIKES","individual counselling"],
   simple:"Counselling helps parents understand their feelings, solve problems and make decisions about their child. Case work is a one-to-one helping method with clear principles such as acceptance and confidentiality; family therapy works with the whole family, and marital counselling with the couple. Breaking the news of a disability must be done honestly, kindly and in private, with both parents present where possible.",
   flow:["Build rapport; ensure privacy and time","Listen and understand the problem (intake and study)","Assess needs, feelings and resources","Plan goals together with the client","Intervene: counselling, information, linking to services","Evaluate, follow up and terminate"],
@@ -235,7 +235,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Which is one of Biestek's principles of case work?",["Directive advice","Client self-determination","Punishment","Group decision"],1,"Self-determination respects the client's right to make choices."],["In SPIKES, 'P' stands for:",["Prognosis","Perception","Planning","Prayer"],1,"Find out what the parents already know or perceive."]]
 },
 {
-  id:"community-disability", title:"Community and disability: culture, awareness, community organisation and group work", subject:"Family and community", region:"Family and community", stages:"steps",
+  id:"community-disability", title:"Community and disability: culture, awareness, community organisation and group work", subject:"Early Intervention: Family and community", region:"Family and community", stages:"steps",
   aliases:["community organisation","group work","group dynamics","community awareness","attitudes to disability","self help groups"],
   simple:"A community is a group of people living in one area or sharing common interests and values. Its beliefs and attitudes can include or exclude a child with disability, so awareness work, local resources and organised community action matter. Group work uses small groups, such as parent groups, to share support and learn together.",
   flow:["Understand the community: people, leaders, beliefs, resources","Identify attitudes and barriers to inclusion","Raise awareness; involve leaders, ASHA, Anganwadi","Organise: committees, self-help and parent groups","Use group work for support and learning","Mobilise resources; evaluate and sustain"],
@@ -261,7 +261,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["A parent self-help group is a type of:",["Task group","Mutual support group","Therapeutic hospital group","Recreational club only"],1,"Self-help groups give mutual support among people with a shared situation."],["Which is NOT one of Tuckman's stages?",["Forming","Storming","Reforming","Norming"],2,"The stages are forming, storming, norming, performing and adjourning."]]
 },
 {
-  id:"ei-services", title:"Organising early intervention services: schemes, service models, teams and preschool linkage", subject:"Family and community", region:"Family and community", stages:"steps",
+  id:"ei-services", title:"Organising early intervention services: schemes, service models, teams and preschool linkage", subject:"Early Intervention: Family and community", region:"Family and community", stages:"steps",
   aliases:["RBSK","DEIC","RPwD Act 2016","National Trust Niramaya","UDID","transdisciplinary team","service delivery models"],
   simple:"Early intervention services in India are delivered through government programmes like RBSK and District Early Intervention Centres, laws such as the RPwD Act 2016, and National Trust schemes. Services can be home-based, centre-based, hospital-based or community-based, and are given by teams that work together in different ways. Good programmes also prepare the child to join a preschool.",
   flow:["Identify child through screening (RBSK, Anganwadi, NICU follow-up)","Refer to DEIC or EI centre; team assessment","Choose service setting: home, centre, hospital, community","Team plans IEIP; certify disability; access schemes","Deliver and monitor intervention with family","Transition to inclusive preschool or Anganwadi"],
@@ -287,7 +287,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["A primary service provider supported by other professionals who release roles describes the:",["Multidisciplinary model","Interdisciplinary model","Transdisciplinary model","Medical model"],2,"Role release and one main provider define the transdisciplinary model."],["Niramaya is a scheme of the National Trust providing:",["Free school uniforms","Health insurance","Housing","Employment"],1,"Niramaya is a health insurance scheme for persons covered by the National Trust Act."]]
 },
 {
-  id:"ieip", title:"Case history, developmental and family assessment and the Individualised Early Intervention Programme (IEIP / IFSP)", subject:"Family and community", region:"Family and community", stages:"steps",
+  id:"ieip", title:"Case history, developmental and family assessment and the Individualised Early Intervention Programme (IEIP / IFSP)", subject:"Early Intervention: Family and community", region:"Family and community", stages:"steps",
   aliases:["IEIP","IFSP","case history infant","developmental assessment 0-3","family assessment","individualised family service plan","practical exam record"],
   simple:"For every child, the interventionist takes a detailed case history, assesses development and the family's concerns and resources, then writes an individualised plan with clear goals. The plan is carried out mostly at home with the family, progress is recorded and the plan is reviewed. This is the core of the PGDEI practical exams.",
   flow:["Case history: prenatal, birth, medical, developmental, family","Developmental assessment with standard tools (DASII, Portage, TDSC)","Family assessment: concerns, priorities, resources, stress","Write IEIP: present levels, goals, strategies, who, where, when","Implement through home routines and sessions","Evaluate, record progress, review and plan transition"],

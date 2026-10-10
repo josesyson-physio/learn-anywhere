@@ -403,10 +403,11 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
   <!-- LIBRARY -->
   <section id="view-lib" class="view" hidden>
     <div class="row" style="justify-content:space-between">
-      <div><h2>Library</h2><p class="small">Ready answers that work without internet, written from standard physiotherapy textbooks and guidelines. <span id="libCount"></span></p></div>
+      <div><h2>Library</h2><p class="small">Ready answers that work without internet, written from standard textbooks and guidelines. Physiotherapy topics and PG Diploma in Early Intervention topics are marked separately (pick one in the subject list). <span id="libCount"></span></p></div>
       <button class="ghost" id="libPdf" type="button" hidden>Download library as PDF</button>
     </div>
-    <details class="shelf" id="mgrMap"><summary>University syllabus, topic by topic: Dr. MGR BPT, PG Diploma in Early Intervention</summary>
+    <details class="shelf" id="mgrMap"><summary>University syllabus, topic by topic</summary>
+      <p class="small">Two separate courses from two universities. Pick yours: BPT Physiotherapy from the Tamil Nadu Dr. M.G.R. Medical University, or the PG Diploma in Early Intervention from Osmania University (with NIEPID).</p>
       <div class="seg" id="mgrCourse" role="group" aria-label="Course"></div>
       <p class="small" id="mgrMeta"></p>
       <div class="seg" id="mgrYears" role="group" aria-label="Year"></div>
@@ -624,7 +625,8 @@ function prepTopic(t){
     const big = marking.reduce((b, r, i) => r[1] > marking[b][1] ? i : b, 0);
     marking[big][1] += diff;
   }
-  return { marks: 10, ...t, refs, marking };
+  const ei = /^Early Intervention/.test(t.subject || "");
+  return { marks: 10, ...(ei ? { course: "PG Diploma in Early Intervention", uni: "Osmania University (with NIEPID, Secunderabad)" } : {}), ...t, refs, marking };
 }
 
 /* ================= helpers ================= */
@@ -740,7 +742,7 @@ function renderAnswer(a, opts = {}){
   el.className = "sheet";
   el.innerHTML = `
     <div class="sheet-head">
-      <div class="meta"><span class="pill marks">${esc(marks)}</span>${a.qtype?`<span class="pill">${esc(a.qtype)}</span>`:""}${a.subject?`<span class="pill tag">${esc(a.subject)}</span>`:""}${a.lang&&a.lang!=="English"?`<span class="pill">${esc(a.lang)}</span>`:""}${opts.badge?`<span class="pill ok">${esc(opts.badge)}</span>`:""}</div>
+      <div class="meta"><span class="pill marks">${esc(marks)}</span>${a.qtype?`<span class="pill">${esc(a.qtype)}</span>`:""}${a.course?`<span class="pill">${esc(a.course)}</span>`:""}${a.subject?`<span class="pill tag">${esc(a.subject)}</span>`:""}${a.lang&&a.lang!=="English"?`<span class="pill">${esc(a.lang)}</span>`:""}${opts.badge?`<span class="pill ok">${esc(opts.badge)}</span>`:""}</div>
       <h2>${esc(a.title)}</h2>
     </div>
     <p class="safety" role="note"><b>Safety:</b> ${esc(SAFETY)}${a.checked ? `<br><b>Checked:</b> ${esc(a.checked)}` : ""}</p>
@@ -800,7 +802,7 @@ function buildPdf(list){
   const bullet = t => text("- " + t, 10.5, "normal", [25,30,50], 10, 1);
   list.forEach((a, i) => {
     if (i > 0) { doc.addPage(); y = M; }
-    text("LEARN ANYWHERE  |  free physiotherapy learning", 8, "bold", [184,110,0], 0, 6);
+    text("LEARN ANYWHERE  |  free learning for every student", 8, "bold", [184,110,0], 0, 6);
     text(a.title, 20, "bold", [18,26,51], 0, 2);
     text([a.marks ? a.marks + " marks" : "", a.qtype, a.subject, a.uni].filter(Boolean).join("  |  "), 9, "normal", [89,98,127], 0, 4);
     text("Safety: " + SAFETY + (a.checked ? " Checked: " + a.checked : ""), 8.5, "italic", [150,60,20], 0, 8);
@@ -1054,13 +1056,14 @@ function renderShelf(){
   $("#sylStages").innerHTML = SY.stages.map(st => `<div class="sylrow"><h4>${esc(st.h)}</h4><p class="small">${esc(st.d)}</p><div class="suggest">${st.s.filter(count).map(k => `<button type="button" data-sub="${esc(k)}">${esc(k)} <b>${count(k)}</b></button>`).join("")}</div></div>`).join("");
   $("#sylLinks").innerHTML = SY.links.map(([n, u]) => `<li><a href="${esc(u)}" target="_blank" rel="noopener">${esc(n)}</a></li>`).join("");
   const subs = [...new Set(LIB.map(t => t.subject))].sort();
-  $("#libSubject").innerHTML = `<option value="">All subjects</option>` + subs.map(x => `<option>${esc(x)}</option>`).join("");
+  const isEI = x => /^Early Intervention/.test(x), opt = x => `<option value="${esc(x)}">${esc(x.replace(/^Early Intervention: /, ""))}</option>`;
+  $("#libSubject").innerHTML = `<option value="">All subjects</option><optgroup label="Physiotherapy (BPT, MPT)">${subs.filter(x => !isEI(x)).map(opt).join("")}</optgroup><optgroup label="PG Diploma in Early Intervention">${subs.filter(isEI).map(opt).join("")}</optgroup>`;
 }
 $("#libSearch").addEventListener("input", renderLib);
 $("#libSubject").addEventListener("change", renderLib);
 /* Dr. MGR syllabus, topic by topic */
 let mgrYear = "I", mgrCourse = "mgr";
-const COURSES = () => [window.MGR_BPT && {...window.MGR_BPT, key: "mgr", label: "Dr. MGR BPT", university: "Tamil Nadu Dr. M.G.R. Medical University", note: "revised January 2022"}, ...(window.COURSE_MAPS || [])].filter(Boolean);
+const COURSES = () => [window.MGR_BPT && {...window.MGR_BPT, key: "mgr", label: "BPT Physiotherapy (Dr. MGR University)", university: "Tamil Nadu Dr. M.G.R. Medical University", note: "revised January 2022"}, ...(window.COURSE_MAPS || [])].filter(Boolean);
 function renderMgr(){
   const CS = COURSES(); if (!CS.length) { $("#mgrMap").hidden = true; return; }
   const M = CS.find(c => c.key === mgrCourse) || CS[0];

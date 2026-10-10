@@ -1,7 +1,7 @@
 // PGDEI Paper III: Physical and occupational therapy in early intervention (paediatric therapy). Written in Learn Anywhere's own words.
 window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
 {
-  id:"postural-control-reflexes", title:"Normal postural control, balance, primitive reflexes and automatic reactions", subject:"Paediatric therapy", region:"Whole body", stages:"steps",
+  id:"postural-control-reflexes", title:"Normal postural control, balance, primitive reflexes and automatic reactions", subject:"Early Intervention: Paediatric therapy", region:"Whole body", stages:"steps",
   aliases:["primitive reflexes","newborn reflexes","righting reactions","equilibrium reactions","protective reactions","postural control","normal and abnormal development"],
   simple:"A newborn moves mostly with primitive reflexes such as Moro and grasp. As the brain matures these fade and are replaced by righting, protective and balance reactions that let the baby hold the head, sit, stand and walk. A reflex that stays too long, or a reaction that does not appear, is an early warning sign.",
   flow:["Newborn: primitive reflexes dominate, physiological flexion","Brain maturation integrates reflexes in the first 6 months","Righting reactions align head and body from 1-6 months","Protective and equilibrium reactions appear from 6 months","Persistence or absence of reactions flags abnormal development","Intervene early: positioning, handling and play to build control"],
@@ -27,7 +27,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Which reaction appears last in the normal infant?",["Forward parachute","Sideways parachute","Backward parachute","Labyrinthine head righting"],2,"Backward protective extension appears at about 9-10 months, after forward and sideways."],["The plantar grasp reflex normally disappears by:",["2 months","4 months","9-12 months","3 years"],2,"Plantar grasp persists until about 9-12 months, before independent standing."]]
 },
 {
-  id:"paediatric-assessment", title:"Paediatric PT and OT assessment and formation of treatment goals (GMFM, GMFCS, AIMS, HINE, GMA, NDT assessment)", subject:"Paediatric therapy", region:"Whole body", stages:"steps",
+  id:"paediatric-assessment", title:"Paediatric PT and OT assessment and formation of treatment goals (GMFM, GMFCS, AIMS, HINE, GMA, NDT assessment)", subject:"Early Intervention: Paediatric therapy", region:"Whole body", stages:"steps",
   aliases:["role of physiotherapy and occupational therapy","tone assessment infant","GMFM","GMFCS","Alberta Infant Motor Scale","HINE","general movements assessment"],
   simple:"Before treating a baby, the therapist checks how the child moves, the tone of the muscles, joint range, strength and the quality of movement, and uses standard tests to measure them. The results are shared with the family and turned into clear goals that matter in the child's daily life. Physiotherapists focus on gross motor skills; occupational therapists focus on hand use, self-care, play and sensory processing.",
   flow:["Case history, birth risk factors and family concerns","Observe spontaneous movement, posture and play","Test tone, ROM, power, reflexes and movement quality","Use standard tools: HINE, GMA, AIMS, GMFM, GMFCS","Write SMART family-centred goals with the parents","Re-assess at fixed intervals and revise goals"],
@@ -53,7 +53,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["GMFCS is used to:",["Measure change after therapy","Classify gross motor function into 5 levels","Measure spasticity","Assess sensory processing"],1,"GMFCS classifies; GMFM measures change."],["The HINE can be used in infants aged:",["0-1 month only","2-24 months","3-5 years","6-12 years"],1,"The Hammersmith Infant Neurological Examination is validated from 2 to 24 months."]]
 },
 {
-  id:"sensory-integration-therapy", title:"Sensory integration: assessment (SIPT, Sensory Profile) and treatment", subject:"Paediatric therapy", region:"Nervous system", stages:"steps",
+  id:"sensory-integration-therapy", title:"Sensory integration: assessment (SIPT, Sensory Profile) and treatment", subject:"Early Intervention: Paediatric therapy", region:"Nervous system", stages:"steps",
   aliases:["sensory integration","Ayres","sensory processing disorder","tactile defensiveness","sensory diet","SIPT","Sensory Profile"],
   simple:"Sensory integration is how the brain takes in touch, movement, body position, sight and sound and organises them so a child can play, learn and behave. Some children over-react or under-react to sensations, or have poor body awareness and motor planning. Occupational therapists assess this and use play rich in touch, swinging and heavy work to help.",
   flow:["Sensory input: tactile, vestibular, proprioceptive, visual, auditory","Brain registers, modulates and integrates the input","Dysfunction: modulation, discrimination or praxis problems","Assess: history, Sensory Profile 2, SIPT or EASI, observation","Treat: child-led play with suspended equipment, sensory diet","Coach parents to adapt routines and environment at home"],
@@ -79,7 +79,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Which activity is most likely to calm an over-aroused child?",["Fast spinning","Light tickling","Slow linear swinging with deep pressure","Loud music"],2,"Slow, linear, rhythmic and deep inputs are calming."],["The SIPT is standardised for children aged about:",["0-2 years","4-8 years 11 months","12-18 years","Adults"],1,"SIPT norms cover roughly 4 to 8 years 11 months."]]
 },
 {
-  id:"rood-approach", title:"Rood's approach: facilitation and inhibition techniques and ontogenetic motor sequence", subject:"Paediatric therapy", region:"Nervous system", stages:"steps",
+  id:"rood-approach", title:"Rood's approach: facilitation and inhibition techniques and ontogenetic motor sequence", subject:"Early Intervention: Paediatric therapy", region:"Nervous system", stages:"steps",
   aliases:["Rood","Margaret Rood","sensorimotor approach","icing brushing tapping","ontogenetic motor sequence","facilitation inhibition"],
   simple:"Margaret Rood believed that the right sensory stimulus can wake up or calm down muscles. Quick stimuli like brushing, ice or tapping make a weak muscle work; slow stroking, warmth and rocking calm a tight or over-active one. She also listed the order in which babies gain motor control, which therapists use to grade activity.",
   flow:["Assess tone: low (needs facilitation) or high (needs inhibition)","Choose sensory input matched to the problem","Facilitate: quick stretch, tapping, brushing, icing, approximation","Inhibit: slow stroking, neutral warmth, slow rocking, prolonged stretch","Follow the ontogenetic motor sequence for activities","Progress to purposeful functional movement"],
@@ -105,7 +105,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Which of these is an inhibitory Rood technique?",["Quick icing","Tapping","Neutral warmth","Fast brushing"],2,"Neutral warmth reduces tone and arousal."],["The first pattern in Rood's ontogenetic motor sequence is:",["Pivot prone","Supine withdrawal","Roll over","Quadruped"],1,"Supine withdrawal (total flexion) comes first."]]
 },
 {
-  id:"vojta-therapy", title:"Vojta therapy: reflex locomotion and postural reactions in diagnosis", subject:"Paediatric therapy", region:"Nervous system", stages:"steps",
+  id:"vojta-therapy", title:"Vojta therapy: reflex locomotion and postural reactions in diagnosis", subject:"Early Intervention: Paediatric therapy", region:"Nervous system", stages:"steps",
   aliases:["Vojta","reflex locomotion","reflex creeping","reflex rolling","Vojta postural reactions","Vojta diagnosis"],
   simple:"Vojta therapy was developed by a Czech neurologist. The therapist presses on certain points of the baby's body in set positions, which brings out automatic movement patterns like crawling and rolling. Vojta also described seven postural tests that help to spot babies whose movement development is going wrong.",
   flow:["Screen with 7 Vojta postural reactions","Grade central coordination disturbance by number of abnormal reactions","Place infant in a starting position (prone, supine, side)","Apply pressure at activation zones","Reflex creeping or rolling pattern is evoked","Parents repeat short sessions several times daily"],
@@ -131,7 +131,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["Which of these is a Vojta postural reaction?",["Babinski","Peiper-Isbert","Moro","Rooting"],1,"Peiper-Isbert (head-down vertical suspension) is one of the seven."],["The evidence for Vojta therapy is best described as:",["Strong","Weak","Proven superior to all others","Harmful in all children"],1,"Reviews find low-quality evidence without clear superiority."]]
 },
 {
-  id:"facilitation-handling", title:"Facilitation of normal movement: handling, positioning and carrying the young child (Finnie) and home programme", subject:"Paediatric therapy", region:"Whole body", stages:"steps",
+  id:"facilitation-handling", title:"Facilitation of normal movement: handling, positioning and carrying the young child (Finnie) and home programme", subject:"Early Intervention: Paediatric therapy", region:"Whole body", stages:"steps",
   aliases:["handling","positioning","carrying","Finnie","home programme","facilitation of normal movement","24-hour postural care"],
   simple:"How a parent lifts, carries, feeds and positions a child with motor problems makes a big difference to tone, comfort and learning. Good handling helps the child use more normal movement and stops deformities forming. Nancie Finnie wrote practical guidance for parents, and therapists teach these skills as part of a home programme.",
   flow:["Observe child's posture, tone and family daily routines","Prepare: reduce excess tone, align trunk and pelvis","Facilitate via key points: head, shoulders, pelvis","Teach carrying, positioning, feeding and dressing positions","Write a simple illustrated home programme with parents","Review and progress as control improves"],
@@ -157,7 +157,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["For a child with athetosis, carrying should keep:",["Arms back and legs straight","Arms forward with hands together and legs bent","Head extended","Trunk rotated away"],1,"Bringing arms forward and legs bent gives stability and midline control."],["The best seating position for a child with CP is usually:",["W-sitting","Hips about 90 degrees with feet supported","Sacral sitting","Long sitting with knees locked"],1,"Upright pelvis, hips at 90 degrees and supported feet."]]
 },
 {
-  id:"erbs-palsy", title:"Obstetric brachial plexus palsy (Erb's and Klumpke's palsy)", subject:"Paediatric therapy", region:"Upper limb", stages:"012344",
+  id:"erbs-palsy", title:"Obstetric brachial plexus palsy (Erb's and Klumpke's palsy)", subject:"Early Intervention: Paediatric therapy", region:"Upper limb", stages:"012344",
   aliases:["Erb's palsy","Klumpke's palsy","OBPP","birth brachial plexus injury","waiter's tip","Narakas classification"],
   simple:"During a difficult birth the nerves in the baby's neck that supply the arm can be stretched or torn. In Erb's palsy the upper nerves are hurt and the arm hangs by the side, turned in. Most babies recover over months with gentle exercise, but some need nerve surgery.",
   flow:["Traction on neck and shoulder in difficult delivery","Stretch, rupture or avulsion of C5-T1 roots","Limp arm: waiter's tip posture, asymmetric Moro","Assess AMS, Narakas grade, biceps recovery by 3 months","Gentle ROM, positioning, sensory and active play","Microsurgery if poor recovery; later secondary procedures"],
@@ -183,7 +183,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["In Erb's palsy the forearm is held in:",["Supination","Pronation","Mid-prone","Hyper-supination"],1,"The waiter's tip posture has a pronated forearm."],["Horner syndrome with OBPP suggests injury to:",["C5","C6","T1 root","Axillary nerve"],2,"T1 sympathetic fibres; suggests avulsion and poor prognosis."]]
 },
 {
-  id:"ddh", title:"Developmental dysplasia of the hip (congenital dislocation of hip, CDH)", subject:"Paediatric therapy", region:"Hip", stages:"012344",
+  id:"ddh", title:"Developmental dysplasia of the hip (congenital dislocation of hip, CDH)", subject:"Early Intervention: Paediatric therapy", region:"Hip", stages:"012344",
   aliases:["CDH","DDH","congenital dislocation of hip","Ortolani","Barlow","Pavlik harness"],
   simple:"In DDH the ball of the thigh bone does not sit properly in the hip socket, so the hip is loose or out of joint. It is found by gently testing the newborn's hips and by ultrasound. Treated early with a soft harness that keeps the hips bent and apart, most babies get a normal hip.",
   flow:["Risk factors: breech, female, first born, family history","Shallow acetabulum, lax capsule, femoral head subluxes","Positive Ortolani or Barlow, later limited abduction","Ultrasound under 4-6 months, X-ray after","Pavlik harness under 6 months","Reduction and spica if late; physiotherapy afterwards"],
@@ -209,7 +209,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["After 3 months of age, the most reliable clinical sign of DDH is:",["Positive Ortolani","Limited hip abduction","Asymmetric skin folds","Hip clicks"],1,"Ortolani and Barlow become negative as soft tissues tighten."],["The Pavlik harness keeps the hips in:",["Extension and adduction","Flexion and gentle abduction","Extension and internal rotation","Neutral"],1,"About 90-100 degrees of flexion with gentle, not forced, abduction."]]
 },
 {
-  id:"congenital-torticollis", title:"Congenital muscular torticollis and positional plagiocephaly", subject:"Paediatric therapy", region:"Neck", stages:"012344",
+  id:"congenital-torticollis", title:"Congenital muscular torticollis and positional plagiocephaly", subject:"Early Intervention: Paediatric therapy", region:"Neck", stages:"012344",
   aliases:["torticollis","wry neck","sternomastoid tumour","CMT","plagiocephaly","flat head"],
   simple:"In congenital muscular torticollis one sternomastoid muscle in the baby's neck is short and tight, so the head tilts to that side and turns to the other. Babies often get a flat area on the back of the head. Gentle stretching, positioning and tummy time started early cure most babies.",
   flow:["Intrauterine crowding or birth trauma to sternomastoid","Fibrosis and shortening of one sternomastoid","Head tilt to same side, chin to opposite side","Measure neck ROM; screen hips and exclude other causes","Stretching, active rotation play, positioning, tummy time","Surgery only if ROM deficit persists after 12 months"],
@@ -235,7 +235,7 @@ window.LIB_EXTRA = (window.LIB_EXTRA || []).concat([
   mcq:[["In left CMT, the stretch is:",["Lateral flexion to the left and rotation to the right","Lateral flexion to the right and rotation to the left","Neck extension","Neck flexion only"],1,"Bend away from the tight muscle and turn toward it."],["Which condition is commonly associated with CMT?",["DDH","Spina bifida","Duchenne dystrophy","Polio"],0,"Both relate to intrauterine packaging; screen the hips."]]
 },
 {
-  id:"aids-adl", title:"Aids and appliances, ADL training and intervention for multiple handicaps in young children", subject:"Paediatric therapy", region:"Whole body", stages:"steps",
+  id:"aids-adl", title:"Aids and appliances, ADL training and intervention for multiple handicaps in young children", subject:"Early Intervention: Paediatric therapy", region:"Whole body", stages:"steps",
   aliases:["assistive devices","adaptive seating","standing frame","walkers","ADL training","multiple disabilities","feeding dressing toileting"],
   simple:"Young children with disabilities often need equipment such as special chairs, standers, walkers and splints to sit, stand, move and use their hands. Therapists also teach the child and family ways to feed, dress and toilet as independently as possible. When a child has more than one disability, a team works together with the family on a single plan.",
   flow:["Assess child, family routines, home and resources","Set participation goals with the family","Select and fit aids: seating, stander, walker, splints","Teach ADL by task analysis and chaining","Coordinate a team plan for multiple disabilities","Review fit, growth and goals every few months"],

@@ -104,7 +104,7 @@ PR = [
  ("Practical III: Individualised family assessment (PGDEI 153)", "Family assessment and family intervention plan", "family-systems"),
  ("Practical IV: IEIP (PGDEI 154)", "Writing, implementing and evaluating the IEIP", "ieip"),
 ]
-M = {"key": "pgdei", "label": "PG Diploma in Early Intervention", "university": "Osmania University (with NIEPID, Secunderabad)", "course": "PGDEI",
+M = {"key": "pgdei", "label": "PG Diploma in Early Intervention (Osmania University)", "university": "Osmania University (with NIEPID, Secunderabad)", "course": "PGDEI",
      "regulation": "w.e.f. 2001-02, revised 2004-05", "tabLabel": "",
      "pattern": "One year. 5 theory papers, each 3 hours, 60 marks external + 20 internal. 4 practicals, each a full-day case exam with viva, 60 external + 90 internal.",
      "years": [
