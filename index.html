@@ -45,6 +45,18 @@
 <script src="library/relate-bpt-exth1.js"></script>
 <script src="library/relate-bpt-exth2.js"></script>
 <script src="library/relate-bpt-medpath.js"></script>
+<script src="library/bpt-cardio.js"></script>
+<script src="library/bpt-ptorthoneuro.js"></script>
+<script src="library/bpt-orthorehab.js"></script>
+<script src="library/bpt-electro1.js"></script>
+<script src="library/bpt-electro2.js"></script>
+<script src="library/bpt-commneuro.js"></script>
+<script src="library/relate-bpt-cardio.js"></script>
+<script src="library/relate-bpt-ptorthoneuro.js"></script>
+<script src="library/relate-bpt-orthorehab.js"></script>
+<script src="library/relate-bpt-electro1.js"></script>
+<script src="library/relate-bpt-electro2.js"></script>
+<script src="library/relate-bpt-commneuro.js"></script>
 <style>
 :root{color-scheme:light}
 body{margin:0;padding-top:env(safe-area-inset-top,0px)}
@@ -1156,7 +1168,11 @@ function words(q){ return (q||"").toLowerCase().split(/[^a-z0-9']+/).filter(w =>
 function score(it, ws){
   const top = [it.title, (it.aliases||[]).join(" "), it.id].join(" ").toLowerCase(), kw = (it.keywords + " " + it.subject + " " + it.region).toLowerCase(), h = hay(it);
   let n = 0;
-  for (const w of ws) n += top.includes(w) ? 3 : kw.includes(w) ? 2 : h.includes(w) ? 1 : 0;
+  // Whole-word matches rank above matches inside longer words, so short queries ("ESI act") find the right topic
+  for (const w of ws) {
+    const wb = new RegExp("(^|[^a-z0-9])" + w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+    n += top.includes(w) ? (wb.test(top) ? 4 : 3) : kw.includes(w) ? (wb.test(kw) ? 2.5 : 2) : h.includes(w) ? 1 : 0;
+  }
   return n;
 }
 function ranked(q){
