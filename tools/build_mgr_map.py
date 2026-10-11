@@ -11,6 +11,10 @@ bpt = json.load(open(os.path.join(src, "mgr-bpt.json")))
 gaps = json.load(open(os.path.join(src, "mgr-gaps.json")))
 known = {(g["paper"].lower(), g["topic"].lower()): g["covered"] for g in gaps if g.get("covered")}
 by_topic = {g["topic"].lower(): g["covered"] for g in gaps if g.get("covered")}
+# mgr-links.json: one topic id per remaining syllabus line, written with the BPT topic files (checked by hand)
+lp = os.path.join(src, "mgr-links.json")
+links = json.load(open(lp)) if os.path.exists(lp) else []
+direct = {(x["paper"].lower(), x["topic"].lower()): x["id"] for x in links}
 
 # Topic text -> library id, for topics written after the gap list was made (checked in order)
 RULES = [
@@ -57,7 +61,7 @@ RULES = [
     (r"cervical spondylosis|cervical radic", "cervical-radiculopathy"), (r"disc prolapse|\bpivd\b|sciatica|disc lesion", "lumbar-disc"),
     (r"low back|lumbar spondylosis", "lbp"), (r"frozen shoulder|periarthritis|adhesive capsulitis", "frozen-shoulder"),
     (r"osteoarthritis", "knee-oa"), (r"\bacl\b|cruciate|knee ligament", "acl"), (r"tennis elbow|lateral epicondyl", "tennis-elbow"),
-    (r"carpal tunnel", "carpal-tunnel"), (r"plantar fasci|heel", "plantar-heel-pain"), (r"ankle sprain", "ankle-sprain"),
+    (r"carpal tunnel", "carpal-tunnel"), (r"plantar fasci|heel pain|calcaneal spur", "plantar-heel-pain"), (r"ankle sprain", "ankle-sprain"),
     (r"supraspinatus|rotator cuff|impingement", "subacromial-pain"), (r"hamstring", "hamstring"), (r"flexor tendon|tendon repair", "flexor-tendon"),
     (r"chondromalacia|patellofemoral", "pfps"), (r"mobility aid|wheelchair", "crutch-gait"),
 ]
@@ -67,10 +71,12 @@ TECHNIQUE = {"balance-training", "massage", "stretching", "traction", "crutch-ga
 
 # Hand-checked corrections where a keyword would pick the wrong topic (matched on the start of the text)
 OVERRIDE = {"cns infections": None, "craniovertebral anomalies": None, "principles: positioning, fixation": "maitland-grades",
-            "basic procedures: traction, approximation": "pnf"}
+            "basic procedures: traction, approximation": "pnf", "tests: finger-nose, heel-knee": "coordination"}
 
 def link(paper, topic):
     physio = paper.lower().startswith(PHYSIO)
+    if (paper.lower(), topic.lower()) in direct:
+        return direct[(paper.lower(), topic.lower())]
     for k, v in OVERRIDE.items():
         if topic.lower().startswith(k):
             return v

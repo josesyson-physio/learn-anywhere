@@ -35,6 +35,16 @@
 <script src="library/relate-4.js"></script>
 <script src="library/relate-5.js"></script>
 <script src="library/relate-6.js"></script>
+<script src="library/bpt-biomech-a.js"></script>
+<script src="library/bpt-biomech-b.js"></script>
+<script src="library/bpt-exth1.js"></script>
+<script src="library/bpt-exth2.js"></script>
+<script src="library/bpt-medpath.js"></script>
+<script src="library/relate-bpt-biomech-a.js"></script>
+<script src="library/relate-bpt-biomech-b.js"></script>
+<script src="library/relate-bpt-exth1.js"></script>
+<script src="library/relate-bpt-exth2.js"></script>
+<script src="library/relate-bpt-medpath.js"></script>
 <style>
 :root{color-scheme:light}
 body{margin:0;padding-top:env(safe-area-inset-top,0px)}
@@ -1265,6 +1275,8 @@ const SUBJ = {
   "Kinesiology":["#4c6ef5","joint"], "Medicine and surgery":["#c92a2a","plus"], "Pain science":["#ae3ec9","pain"],
   "Physiology":["#099268","flask"], "Rehabilitation":["#1098ad","rehab"], "Research":["#495057","book"],
   "Women's health":["#c2255c","women"], "Community":["#364fc7","people"],
+  "Anatomy":["#b8461f","joint"], "Psychology and sociology":["#9c36b5","people"], "Physics":["#5c7cfa","bolt"],
+  "Pathology and microbiology":["#5f9e1f","flask"], "First aid and nursing":["#e03131","plus"], "Professional practice":["#3b5bdb","clip"],
   "Early Intervention: Neurobiology":["#6741d9","brain"], "Early Intervention: Child development":["#e64980","child"],
   "Early Intervention: Paediatric therapy":["#f08c00","hand"], "Early Intervention: Speech and language":["#1c7ed6","speech"],
   "Early Intervention: Family and community":["#5f3dc4","people"]
@@ -1335,7 +1347,13 @@ function nudge(kind, text){
 
 /* ================= quiz ================= */
 let qi = 0, qscore = 0, QUIZ = [], qrow = 0;
-function newRound(){ qrow = 0; QUIZ = QUIZ_POOL.map(x => [Math.random(), x]).sort((a, b) => a[0] - b[0]).slice(0, 10).map(([, x]) => x); qi = 0; qscore = 0; }
+// Shuffle the options too, so the right answer is not always in the same place (kept in order when one option refers to the others)
+function shuffleOpts(x){
+  if (x.o.some(o => /all of|none of|both|above|neither/i.test(o))) return x;
+  const order = x.o.map((_, i) => [Math.random(), i]).sort((a, b) => a[0] - b[0]).map(([, i]) => i);
+  return { ...x, o: order.map(i => x.o[i]), a: order.indexOf(x.a) };
+}
+function newRound(){ qrow = 0; QUIZ = QUIZ_POOL.map(x => [Math.random(), x]).sort((a, b) => a[0] - b[0]).slice(0, 10).map(([, x]) => shuffleOpts(x)); qi = 0; qscore = 0; }
 function renderQuiz(){
   const box = $("#quiz");
   if (qi >= QUIZ.length) {
