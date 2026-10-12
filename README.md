@@ -11,7 +11,7 @@ Free, open-source physiotherapy learning for every student, including those who 
 - **PDF downloads:** save any answer, or the whole library, as a PDF.
 - **Quiz:** exam-style MCQs with explanations.
 
-AI-written answers (ask any topic, in 12 languages) currently work in the Claude-hosted version. The public site shows the closest library topic until an AI service is connected.
+The public site has no AI and no paid services: "Find my answer" opens the closest ready topic from the library. AI-written answers (any topic, in 12 languages) only work in the Claude-hosted prototype.
 
 ## Run it
 
@@ -32,15 +32,17 @@ python3 -m http.server 8000
 
 | Path | What it is |
 | --- | --- |
-| `index.html` | The whole app: content, styles and logic |
+| `index.html` | The app: styles, logic and the first four topics |
+| `library/*.js` | Library topics, "like a friend" examples, the textbook list and the university syllabus maps |
+| `tools/` | Scripts that build the syllabus maps |
 | `sw.js` | Service worker for offline use |
 | `manifest.webmanifest`, `icons/` | Makes the app installable |
-| `vendor/jspdf.umd.min.js` | PDF generation (jsPDF 2.5.1, MIT) |
+| `vendor/jspdf.umd.min.js` | PDF generation (jsPDF 4.2.1, MIT) |
 | `docs/plan.md` | Product plan and roadmap |
 
 ## Adding a topic
 
-Library topics live in the `LIB` array in `index.html`. Copy an existing topic and fill in every field. Cite only real guidelines, textbooks or papers. See [CONTRIBUTING.md](CONTRIBUTING.md).
+Library topics live in `library/*.js` (each file pushes topics onto `window.LIB_EXTRA`). Copy an existing topic and fill in every field. A new file must also be added as a `<script>` in `index.html` and to `SHELL` in `sw.js` (then bump `VERSION`). Cite only real guidelines, textbooks or papers. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Licence
 

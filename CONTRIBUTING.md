@@ -4,11 +4,11 @@ Thank you for helping students learn for free. Physiotherapists, teachers, stude
 
 ## Content
 
-- **Add or improve a topic:** edit the `LIB` array in `index.html`. Keep the same fields as existing topics (`simple`, `flow`, `exam`, `marking`, `evidence`, `outcomes`, `recent`, `mnemonic`, `example`, `flags`, `viva`, `refs`).
+- **Add or improve a topic:** edit a file in `library/` (topics are pushed onto `window.LIB_EXTRA`). Keep the same fields as existing topics (`simple`, `flow`, `exam`, `marking`, `evidence`, `outcomes`, `recent`, `mnemonic`, `example`, `flags`, `viva`, `refs`).
 - **Accuracy first:** cite only real clinical practice guidelines, systematic reviews, trials or standard textbooks. Give the full citation. Never invent DOIs or page numbers.
 - **Write in your own words.** Do not copy text from copyrighted books, journals or guidelines.
 - **Plain language:** short sentences a first-year student can follow, with key exam terms kept.
-- **Quiz questions:** add to the `QUIZ` array with four options, the correct index and a one-line explanation.
+- **Quiz questions:** add an `mcq` list to a topic: `[question, [four options], correct index, one-line explanation]`.
 - New topics should be reviewed by a qualified physiotherapist before merging.
 
 ## Code
