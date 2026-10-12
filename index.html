@@ -271,7 +271,7 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
 .related{margin-top:14px}.related h3{margin:0 0 8px;font-size:1rem}
 .lib-tools{display:flex;gap:8px;flex-wrap:wrap}.lib-tools input{flex:1 1 200px}.lib-tools select{flex:0 1 200px}
 .shelf{margin-top:18px}
-.mgrsub{border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin:8px 0;background:var(--surface)}.mgrsub summary{display:flex;justify-content:space-between;gap:10px;cursor:pointer;font-weight:600}.mgrsub h5{margin:12px 0 4px;font:700 .74rem var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}.mgrlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}.mgrlist button{all:unset;cursor:pointer;color:var(--primary);font-weight:600;display:block;padding:3px 0}.mgrlist button::before{content:"\2713  ";color:var(--mint)}.mgrlist button:focus-visible{outline:2px solid var(--primary)}.mgrlist .todo{color:var(--muted);padding:3px 0}.mgrlist .todo::before{content:"\25CB  "}#mgrYears,#mgrCourse{margin:8px 0;flex-wrap:wrap}.sylrow{margin:10px 0 14px}.sylrow h4{margin:0}.sylrow p{margin:2px 0 6px}.suggest button b{color:var(--primary);margin-left:4px}.shelf summary{cursor:pointer;font-weight:600}.shelf h4{margin:14px 0 4px}
+.mgrsub{border:1px solid var(--line);border-radius:12px;padding:8px 12px;margin:8px 0;background:var(--surface)}.mgrsub summary{display:flex;justify-content:space-between;gap:10px;cursor:pointer;font-weight:600}.mgrsub h3{margin:12px 0 4px;font:700 .74rem var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}.mgrlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}.mgrlist button{all:unset;cursor:pointer;color:var(--primary);font-weight:600;display:block;padding:3px 0}.mgrlist button::before{content:"\2713  ";color:var(--mint)}.mgrlist button:focus-visible{outline:2px solid var(--primary)}.mgrlist .todo{color:var(--muted);padding:3px 0}.mgrlist .todo::before{content:"\25CB  "}#mgrYears,#mgrCourse{margin:8px 0;flex-wrap:wrap}.sylrow{margin:10px 0 14px}.sylrow h4{margin:0}.sylrow p{margin:2px 0 6px}.suggest button b{color:var(--primary);margin-left:4px}.shelf summary{cursor:pointer;font-weight:600}.shelf h4{margin:14px 0 4px}
 .actions{display:flex;flex-wrap:wrap;gap:8px;padding:14px 18px;background:var(--sunk);border-top:1px solid var(--line)}
 .reexplain{white-space:pre-wrap;background:var(--bg);border-radius:10px;padding:12px;font-size:.96rem;overflow-x:auto}
 
@@ -303,9 +303,7 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
 .about{display:flex;flex-direction:column;gap:10px;max-width:65ch}
 main{display:flex;flex-direction:column;gap:18px}
 main:focus{outline:none}
-.foot{margin-top:14px;padding-top:16px;border-top:1px solid var(--line);font-size:.86rem;color:var(--muted);display:flex;flex-direction:column;gap:8px}
-.foot ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px 16px}
-.foot a{display:inline-block;padding:4px 0}
+.foot{margin-top:14px;padding-top:16px;border-top:1px solid var(--line);font-size:.86rem;color:var(--muted);display:flex;flex-direction:column;gap:4px}
 @media (prefers-reduced-motion:no-preference){.sheet{animation:rise .3s ease-out both}@keyframes rise{from{transform:translateY(8px)}to{transform:none}}}
 /* small coloured text: mix the subject or stage colour with the ink colour so it stays readable (WCAG AA) in light and dark */
 .sheet .sec h3,.memory small{color:color-mix(in srgb,var(--sc) 60%,var(--ink))}
@@ -485,9 +483,9 @@ main:focus{outline:none}
           </select></label>
         <label class="field"><span>Year</span>
           <select id="level"><option>BPT 1st year</option><option>BPT 2nd year</option><option>BPT 3rd year</option><option selected>BPT 4th year</option><option>Internship</option><option>MPT</option></select></label>
-        <label class="field"><span>Question type</span>
+        <label class="field ai-only" hidden><span>Question type</span>
           <select id="qtype"><option>Long essay</option><option>Short essay</option><option>Short answer</option><option>Viva</option><option>Practical / OSCE</option></select></label>
-        <label class="field"><span>Language</span>
+        <label class="field ai-only" hidden><span>Language</span>
           <select id="lang"><option>English</option><option>Hindi</option><option>Tamil</option><option>Telugu</option><option>Malayalam</option><option>Kannada</option><option>Bengali</option><option>Marathi</option><option>Gujarati</option><option>Punjabi</option><option>Urdu</option><option>Odia</option></select></label>
       </div>
       <div class="field"><span>Marks</span>
@@ -576,14 +574,8 @@ main:focus{outline:none}
   </main>
 
   <footer class="foot">
-    <p><strong>Learn Anywhere</strong> is free and open source. A study aid for students, not medical advice for patients.</p>
-    <ul>
-      <li><a href="https://github.com/josesyson-physio/learn-anywhere" target="_blank" rel="noopener">Source code</a></li>
-      <li><a href="https://github.com/josesyson-physio/learn-anywhere/issues/new" target="_blank" rel="noopener">Report an error</a></li>
-      <li><a href="https://github.com/josesyson-physio/learn-anywhere/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">Contribute</a></li>
-      <li><a href="https://github.com/josesyson-physio/learn-anywhere/blob/main/LICENSE" target="_blank" rel="noopener">Code: MIT</a></li>
-      <li><a href="https://github.com/josesyson-physio/learn-anywhere/blob/main/CONTENT-LICENSE.md" target="_blank" rel="noopener">Content: CC BY-SA 4.0</a></li>
-    </ul>
+    <p><strong>Learn Anywhere</strong> is free and open source. Code under the MIT licence, content under CC BY-SA 4.0.</p>
+    <p>A study aid for students, not medical advice for patients.</p>
   </footer>
 </div>
 
@@ -1296,7 +1288,7 @@ function renderMgr(){
   $("#mgrBody").dataset.uni = M.university;
   $("#mgrBody").innerHTML = y.s.map(s => {
     const ks = s.u.flatMap(u => u.k), n = ks.filter(k => ok(k[1])).length;
-    return `<details class="mgrsub"><summary><span>${esc(s.n)}</span><span class="small">${s.e ? "" : "Not examined · "}${n}/${ks.length} ready</span></summary>${s.u.length ? s.u.map(u => `<h5>${esc(u.t)}</h5><ul class="mgrlist">${u.k.map(([t, id]) => ok(id) ? `<li><button type="button" data-open-lib="${esc(id)}">${esc(t)}</button></li>` : `<li class="todo">${esc(t)}</li>`).join("")}</ul>`).join("") : `<p class="small">No detailed syllabus in the regulations.</p>`}</details>`;
+    return `<details class="mgrsub"><summary><span>${esc(s.n)}</span><span class="small">${s.e ? "" : "Not examined · "}${n}/${ks.length} ready</span></summary>${s.u.length ? s.u.map(u => `<h3>${esc(u.t)}</h3><ul class="mgrlist">${u.k.map(([t, id]) => ok(id) ? `<li><button type="button" data-open-lib="${esc(id)}">${esc(t)}</button></li>` : `<li class="todo">${esc(t)}</li>`).join("")}</ul>`).join("") : `<p class="small">No detailed syllabus in the regulations.</p>`}</details>`;
   }).join("");
 }
 $("#mgrCourse").addEventListener("click", e => { const b = e.target.closest("[data-c]"); if (!b) return; mgrCourse = b.dataset.c; renderMgr(); });
@@ -1487,6 +1479,8 @@ try { const t = localStorage.getItem("la-tab"); if (views.includes(t)) show(t); 
   sample = s; downloads = d;
   if (sample) { try { const lim = await sample.limits(); canImages = !!(lim && lim.images); } catch {} }
   $("#fileLabel").hidden = !canImages;
+  // Question type and Language only shape AI-written answers, so they show only where AI is available
+  document.querySelectorAll(".ai-only").forEach(el => el.hidden = !sample);
   $("#libPdf").hidden = !downloads;
   if (sample || downloads) showExample();
 })();
