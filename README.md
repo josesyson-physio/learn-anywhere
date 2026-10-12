@@ -37,7 +37,7 @@ python3 -m http.server 8000
 | `tools/` | Scripts that build the syllabus maps |
 | `sw.js` | Service worker for offline use |
 | `manifest.webmanifest`, `icons/` | Makes the app installable |
-| `vendor/jspdf.umd.min.js` | PDF generation (jsPDF 2.5.1, MIT) |
+| `vendor/jspdf.umd.min.js` | PDF generation (jsPDF 4.2.1, MIT) |
 | `docs/plan.md` | Product plan and roadmap |
 
 ## Adding a topic
