@@ -136,6 +136,10 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .logo{width:72px;height:72px;flex:none;border-radius:50%;box-shadow:0 0 0 3px #fff;filter:drop-shadow(0 4px 10px rgba(0,0,0,.25))}
 .brand{font:800 1.9rem/1 var(--display);letter-spacing:-.02em;margin:0}
 .brand span{color:#fff;text-shadow:0 2px 0 #c2410c}
+.brand-col{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.isi-chip{display:inline-flex;align-items:center;gap:7px;font:700 .82rem var(--body);color:var(--hero-ink);background:rgba(255,255,255,.6);border-radius:999px;padding:6px 12px;text-decoration:none}
+.isi-chip svg{width:26px;height:auto}
+@media (hover:hover){.isi-chip:hover{background:#fff}}
 .hero p{color:var(--hero-muted);max-width:52ch}
 .hero .mission{color:var(--hero-ink);font-weight:600}
 .stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
@@ -302,6 +306,11 @@ td{padding:8px;border-bottom:1px solid var(--line);vertical-align:top}
 .score{font:800 2.6rem var(--display);font-variant-numeric:tabular-nums;color:var(--primary)}
 .about{display:flex;flex-direction:column;gap:10px;max-width:65ch}
 main{display:flex;flex-direction:column;gap:18px}
+.isi-link{display:grid;grid-template-columns:64px 1fr auto;gap:14px;align-items:center;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-left:6px solid #3443f0;border-radius:var(--r);box-shadow:var(--shadow);color:var(--ink);text-decoration:none}
+.isi-link svg{width:64px;height:auto;color:var(--ink)}
+.isi-link b{display:block;font:800 1.15rem var(--display)}
+.isi-link .isi-arrow{font:800 1.4rem var(--display);color:var(--primary)}
+@media (hover:hover){.isi-link:hover{border-color:var(--primary)}}
 main:focus{outline:none}
 .foot{margin-top:14px;padding-top:16px;border-top:1px solid var(--line);font-size:.86rem;color:var(--muted);display:flex;flex-direction:column;gap:4px}
 @media (prefers-reduced-motion:no-preference){.sheet{animation:rise .3s ease-out both}@keyframes rise{from{transform:translateY(8px)}to{transform:none}}}
@@ -444,7 +453,7 @@ main:focus{outline:none}
     @keyframes la-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
     @media (prefers-reduced-motion:reduce){.la-head,.la-glint,.la-plus{animation:none}}
   </style>
-</svg><h1 class="brand">Learn <span>Anywhere</span></h1></div>
+</svg><div class="brand-col"><h1 class="brand">Learn <span>Anywhere</span></h1><a class="isi-chip" href="inclusive-si.html"><svg viewBox="0 0 460 260" aria-hidden="true"><path d="M17 130 C 75 68 145 24 230 24 C 315 24 385 68 443 130 C 385 192 315 236 230 236 C 145 236 75 192 17 130 Z" fill="none" stroke="currentColor" stroke-width="34"/><circle cx="230" cy="130" r="65" fill="none" stroke="currentColor" stroke-width="20" stroke-dasharray="84 52.4"/><circle cx="230" cy="130" r="26" fill="#3443f0"/></svg>by Inclusive.Si &rarr;</a></div></div>
     <p class="mission">Free physiotherapy learning for every student in India and beyond.</p>
     <figure class="opendoor" aria-label="Animation: knowledge from a book passes an opening barrier and reaches every person">
       <svg viewBox="0 0 320 110" role="img" aria-hidden="true">
@@ -557,6 +566,11 @@ main:focus{outline:none}
 
   <!-- ABOUT -->
   <section id="view-about" class="view" role="tabpanel" aria-labelledby="tab-about" hidden>
+    <a class="isi-link" href="inclusive-si.html">
+      <svg viewBox="0 0 460 260" aria-hidden="true"><path d="M17 130 C 75 68 145 24 230 24 C 315 24 385 68 443 130 C 385 192 315 236 230 236 C 145 236 75 192 17 130 Z" fill="none" stroke="currentColor" stroke-width="30"/><circle cx="230" cy="130" r="65" fill="none" stroke="currentColor" stroke-width="16" stroke-linecap="round" stroke-dasharray="84 52.4"/><circle cx="230" cy="130" r="24" fill="#5566ff"/></svg>
+      <span><b>Inclusive.Si</b><span class="small">Inclusive Super Intelligence, a project from MotionPlus Physio. Read about it</span></span>
+      <span aria-hidden="true" class="isi-arrow">&rarr;</span>
+    </a>
     <h2>Why this exists</h2>
     <div class="about">
       <p>Good coaching and books cost money many students do not have. Learn Anywhere gives every physiotherapy student the same quality of explanation, for free, on any phone.</p>
@@ -569,7 +583,6 @@ main:focus{outline:none}
       <p><strong>Use it fairly.</strong> Use it to learn, revise and teach, and share it freely. Please do not sell it, put it behind a paywall, copy from it during an exam, or use it to treat patients without a qualified clinician. The "Understand it like a friend" examples are for understanding only: write the proper terms in your exam.</p>
       <p><strong>Built to help you remember.</strong> Every subject has its own colour and picture, shown on its cards and at the top of every answer, so your visual memory links them. Each topic shows its memory key word large. The daily goal (3 topics), study streak, levels and "Mark as learned" ticks keep you coming back. After 25 minutes the app reminds you to take a short break, and late at night it reminds you that sleep is when memory is saved. Your progress stays on your phone only.</p>
       <p><strong>Safety.</strong> This is a study aid for students, not medical advice for patients. Answers are written carefully from standard textbooks and guidelines, but mistakes are possible and practice changes. Before using any dose, vaccine schedule, drug, electrotherapy parameter or exercise prescription with a real patient, check it against current official guidance (MoHFW, WHO, NICE, your university syllabus) and a qualified clinician. Spotted an error? <a href="https://github.com/josesyson-physio/learn-anywhere/issues/new" target="_blank" rel="noopener">Report it on GitHub</a> and it will be corrected for everyone.</p>
-      <p><strong>Inclusive.Si.</strong> <a href="inclusive-si.html">Read about Inclusive.Si</a>, Inclusive Super Intelligence, a project from MotionPlus Physio.</p>
     </div>
   </section>
   </main>
