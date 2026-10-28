@@ -6,7 +6,7 @@ A free, open-source learning app that works on cheap phones and bad networks, wi
 - **Free forever**: no ads, no paywalls, no account required to learn.
 - **Offline first**: everything a student needs for a topic is downloadable and works with zero signal.
 - **Light**: runs on a 2 GB RAM Android phone; a topic pack is a few MB.
-- **Open**: code under MIT or Apache-2.0, content under CC BY-SA 4.0 so anyone can reuse and translate it.
+- **Open**: code under MIT or Apache-2.0, content under CC BY-NC-SA 4.0 so anyone can reuse and translate it for free, but nobody can sell it.
 
 ## 1a. Student workflow (from jose's sketch, 2026-10-09)
 1. **Ask**: the student types or uploads a topic or question (text, photo of a question paper, or PDF).

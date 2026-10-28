@@ -47,7 +47,7 @@ Library topics live in `library/*.js` (each file pushes topics onto `window.LIB_
 ## Licence
 
 - Code: [MIT](LICENSE)
-- Educational content (topics, quiz questions): [CC BY-SA 4.0](CONTENT-LICENSE.md)
+- Educational content (topics, quiz questions): [CC BY-NC-SA 4.0](CONTENT-LICENSE.md): free to share and adapt for students and teachers, never to sell
 
 This is a study aid for students, not medical advice for patients. It is independent and not affiliated with or endorsed by any university, publisher or guideline body it mentions.
 
