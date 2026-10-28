@@ -413,6 +413,37 @@ html.motion .update{animation:pop-in .55s var(--spring) both}
 html.motion .nudge{animation:pop-in .5s var(--spring) both}
 @keyframes pop-in{from{opacity:0;transform:translateY(18px) scale(.96)}}
 
+/* Jo, the study buddy (buddy.js) */
+.buddy{position:absolute;left:0;top:0;z-index:4;width:84px;height:119px;pointer-events:none;will-change:transform}
+.bd-btn{all:unset;display:block;width:84px;height:119px;cursor:pointer;pointer-events:auto;-webkit-tap-highlight-color:transparent}
+.bd-btn:focus-visible{outline:3px solid var(--saffron-bright);outline-offset:2px;border-radius:12px}
+.bd-svg{width:100%;height:100%;overflow:visible;display:block;filter:drop-shadow(0 4px 6px rgba(0,0,0,.18))}
+.bd-body,.bd-arm,.bd-head{transform-box:fill-box}
+.bd-body{transform-origin:50% 100%}.bd-arm{transform-origin:20% 10%}.bd-head{transform-origin:50% 90%}
+.bd-laugh{display:none}.buddy.happy .bd-laugh{display:block}.buddy.happy .bd-smile{display:none}
+.bd-say{position:absolute;bottom:62%;right:88%;width:max-content;max-width:min(250px,68vw);background:var(--surface);color:var(--ink);border:2px solid var(--ink);border-radius:16px 16px 4px 16px;padding:9px 12px;font:600 .9rem/1.4 var(--body);box-shadow:0 10px 24px -12px rgba(0,0,0,.4);pointer-events:auto;cursor:pointer}
+.bd-say b{display:block;font:700 .66rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--saffron);margin-bottom:2px}
+.bd-say p{margin:0}
+.bd-say:not(.left){right:auto;left:88%;border-radius:16px 16px 16px 4px}
+.bd-say.below{bottom:auto;top:78%;border-radius:4px 16px 16px 16px}.bd-say.below.left{border-radius:16px 4px 16px 16px}
+html.focus-on .buddy{display:none}
+:root[data-eink] .buddy{filter:grayscale(1)}
+html.motion .buddy:not(.air) .bd-body{animation:bd-bob 2.6s ease-in-out infinite}
+html.motion .buddy:not(.air) .bd-head{animation:bd-nod 5s ease-in-out infinite}
+html.motion .buddy.air .bd-body{transform:scale(.94,1.08)}
+html.motion .buddy.land .bd-body{animation:bd-land .35s var(--spring)}
+html.motion .buddy.wave .bd-arm{animation:bd-wave .4s ease-in-out 3}
+html.motion .buddy.happy .bd-body{animation:bd-hop .5s var(--spring) 2}
+html.motion .buddy.oops .bd-head{animation:bd-shake .3s ease-in-out 2}
+html.motion .bd-say:not([hidden]){animation:bd-pop .4s var(--spring) both}
+@keyframes bd-bob{50%{transform:translateY(-2px) scale(1.01,.99)}}
+@keyframes bd-nod{0%,85%,100%{transform:none}90%{transform:rotate(-6deg)}95%{transform:rotate(4deg)}}
+@keyframes bd-land{0%{transform:scale(1.12,.86)}100%{transform:none}}
+@keyframes bd-wave{50%{transform:rotate(-70deg)}}
+@keyframes bd-hop{50%{transform:translateY(-12px)}}
+@keyframes bd-shake{25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+@keyframes bd-pop{from{opacity:0;transform:translateY(8px) scale(.9)}}
+
 /* eye comfort (home screen): e-ink paper mode and text size */
 :root[data-text="l"]{font-size:112.5%}:root[data-text="xl"]{font-size:125%}
 .comfort{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:12px}
@@ -538,6 +569,10 @@ html.focus-on .sheet.focusing .sec{scroll-margin-top:64px}
       <div class="comfort-row">
         <h2 class="eyebrow" id="comfortTitle">Eye comfort</h2>
         <button type="button" class="switch" id="einkBtn" aria-pressed="false">E-ink paper mode <span class="sw" aria-hidden="true"></span></button>
+      </div>
+      <div class="comfort-row">
+        <span class="small">Jo, your study buddy, hops onto what you read with tips and jokes</span>
+        <button type="button" class="switch" id="buddyBtn" aria-pressed="true">Jo <span class="sw" aria-hidden="true"></span></button>
       </div>
       <div class="comfort-row" id="hapticRow" hidden>
         <span class="small">Gentle vibration when you tap (supported phones)</span>
@@ -1013,7 +1048,7 @@ function renderAnswer(a, opts = {}){
   const labels = {relate:"Understand it like a friend",play:"Think and play",simple:"In simple words",flow:"Flowchart: draw this in your answer",glance:"Diagram at a glance",exam:"How to write it in the exam",marks:"Write it for your marks",adv:"Advanced: evidence and research",mem:"Memory trick",ex:"Real-life example",flags:"Red flags",viva:"Viva questions",refs:"References"};
 
   const el = document.createElement("article");
-  el.className = "sheet"; el.style.setProperty("--sc", subjOf(a.subject)[0]);
+  el.className = "sheet"; el.style.setProperty("--sc", subjOf(a.subject)[0]); if (a.id) el.dataset.id = a.id;
   el.innerHTML = `
     <div class="memory">${icoHTML(a.subject)}<div><small>${esc(a.subject || "Topic")}</small>${a.mnemonic && a.mnemonic.word ? `<div class="word">${esc(a.mnemonic.word)}</div><div class="hint">Memory key. Picture this colour and symbol whenever you revise ${esc((a.subject || "this subject").replace(/^Early Intervention: /, ""))}.</div>` : `<div class="hint">Picture this colour and symbol whenever you revise ${esc((a.subject || "this subject").replace(/^Early Intervention: /, ""))}.</div>`}</div></div>
     <div class="sheet-head">
@@ -1723,5 +1758,6 @@ if ("serviceWorker" in navigator && location.protocol !== "file:") {
   }).catch(() => {});
 }
 </script>
+<script src="buddy.js"></script>
 </body>
 </html>
