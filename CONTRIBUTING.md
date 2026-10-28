@@ -19,4 +19,4 @@ Thank you for helping students learn for free. Physiotherapists, teachers, stude
 
 ## Licence
 
-By contributing, you agree that code is released under MIT and content under CC BY-SA 4.0.
+By contributing, you agree that code is released under MIT and content under CC BY-NC-SA 4.0 (no commercial use).
