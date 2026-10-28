@@ -2,13 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>About Inclusive.Si | Learn Anywhere</title>
 <meta name="description" content="Inclusive.Si, Inclusive Super Intelligence: apps and AI work pods built with people from MotionPlus Physio clinics. The team behind Learn Anywhere.">
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="fonts/inclusive-si-fonts.css">
 <style>
 /* Layout concept: a dark navy brand stage (the logo screenshot, alive) with concentric rings radiating from the eye.
    One scoped column below it: statement, origin, five animated app screens in a swipe rail, the pod loop, inclusion orbit, bloom radar, network.
@@ -442,7 +441,7 @@ body { background: var(--isi-bg); color: var(--isi-fg); }
         <p class="isi-tag">Inclusive Super Intelligence</p>
         <p class="isi-quote">Super intelligence begins when <b>no mind is left out.</b></p>
         <nav class="isi-cta" aria-label="Inclusive.Si links">
-          <a class="isi-btn isi-btn--solid" href="https://www.instagram.com/inclusive.si?cplk=YmRsYTltYmVubTg5" target="_blank" rel="noopener noreferrer">
+          <a class="isi-btn isi-btn--solid" href="https://www.instagram.com/inclusive.si" target="_blank" rel="noopener noreferrer">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.8" fill="currentColor"/></svg>
             Follow on Instagram
           </a>
@@ -917,7 +916,7 @@ body { background: var(--isi-bg); color: var(--isi-fg); }
       <h2 id="isi-h-close">The birth of Super Intelligence is from India.</h2>
       <p class="isi-lede">Come and see what we are building, one pod and one app at a time.</p>
       <nav class="isi-cta" aria-label="Inclusive.Si links">
-        <a class="isi-btn isi-btn--solid" href="https://www.instagram.com/inclusive.si?cplk=YmRsYTltYmVubTg5" target="_blank" rel="noopener noreferrer">
+        <a class="isi-btn isi-btn--solid" href="https://www.instagram.com/inclusive.si" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.8" fill="currentColor"/></svg>
           Follow on Instagram
         </a>
@@ -936,15 +935,7 @@ body { background: var(--isi-bg); color: var(--isi-fg); }
     <p class="isi-foot">Inclusive.Si is a project from <b>MotionPlus Physio Pvt. Ltd.</b> &middot; Unseen to Unstoppable.</p>
   </div>
 </div>
-<script>
-(function () {
-  try {
-    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      document.querySelectorAll('#isi-about svg').forEach(function (s) { if (s.pauseAnimations) { s.pauseAnimations(); } });
-    }
-  } catch (e) {}
-})();
-</script>
+<script src="inclusive-si.js"></script>
 
 </body>
 </html>
