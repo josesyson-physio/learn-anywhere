@@ -24,6 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500&display=swap">
 <script>try{if(localStorage.getItem("la-eink")==="1")document.documentElement.setAttribute("data-eink","");var t=localStorage.getItem("la-text");if(t==="l"||t==="xl")document.documentElement.dataset.text=t}catch(e){}
+try{window.LA_PROFILE=localStorage.getItem("la-active")||sessionStorage.getItem("la-active-s")||null}catch(e){}
 try{if(!matchMedia("(prefers-reduced-motion: reduce)").matches&&!document.documentElement.hasAttribute("data-eink"))document.documentElement.classList.add("motion")}catch(e){}</script>
 <style>
 :root{color-scheme:light}
@@ -494,6 +495,58 @@ html.motion .bd-say:not([hidden]) .bd-tail.t1{animation-delay:.08s}
 @keyframes bd-tall{0%,100%{transform:none}30%,75%{transform:scale(.97,1.05)}}
 @keyframes bd-pop{from{opacity:0;transform:translateY(8px) scale(.8)}}
 
+/* welcome screens and profile (welcome.js) */
+.who:empty{display:none}
+.who{display:flex;justify-content:flex-start;flex-wrap:wrap;align-items:center;gap:6px 14px;font-size:.95rem;padding:0 4px}
+.gt-link{all:unset;cursor:pointer;color:var(--primary);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.gt-link:focus-visible{outline:3px solid var(--saffron-bright);outline-offset:2px;border-radius:4px}
+.gate{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:16px;overflow-y:auto;background:var(--bg)}
+.gt-bg{position:fixed;inset:0;overflow:hidden;background:linear-gradient(160deg,#ffe3a8 0%,var(--bg) 45%,#e5ecff 100%)}
+.gt-bg i{position:absolute;border-radius:50%;filter:blur(2px);opacity:.55}
+.gt-bg i:nth-child(1){width:260px;height:260px;left:-80px;top:-60px;background:radial-gradient(circle,#ffb547,#ffb54700 70%)}
+.gt-bg i:nth-child(2){width:300px;height:300px;right:-110px;top:30%;background:radial-gradient(circle,#7c9cff,#7c9cff00 70%)}
+.gt-bg i:nth-child(3){width:220px;height:220px;left:20%;bottom:-90px;background:radial-gradient(circle,#ff8f7a,#ff8f7a00 70%)}
+.gt-card{position:relative;width:100%;max-width:440px;background:var(--surface);border-radius:24px;box-shadow:0 30px 60px -30px rgba(0,0,0,.45);padding:24px 22px 18px;display:flex;flex-direction:column;gap:16px}
+.gt-slide{display:flex;flex-direction:column;gap:10px;text-align:left}
+.gt-slide h2{font:800 1.5rem/1.15 var(--display);outline:none}
+.gate h2[tabindex]:focus,.gate h2[tabindex]:focus-visible{outline:none}
+.gt-small{font-size:.86rem;color:var(--muted)}
+.gt-art{display:grid;place-items:center;position:relative;height:150px}
+.gt-logo .logo{width:120px;height:120px}
+.gt-jo .bd-svg{width:120px;height:134px}
+.gt-spark{position:absolute;width:12px;height:12px;background:#ffc94a;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+.gt-spark.s1{left:22%;top:12%}.gt-spark.s2{right:22%;top:20%;width:16px;height:16px;background:#7c9cff}.gt-spark.s3{right:30%;bottom:8%;background:#ff8f7a}
+.gt-list{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:12px}
+.gt-list li{display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:center}
+.gt-list li b{display:block;font:700 1rem var(--display)}
+.gt-list li span{font-size:.9rem;color:var(--muted)}.gt-list li span b{color:var(--ink)}
+.gt-ico{width:40px;height:40px;border-radius:12px;background:var(--primary-soft);color:var(--primary);display:grid;place-items:center}
+.gt-ico svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.gt-rules .gt-ico{background:var(--saffron-soft);color:var(--saffron)}
+.gt-how{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:.94rem}
+.gt-foot{display:flex;flex-direction:column;gap:12px}
+.gt-foot:empty{display:none}
+.gt-dots{display:flex;gap:6px;justify-content:center}.gt-dots i{width:8px;height:8px;border-radius:999px;background:var(--line)}.gt-dots i.on{width:22px;background:var(--primary)}
+.gt-btns{display:flex;justify-content:space-between;gap:10px}.gt-btns .primary{flex:1}
+.gt-form{display:flex;flex-direction:column;gap:12px;margin-top:4px}
+.gt-form input[type=password],.gt-form input:not([type]){width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 13px}
+.gt-check{display:flex;gap:8px;align-items:center;font-size:.92rem}
+.gt-err{color:var(--flag);font-size:.9rem;min-height:1.2em;margin:0}
+.gt-links{font-size:.92rem;text-align:center}
+html.gate-on body{overflow:hidden}
+html.motion .gt-slide>*{animation:up .5s var(--ease) both}
+html.motion .gt-slide>*:nth-child(2){animation-delay:.06s}html.motion .gt-slide>*:nth-child(3){animation-delay:.12s}html.motion .gt-slide>*:nth-child(4){animation-delay:.18s}
+html.motion .gt-list li{animation:up .5s var(--ease) both}
+html.motion .gt-list li:nth-child(2){animation-delay:.08s}html.motion .gt-list li:nth-child(3){animation-delay:.16s}html.motion .gt-list li:nth-child(4){animation-delay:.24s}html.motion .gt-list li:nth-child(5){animation-delay:.32s}
+html.motion .gt-logo .logo,html.motion .gt-jo .bd-svg{animation:logoin .9s var(--spring) both}
+html.motion .gt-spark{animation:twinkle 2.4s ease-in-out infinite}html.motion .gt-spark.s2{animation-delay:.8s}html.motion .gt-spark.s3{animation-delay:1.6s}
+html.motion .gt-bg i{animation:orb 12s ease-in-out infinite alternate}html.motion .gt-bg i:nth-child(2){animation-duration:15s}
+html.motion .gt-card{animation:pop-in .6s var(--spring) both}
+html.motion .gt-dots i{transition:width .35s var(--spring),background .3s}
+@keyframes twinkle{0%,100%{transform:scale(.6) rotate(0);opacity:.5}50%{transform:scale(1.2) rotate(45deg);opacity:1}}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]):not([data-eink]) .gt-bg{background:linear-gradient(160deg,#3b2b12 0%,var(--bg) 45%,#26305a 100%)}}
+:root[data-eink] .gt-bg{background:var(--bg)}:root[data-eink] .gt-bg i{display:none}:root[data-eink] .gate{filter:grayscale(1)}
+
 /* eye comfort (home screen): e-ink paper mode and text size */
 :root[data-text="l"]{font-size:112.5%}:root[data-text="xl"]{font-size:125%}
 .comfort{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:12px}
@@ -603,6 +656,7 @@ html.focus-on .sheet.focusing .sec{scroll-margin-top:64px}
   </header>
 
   <main id="main" tabindex="-1">
+  <div class="who" id="who"></div>
   <section class="today" id="today" aria-label="Your progress today" aria-live="polite"></section>
   <div id="nudge"></div>
 
@@ -644,7 +698,7 @@ html.focus-on .sheet.focusing .sec{scroll-margin-top:64px}
       <div class="grid2">
         <label class="field"><span>University</span>
           <select id="uni">
-            <option>MUHS (Maharashtra)</option><option>RGUHS (Karnataka)</option><option>Tamil Nadu Dr. M.G.R. Medical University</option><option>Dr. NTR UHS (Andhra Pradesh)</option><option>KNRUHS (Telangana)</option><option>KUHS (Kerala)</option><option>BFUHS (Punjab)</option><option>Pt. B.D. Sharma UHS (Haryana)</option><option>GGSIPU (Delhi)</option><option>Gujarat (state universities)</option><option>Deemed or private university</option><option>Other / not sure</option>
+            <option selected>Tamil Nadu Dr. M.G.R. Medical University</option><option>MUHS (Maharashtra)</option><option>RGUHS (Karnataka)</option><option>Dr. NTR UHS (Andhra Pradesh)</option><option>KNRUHS (Telangana)</option><option>KUHS (Kerala)</option><option>BFUHS (Punjab)</option><option>Pt. B.D. Sharma UHS (Haryana)</option><option>GGSIPU (Delhi)</option><option>Gujarat (state universities)</option><option>Deemed or private university</option><option>Other / not sure</option>
           </select></label>
         <label class="field"><span>Year</span>
           <select id="level"><option>BPT 1st year</option><option>BPT 2nd year</option><option>BPT 3rd year</option><option selected>BPT 4th year</option><option>Internship</option><option>MPT</option></select></label>
@@ -658,8 +712,8 @@ html.focus-on .sheet.focusing .sec{scroll-margin-top:64px}
           <button type="button" data-m="2" aria-pressed="false">2</button>
           <button type="button" data-m="3" aria-pressed="false">3</button>
           <button type="button" data-m="5" aria-pressed="false">5</button>
-          <button type="button" data-m="10" aria-pressed="true">10</button>
-          <button type="button" data-m="15" aria-pressed="false">15</button>
+          <button type="button" data-m="10" aria-pressed="false">10</button>
+          <button type="button" data-m="15" aria-pressed="true">15</button>
           <button type="button" data-m="20" aria-pressed="false">20</button>
         </div>
       </div>
@@ -740,7 +794,11 @@ html.focus-on .sheet.focusing .sec{scroll-margin-top:64px}
       <p><strong>Use it fairly.</strong> Use it to learn, revise and teach, and share it freely. The content licence (CC BY-NC-SA 4.0) does not allow selling it or putting it behind a paywall. Please also do not copy from it during an exam, or use it to treat patients without a qualified clinician. The "Understand it like a friend" examples are for understanding only: write the proper terms in your exam.</p>
       <p><strong>Built to help you remember.</strong> Every subject has its own colour and picture, shown on its cards and at the top of every answer, so your visual memory links them. Each topic shows its memory key word large. The daily goal (3 topics), study streak, levels and "Mark as learned" ticks keep you coming back. After 25 minutes the app reminds you to take a short break, and late at night it reminds you that sleep is when memory is saved. Your progress stays on your phone only.</p>
       <p><strong>Independent.</strong> Learn Anywhere is an independent study aid. It is not affiliated with, approved or endorsed by any university, NIEPID, textbook publisher, Physiopedia, NICE, WHO or any other body named here. University names, syllabus outlines and book titles are used only to tell you what a topic covers and where to read more; their names and trademarks belong to their owners. Syllabus lines are short summaries, so always check the official syllabus for your batch.</p>
-      <p><strong>Privacy.</strong> No account, no ads, no tracking and no cookies. Your progress and settings are saved only in this browser on your phone, and clearing site data deletes them. Like any website, the web host and the font service (Google Fonts) receive your IP address when the page loads.</p>
+      <p><strong>Your profile.</strong> Your name and password exist only on this phone, so each person sharing a phone keeps their own streak. There is no email, no server account and no way for us to see or recover them. The password is stored only as a scrambled code (a salted SHA-256 hash). It is a simple lock for shared phones, so don't reuse an important password here. Forgot it? Choose "Forgot password?" to remove that profile and start again. Switch profiles from the top of the home screen.</p>
+      <p><strong>Privacy.</strong> No ads, no tracking and no cookies. Your profile, progress and settings are saved only in this browser on your phone, and clearing site data deletes them. We collect no personal data on any server, which is how we keep within India's Digital Personal Data Protection Act, 2023. Like any website, the web host and the font service (Google Fonts) receive your IP address when the page loads.</p>
+      <p><strong>Meet Jo.</strong> Jo is the little study buddy who sits on what you are reading. He gives short tips, memory keys from the topic, real-life examples and the odd friendly tease, and he cheers your quiz answers. He is written into the app, works offline and is not an AI chatbot. Tap him for a line, tap 👍 to close his cloud, or 🤫 Shh to keep him quiet for 15 minutes. To turn him off, use the Jo switch under Eye comfort on the Ask screen. He hides in focus mode. <button type="button" class="gt-link" id="replayIntro">Show the welcome screens again</button></p>
+      <p><strong>Official sources.</strong> The BPT and MPT syllabus maps follow the <a href="https://www.tnmgrmu.ac.in/academics/syllabus-regulations/allied-health-sciences-syllabus-regulations/" target="_blank" rel="noopener">Tamil Nadu Dr. M.G.R. Medical University syllabus and regulations page</a> (<a href="https://www.tnmgrmu.ac.in/" target="_blank" rel="noopener">tnmgrmu.ac.in</a>): the <a href="https://www.tnmgrmu.ac.in/wp-content/uploads/2026/07/Revised-BPT-Syllabus-Jan2022.pdf" target="_blank" rel="noopener">BPT syllabus from 2017-18, revised January 2022</a> and the <a href="https://www.tnmgrmu.ac.in/wp-content/uploads/2026/07/syllabregul-mpt-1819-09022018.pdf" target="_blank" rel="noopener">MPT syllabus and regulations from 2018-19</a>. The PG Diploma in Early Intervention map follows the Osmania University syllabus run with <a href="https://niepid.nic.in/" target="_blank" rel="noopener">NIEPID</a>. We link to the official files and summarise them in our own words; we do not copy or host them. Clinical topics point to public guidelines (WHO, NICE, MoHFW) and to PubMed. Check your university's site for the version that applies to your batch.</p>
+      <p><strong>Permissions and the law.</strong> We have not asked for or received special permission from any university, publisher or guideline body, and none is implied. Here is what we rely on instead. Universities publish their syllabi openly for students. Facts and ideas belong to no one; only their wording is protected, so every topic is written fresh in our own words and textbooks are only cited by chapter. India's Copyright Act, 1957, Section 52, allows fair dealing for private study and research (Section 52(1)(a)) and use in the course of teaching (Section 52(1)(i)). Organisations named on the Inclusive.Si page are named with their agreement. This is our honest reading, not legal advice. If you own something here and disagree, tell us and we will fix it.</p>
       <p><strong>Copyright.</strong> Every topic is written in our own words. If you think something here copies your work, <a href="https://www.instagram.com/inclusive.si" target="_blank" rel="noopener">message us on Instagram (@inclusive.si)</a> and it will be fixed or removed.</p>
       <p><strong>Safety.</strong> This is a study aid for students, not medical advice for patients. Answers are written carefully from standard textbooks and guidelines, but mistakes are possible and practice changes. Before using any dose, vaccine schedule, drug, electrotherapy parameter or exercise prescription with a real patient, check it against current official guidance (MoHFW, WHO, NICE, your university syllabus) and a qualified clinician. Spotted an error? <a href="https://www.instagram.com/inclusive.si" target="_blank" rel="noopener">Message us on Instagram (@inclusive.si)</a> and it will be corrected for everyone.</p>
     </div>
@@ -1319,7 +1377,7 @@ function errCopy(code){
     sampling_disabled:"AI answers are turned off here. The Library and Quiz still work."}[code]) || "Could not make the answer. Check your connection and try again; the Library works offline.";
 }
 
-let marks = 10;
+let marks = 15;
 $("#marks").addEventListener("click", e => {
   const b = e.target.closest("button"); if (!b) return;
   marks = +b.dataset.m;
@@ -1529,12 +1587,14 @@ const svgI = k => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${ICONS[
 const subjOf = sub => SUBJ[sub] || ["#2457f5", "spark"];
 const icoHTML = sub => `<span class="ico">${svgI(subjOf(sub)[1])}</span>`;
 
-// Progress lives only on this phone (localStorage): days studied, topics learned, quiz points.
+// Progress lives only on this phone (localStorage): days studied, topics learned, quiz points. Each profile
+// (welcome.js) has its own copy, so classmates sharing a phone keep separate streaks.
+const progKey = () => "la-progress" + (window.LA_PROFILE ? ":" + window.LA_PROFILE : "");
 const GOAL = 3;
 const LEVELS = [[0,"Starter"],[5,"Learner"],[15,"Scholar"],[40,"Clinician"],[80,"Expert"],[150,"Master"]];
 const prog = {
-  get(){ try { return Object.assign({days:{}, learned:{}, xp:0}, JSON.parse(localStorage.getItem("la-progress") || "{}")); } catch { return {days:{}, learned:{}, xp:0}; } },
-  set(v){ try { localStorage.setItem("la-progress", JSON.stringify(v)); } catch {} }
+  get(){ try { return Object.assign({days:{}, learned:{}, xp:0}, JSON.parse(localStorage.getItem(progKey()) || "{}")); } catch { return {days:{}, learned:{}, xp:0}; } },
+  set(v){ try { localStorage.setItem(progKey(), JSON.stringify(v)); } catch {} }
 };
 const dayKey = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
 function streakOf(P){
@@ -1636,7 +1696,7 @@ document.querySelector("nav.tabs").addEventListener("keydown", e => {
   e.preventDefault(); const v = views[(j + views.length) % views.length]; show(v); $(`[data-view="${v}"]`).focus();
 });
 
-function showExample(){ $("#answer").replaceChildren(renderAnswer({...LIB[0], uni:"MUHS (Maharashtra)", qtype:"Long essay"}, { badge: "Example answer" })); }
+function showExample(){ $("#answer").replaceChildren(renderAnswer({...LIB[0], uni:"Tamil Nadu Dr. M.G.R. Medical University", qtype:"Long essay"}, { badge: "Example answer" })); }
 $("#q").value = "Physiotherapy management of frozen shoulder";
 setStatus(""); renderSubjects(); showExample(); renderShelf(); renderMgr(); renderLib(); renderToday(); newRound(); renderQuiz();
 try { const t = localStorage.getItem("la-tab"); if (views.includes(t)) show(t); } catch {}
@@ -1809,5 +1869,6 @@ if ("serviceWorker" in navigator && location.protocol !== "file:") {
 }
 </script>
 <script src="buddy.js"></script>
+<script src="welcome.js"></script>
 </body>
 </html>
