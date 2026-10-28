@@ -48,6 +48,7 @@
   </g>
 </svg>`;
 
+  window.JO_SVG = SVG;
   const pick = a => a[Math.floor(Math.random() * a.length)];
   // The library's own real-life example, only when its first sentence is short enough to read at a glance
   const short = t => { const m = String(t || "").match(/^.{15,115}?[.!?](\s|$)/); return m ? m[0].trim() : ""; };
@@ -147,7 +148,7 @@
   const gap = () => 25000 + Math.min(dismissals, 4) * 15000;
   const chatty = () => Date.now() > quietUntil && Date.now() - lastSay > gap();
   let x = innerWidth - W - 12, y = scrollY + innerHeight + 20, target = null, lastJump = 0, lastSay = 0, hideT = 0, anim = null;
-  const enabled = () => pref.get("la-buddy") !== "0" && !root.classList.contains("focus-on");
+  const enabled = () => pref.get("la-buddy") !== "0" && !root.classList.contains("focus-on") && !root.classList.contains("gate-on");
   const moving = () => root.classList.contains("motion");
   const put = () => { el.style.transform = `translate(${x}px,${y}px)`; if (say) say.classList.toggle("below", y - scrollY < (el.classList.contains("big") ? 240 : 190)); };
 
@@ -254,5 +255,14 @@
   new MutationObserver(() => { if (!enabled()) el.hidden = true; else if (el.hidden) setTimeout(settle, 300); }).observe(root, { attributes: true, attributeFilter: ["class"] });
 
   put(); el.hidden = !enabled();
-  setTimeout(() => { if (!enabled()) return; const spots = visibleSpots(); jumpTo(spots[0] || null, false); setTimeout(() => { act("wave", 2000); if (Date.now() > quietUntil) speak(GREET); }, 800); idle(); }, 1800);
+  // Say hello once the app is open (after the welcome screens and profile, if they are showing)
+  let greeted = false;
+  function hello(){
+    if (greeted || !enabled()) return; greeted = true;
+    const spots = visibleSpots(); jumpTo(spots[0] || null, false);
+    const name = (window.LA_NAME || "").split(" ")[0];
+    setTimeout(() => { act("wave", 2000); if (Date.now() > quietUntil) speak(name ? `Hey ${name}! ${GREET}` : GREET); }, 800); idle();
+  }
+  addEventListener("la-ready", () => setTimeout(hello, 600));
+  setTimeout(hello, 1800);
 })();
