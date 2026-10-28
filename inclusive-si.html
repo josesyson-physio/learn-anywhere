@@ -390,6 +390,12 @@ body { background: var(--isi-bg); color: var(--isi-fg); }
 .isi-foot { margin-top: 28px; text-align: center; font-size: 13px; color: var(--isi-muted); }
 .isi-foot b { color: var(--isi-fg); font-weight: 500; }
 
+/* Clinical milestones timeline */
+.isi-miles { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.isi-mile { position: relative; background: var(--isi-surface); border: 1px solid var(--isi-line); border-top: 4px solid var(--c, var(--isi-accent)); border-radius: 18px; padding: 16px 18px; display: grid; gap: 6px; align-content: start; }
+.isi-mile time { font: 600 13px var(--isi-mono); letter-spacing: .04em; color: var(--c, var(--isi-accent)); text-transform: uppercase; }
+.isi-mile b { font: 700 18px/1.25 var(--isi-display); color: var(--isi-fg); }
+.isi-mile span { font-size: 14px; color: var(--isi-muted); }
 @media (prefers-reduced-motion: reduce) {
   .isi *, .isi *::before, .isi *::after { animation: none !important; transition: none !important; }
   .isi-line { width: auto !important; }
@@ -542,6 +548,20 @@ body { background: var(--isi-bg); color: var(--isi-fg); }
         </div>
         <p class="isi-pull">It does not matter how fancy it looks <b>if it solves the problem.</b></p>
       </div>
+    </section>
+
+    <!-- ===== CLINICAL MILESTONES ===== -->
+    <section class="isi-sec" aria-labelledby="isi-h-miles">
+      <header class="isi-head">
+        <p class="isi-label">Clinical milestones</p>
+        <h2 id="isi-h-miles">Built inside real clinics.</h2>
+      </header>
+      <ol class="isi-miles">
+        <li class="isi-mile" style="--c: var(--isi-accent)"><time datetime="2024-06">June 2024</time><b>MotionPlus Rehab</b></li>
+        <li class="isi-mile" style="--c: var(--isi-teal)"><time datetime="2024-07">July 2024</time><b>Uniquorns</b></li>
+        <li class="isi-mile" style="--c: var(--isi-amber)"><time datetime="2026-05">May 2026</time><b>Smart Rehab</b><span>and Uniquorns Eduplay</span></li>
+        <li class="isi-mile" style="--c: var(--isi-rose)"><time datetime="2026-07">July 2026</time><b>Rewire Rehab</b></li>
+      </ol>
     </section>
 
     <!-- ===== APPS ===== -->
