@@ -119,7 +119,7 @@
       body.innerHTML = `<div class="gt-slide"><h2 id="gateTitle">Make your profile</h2>
         <p>Just a name and a password, so your streak and progress are yours, even on a shared phone.</p>
         <form class="gt-form" id="gtNew" autocomplete="on">
-          <label class="field"><span>Your name</span><input id="gtName" maxlength="30" autocomplete="nickname" required placeholder="e.g. Priya"></label>
+          <label class="field"><span>Your name</span><input id="gtName" maxlength="30" autocomplete="nickname" required placeholder="e.g. Tara"></label>
           <label class="field"><span>Password (at least 4 characters)</span><input id="gtPw1" type="password" minlength="4" autocomplete="new-password" required></label>
           <label class="field"><span>Type it again</span><input id="gtPw2" type="password" minlength="4" autocomplete="new-password" required></label>
           <label class="gt-check"><input type="checkbox" id="gtKeep" checked> Keep me signed in on this phone</label>
@@ -135,7 +135,7 @@
         if (a.length < 4) return void (err.textContent = "The password needs at least 4 characters.");
         if (a !== b) return void (err.textContent = "The two passwords are different.");
         const all = profiles();
-        if (all.some(p => p.name.toLowerCase() === name.toLowerCase())) return void (err.textContent = "That name is already on this phone. Add your initial, like Priya S.");
+        if (all.some(p => p.name.toLowerCase() === name.toLowerCase())) return void (err.textContent = "That name is already on this phone. Add your initial, like Tara S.");
         const p = { id: rid(), name, salt: rid() };
         p.hash = await hash(p.salt, a);
         // The first profile on a phone keeps any progress made before profiles existed
