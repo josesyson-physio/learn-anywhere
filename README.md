@@ -53,4 +53,4 @@ This is a study aid for students, not medical advice for patients. It is indepen
 
 ## Privacy
 
-No accounts, analytics, ads or cookies. Progress is kept in the browser's localStorage on the device. GitHub Pages (hosting) and Google Fonts receive visitors' IP addresses when the page loads.
+No accounts, analytics, ads or cookies. Progress is kept in the browser's localStorage on the device. GitHub Pages (hosting) receives visitors' IP addresses when the page loads. Fonts are self-hosted in `fonts/`, so nothing is sent to Google. See [SECURITY.md](SECURITY.md).

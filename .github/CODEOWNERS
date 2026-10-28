@@ -1,0 +1,15 @@
+# Every change needs jose's review. App code below is listed on its own so it is never missed:
+# these files decide what runs on every student's phone.
+*                     @josesyson-physio
+/index.html           @josesyson-physio
+/app.js               @josesyson-physio
+/boot.js              @josesyson-physio
+/sw.js                @josesyson-physio
+/welcome.js           @josesyson-physio
+/buddy.js             @josesyson-physio
+/inclusive-si.html    @josesyson-physio
+/inclusive-si.js      @josesyson-physio
+/vendor/              @josesyson-physio
+/fonts/               @josesyson-physio
+/tools/               @josesyson-physio
+/.github/             @josesyson-physio
