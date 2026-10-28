@@ -3,60 +3,48 @@
 // fixed list of jokes, healthy teasing and motivation. No AI, no network, works offline.
 (() => {
   const root = document.documentElement;
-  const SVG = `<svg viewBox="0 0 120 170" aria-hidden="true" class="bd-svg">
-  <ellipse class="bd-shadow" cx="60" cy="164" rx="30" ry="4.5" fill="#000" opacity=".16"/>
-  <g class="bd-body">
-    <!-- backpack behind -->
-    <rect x="30" y="80" width="60" height="50" rx="14" fill="#2a2a30"/>
-    <!-- legs: dark cargo joggers -->
-    <path d="M44 120h15l-1 34h-13z" fill="#3e3e45"/><path d="M61 120h15l-1 34h-13z" fill="#3e3e45"/>
-    <rect x="45" y="132" width="7" height="9" rx="1.5" fill="#34343a"/><rect x="68" y="132" width="7" height="9" rx="1.5" fill="#34343a"/>
-    <path d="M45 151h13M62 151h13" stroke="#2e2e34" stroke-width="3" stroke-linecap="round"/>
-    <!-- sneakers -->
-    <path d="M41 153h18c1 0 2 1 2 3v3H38c0-3 1-6 3-6z" fill="#eceef0"/><path d="M61 153h18c2 0 3 3 3 6H59v-3c0-2 1-3 2-3z" fill="#eceef0"/>
-    <path d="M44 156c4 0 8-1 11-3M66 156c4 0 8-1 11-3" stroke="#9aa1a8" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <rect x="38" y="159" width="23" height="2.5" rx="1" fill="#b9bec4"/><rect x="59" y="159" width="23" height="2.5" rx="1" fill="#b9bec4"/>
-    <!-- open white shirt over a white tee -->
-    <path d="M40 84c5-4 13-6 20-6s15 2 20 6l2 40H38z" fill="#f6f3ec"/>
-    <path d="M52 80h16l-1 44H53z" fill="#fff"/>
-    <path d="M52 80l4 9 4-7 4 7 4-9" fill="none" stroke="#d8d2c6" stroke-width="2" stroke-linejoin="round"/>
-    <path d="M53 90v32M67 90v32" stroke="#e2ddd2" stroke-width="1.5"/>
-    <!-- backpack straps -->
-    <path d="M45 82c-1 12-1 26 0 40" stroke="#1d1d22" stroke-width="6" fill="none" stroke-linecap="round"/>
-    <path d="M75 82c1 12 1 26 0 40" stroke="#1d1d22" stroke-width="6" fill="none" stroke-linecap="round"/>
-    <!-- left arm: hand in pocket -->
-    <path d="M40 86c-6 6-8 18-6 30l8 2c0-8 0-16 3-24z" fill="#f6f3ec"/>
-    <path d="M35 113c-1 3 1 6 4 6s5-2 5-5" fill="#b97a52"/>
-    <!-- right arm: waves -->
-    <g class="bd-arm">
-      <path d="M80 86c6 6 8 18 6 30l-8 2c0-8 0-16-3-24z" fill="#f6f3ec"/>
-      <rect x="77" y="111" width="10" height="5" rx="2" fill="#1c1c20"/>
-      <circle cx="82" cy="121" r="5.5" fill="#b97a52"/>
+  // Chibi Jo, drawn from jose's character sheet: big round face, spiral curls, shades, open white shirt,
+  // backpack, dark joggers. He sits on the edge of things with his legs dangling over the front.
+  const CURL = (x, y, r, k = "") => `<g class="bd-curl ${k}" transform="translate(${x} ${y})"><circle r="${r}"/><path d="M${-r * .45} ${r * .1}a${r * .45} ${r * .45} 0 1 1 ${r * .5} ${r * .35}a${r * .25} ${r * .25} 0 1 1 ${-r * .15} ${-r * .4}"/></g>`;
+  const SVG = `<svg viewBox="0 0 100 112" aria-hidden="true" class="bd-svg">
+  <g class="bd-all">
+    <rect x="29" y="61" width="42" height="27" rx="11" fill="#2b2b33"/>
+    <g class="bd-leg bd-legL"><rect x="37" y="84" width="11" height="18" rx="5.5" fill="#3f3f47"/><ellipse cx="42" cy="104" rx="8" ry="5" fill="#f1f2f4"/><path d="M36 104h12" stroke="#a3a9b0" stroke-width="2" stroke-linecap="round"/></g>
+    <g class="bd-leg bd-legR"><rect x="52" y="84" width="11" height="18" rx="5.5" fill="#3f3f47"/><ellipse cx="58" cy="104" rx="8" ry="5" fill="#f1f2f4"/><path d="M52 104h12" stroke="#a3a9b0" stroke-width="2" stroke-linecap="round"/></g>
+    <g class="bd-torso">
+      <path d="M33 88c-1-14 5-24 17-24s18 10 17 24z" fill="#f8f5ef"/>
+      <path d="M45 64h10v24H45z" fill="#fff"/>
+      <path d="M44 64l3 6 3-4 3 4 3-6" fill="none" stroke="#dcd5c8" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M39 66c-1 7-1 15 0 22M61 66c1 7 1 15 0 22" stroke="#1f1f25" stroke-width="4.5" stroke-linecap="round" fill="none"/>
     </g>
-    <!-- neck and head -->
-    <rect x="54" y="70" width="12" height="11" rx="4" fill="#a86c46"/>
+    <g class="bd-book"><path d="M35 76l15 3 15-3v12l-15 3-15-3z" fill="#2457f5"/><path d="M37 77l13 3v10l-13-3zM63 77l-13 3v10l13-3z" fill="#fff"/><path d="M40 81l7 1.5M40 84l7 1.5M53 82.5l7-1.5M53 85.5l7-1.5" stroke="#c9cfdb" stroke-width="1"/></g>
     <g class="bd-head">
-      <circle cx="35" cy="54" r="5" fill="#b97a52"/><circle cx="85" cy="54" r="5" fill="#b97a52"/>
-      <ellipse cx="60" cy="52" rx="25" ry="24" fill="#b97a52"/>
-      <ellipse cx="46" cy="63" rx="4.5" ry="2.6" fill="#d98b6a" opacity=".55"/><ellipse cx="74" cy="63" rx="4.5" ry="2.6" fill="#d98b6a" opacity=".55"/>
-      <!-- curly hair -->
-      <g class="bd-hair" fill="#1b120c">
-        <circle cx="38" cy="38" r="9"/><circle cx="48" cy="28" r="10"/><circle cx="60" cy="24" r="11"/><circle cx="72" cy="28" r="10"/><circle cx="82" cy="38" r="9"/>
-        <circle cx="34" cy="48" r="7"/><circle cx="86" cy="48" r="7"/><circle cx="54" cy="33" r="8"/><circle cx="67" cy="33" r="8"/><circle cx="44" cy="38" r="7"/><circle cx="76" cy="38" r="7"/>
-        <circle cx="52" cy="18" r="6"/><circle cx="68" cy="18" r="6"/><circle cx="60" cy="14" r="5"/>
+      <g class="bd-hair-back" fill="#22160e">${CURL(23, 38, 7)}${CURL(77, 38, 7)}${CURL(25, 27, 8)}${CURL(75, 27, 8)}</g>
+      <circle cx="24.5" cy="45" r="5" fill="#b97d52"/><circle cx="75.5" cy="45" r="5" fill="#b97d52"/>
+      <ellipse cx="50" cy="42" rx="26" ry="24" fill="#c58a5e"/>
+      <ellipse cx="50" cy="58" rx="15" ry="5" fill="#b97d52" opacity=".35"/>
+      <g class="bd-eyes"><ellipse cx="40" cy="47" rx="3.6" ry="4.6" fill="#1b1410"/><ellipse cx="60" cy="47" rx="3.6" ry="4.6" fill="#1b1410"/><circle cx="41.3" cy="45.3" r="1.4" fill="#fff"/><circle cx="61.3" cy="45.3" r="1.4" fill="#fff"/></g>
+      <ellipse cx="34" cy="54" rx="5" ry="3" fill="#ff8f7a" opacity=".5"/><ellipse cx="66" cy="54" rx="5" ry="3" fill="#ff8f7a" opacity=".5"/>
+      <path d="M48.5 51.5q1.5 1.2 3 0" fill="none" stroke="#8c5634" stroke-width="1.3" stroke-linecap="round"/>
+      <path class="bd-smile" d="M45 55.5q5 4.5 10 0" fill="none" stroke="#5a2e1a" stroke-width="2" stroke-linecap="round"/>
+      <g class="bd-laugh"><path d="M44.5 55h11q-1 7-5.5 7t-5.5-7z" fill="#5a2e1a"/><path d="M47 60q3-2 6 0q-1 2-3 2t-3-2z" fill="#ff8a8a"/></g>
+      <g class="bd-hair" fill="#22160e" stroke="#4d3526" stroke-width="1.2" stroke-linecap="round">
+        ${CURL(31, 22, 8.5, "c1")}${CURL(41, 15, 9, "c2")}${CURL(53, 12, 9.5, "c3")}${CURL(65, 15, 9, "c4")}${CURL(73, 23, 8, "c5")}
+        ${CURL(36, 28, 6.5, "c2")}${CURL(46, 25, 6.5, "c4")}${CURL(57, 25, 6.5, "c1")}${CURL(66, 28, 6.5, "c3")}
+        ${CURL(47, 7, 5.5, "c5")}${CURL(59, 6, 5, "c2")}
+        <path class="bd-flick" d="M51 27q-4 5 0 7q3 1 2-2" fill="none" stroke="#22160e" stroke-width="2.4"/>
       </g>
-      <g fill="none" stroke="#4a3526" stroke-width="1.6" stroke-linecap="round" opacity=".9">
-        <path d="M45 24a5 5 0 0 1 6-2"/><path d="M58 17a5 5 0 0 1 6 0"/><path d="M70 23a5 5 0 0 1 5 3"/><path d="M36 35a5 5 0 0 1 4-4"/><path d="M80 32a5 5 0 0 1 4 4"/>
+      <g class="bd-shades">
+        <path d="M27 42.5h46" stroke="#111114" stroke-width="2.2"/>
+        <rect x="30.5" y="39" width="17" height="12" rx="5.5" fill="#111114"/><rect x="52.5" y="39" width="17" height="12" rx="5.5" fill="#111114"/>
+        <path d="M47.5 42q2.5-2 5 0" fill="none" stroke="#111114" stroke-width="2.2"/>
+        <path d="M33.5 48l5-6M55.5 48l5-6" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".4"/>
       </g>
-      <!-- sunglasses -->
-      <path d="M38 50h44" stroke="#0f0f12" stroke-width="2.5"/>
-      <rect x="40" y="48" width="17" height="12" rx="4" fill="#0f0f12"/><rect x="63" y="48" width="17" height="12" rx="4" fill="#0f0f12"/>
-      <path d="M57 51q3-2 6 0" stroke="#0f0f12" stroke-width="2.5" fill="none"/>
-      <path class="bd-glint" d="M43 57l6-7M66 57l6-7" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".35"/>
-      <!-- smile -->
-      <path class="bd-smile" d="M52 66q8 6 16 0" fill="none" stroke="#5a2e1a" stroke-width="2.4" stroke-linecap="round"/>
-      <path class="bd-laugh" d="M51 65q9 10 18 0z" fill="#5a2e1a"/>
     </g>
+    <g class="bd-arm bd-armL"><path d="M36 66q-7 6-7 16l6 1q0-8 4-13z" fill="#f8f5ef"/><circle cx="31.5" cy="84" r="4" fill="#c58a5e"/></g>
+    <g class="bd-arm bd-armR"><path d="M64 66q7 6 7 16l-6 1q0-8-4-13z" fill="#f8f5ef"/><rect x="64.5" y="79" width="7" height="3" rx="1.2" fill="#1c1c20"/><circle cx="68.5" cy="84" r="4" fill="#c58a5e"/>
+      <g class="bd-cup"><path d="M65 72h9l-1 9h-7z" fill="#fff" stroke="#e0d8cc" stroke-width=".8"/><path d="M65.3 73.5h8.4" stroke="#b5713b" stroke-width="2"/><path d="M74 74.5q3 0 2.5 3t-3 2" fill="none" stroke="#e0d8cc" stroke-width="1.4"/>
+        <path class="bd-steam" d="M68 70q-2-3 0-5t0-5M71 70q-2-3 0-5" fill="none" stroke="#c9c2b6" stroke-width="1.2" stroke-linecap="round"/></g></g>
   </g>
 </svg>`;
 
@@ -142,21 +130,22 @@
 
   const el = document.createElement("div");
   el.className = "buddy"; el.id = "buddy";
-  el.innerHTML = `<button type="button" class="bd-btn" aria-label="Jo, your study buddy. Tap for a tip">${SVG}</button><div class="bd-say" role="status" aria-live="polite" hidden><b>Jo</b><p></p></div>`;
+  el.innerHTML = `<button type="button" class="bd-btn" aria-label="Jo, your study buddy. Tap for a tip">${SVG}</button><div class="bd-say" role="status" aria-live="polite" hidden><b>Jo</b><p></p><i class="bd-tail t1"></i><i class="bd-tail t2"></i></div>`;
   document.body.append(el);
   const say = el.querySelector(".bd-say"), sayP = say.querySelector("p"), svg = el.querySelector(".bd-svg");
-  const W = 84, H = 119;
+  const W = 60, H = 67, SEAT = 51;
   let x = innerWidth - W - 12, y = scrollY + innerHeight + 20, target = null, lastJump = 0, lastSay = 0, hideT = 0, anim = null;
   const enabled = () => pref.get("la-buddy") !== "0" && !root.classList.contains("focus-on");
   const moving = () => root.classList.contains("motion");
-  const put = () => { el.style.transform = `translate(${x}px,${y}px)`; if (say) say.classList.toggle("below", y - scrollY < 190); };
+  const put = () => { el.style.transform = `translate(${x}px,${y}px)`; if (say) say.classList.toggle("below", y - scrollY < (el.classList.contains("big") ? 240 : 190)); };
 
-  function speak(text, ms = 7000){
+  function speak(text, ms = 7000, big = false){
     if (!text) return;
+    el.classList.toggle("big", big);
     sayP.textContent = text; say.hidden = false; lastSay = Date.now();
     say.classList.toggle("left", x - scrollX > innerWidth / 2);
-    say.classList.toggle("below", y - scrollY < 190);
-    clearTimeout(hideT); hideT = setTimeout(() => { say.hidden = true; }, ms);
+    say.classList.toggle("below", y - scrollY < (el.classList.contains("big") ? 240 : 190));
+    clearTimeout(hideT); hideT = setTimeout(() => { say.hidden = true; el.classList.remove("big"); }, ms);
   }
   function mood(m, ms = 900){ el.classList.add(m); setTimeout(() => el.classList.remove(m), ms); }
 
@@ -167,11 +156,12 @@
   }
   function spotFor(n){
     const r = n.getBoundingClientRect();
-    return [Math.max(8, Math.min(innerWidth - W - 8, r.right - W - 6)) + scrollX, r.top + scrollY - H + 8];
+    return [Math.max(8, Math.min(innerWidth - W - 8, r.right - W - 14)) + scrollX, r.top + scrollY - SEAT];
   }
   function jumpTo(n, talk){
     const [nx, ny] = n ? spotFor(n) : [innerWidth - W - 12 + scrollX, scrollY + innerHeight - H - 16];
-    target = n; lastJump = Date.now(); if (Date.now() - lastSay > 4000) say.hidden = true;
+    target = n; lastJump = Date.now(); if (Date.now() - lastSay > 4000) { say.hidden = true; el.classList.remove("big"); }
+    act(null);
     const onScreen = y > scrollY - H && y < scrollY + innerHeight;
     const x0 = onScreen ? x : nx, y0 = onScreen ? y : scrollY + innerHeight + 10;
     x = nx; y = ny;
@@ -190,7 +180,7 @@
 
   function settle(){
     if (!enabled()) { el.hidden = true; return; }
-    el.hidden = false; say.classList.toggle("below", y - scrollY < 190);
+    el.hidden = false; say.classList.toggle("below", y - scrollY < (el.classList.contains("big") ? 240 : 190));
     const stillThere = target && target.isConnected && target.offsetParent && (() => { const r = target.getBoundingClientRect(); return r.top > 190 && r.top < innerHeight * .85; })();
     if (stillThere) { const [nx, ny] = spotFor(target); if (Math.abs(nx - x) > 2 || Math.abs(ny - y) > 2) { x = nx; y = ny; put(); } return; }
     const spots = visibleSpots();
@@ -212,14 +202,28 @@
   });
   el.querySelector(".bd-btn").addEventListener("click", () => {
     if (typeof haptic === "function") haptic("tap");
-    mood("wave", 1200);
-    speak(Math.random() < .55 ? lineFor(target) : pick(Math.random() < .5 ? TEASE : MOTIVATE));
+    act(null); mood("happy", 1400);
+    speak(Math.random() < .55 ? lineFor(target) : pick(Math.random() < .5 ? TEASE : MOTIVATE), 8000, true);
   });
-  say.addEventListener("click", () => { say.hidden = true; });
+  say.addEventListener("click", () => { say.hidden = true; el.classList.remove("big"); });
+
+  // Little things Jo does while he sits: sips chai, reads, stretches, waves
+  const ACTS = [["chai", 4200], ["read", 6000], ["stretch", 2600], ["wave", 2000]];
+  let actT = 0;
+  function act(name, ms){
+    ACTS.forEach(([a]) => el.classList.remove("act-" + a)); clearTimeout(actT);
+    if (name) { el.classList.add("act-" + name); actT = setTimeout(() => el.classList.remove("act-" + name), ms); }
+  }
+  (function fidget(){
+    setTimeout(() => {
+      if (enabled() && moving() && !anim && !el.classList.contains("big") && !document.hidden) { const [a, ms] = pick(ACTS); act(a, ms); }
+      fidget();
+    }, 8000 + Math.random() * 7000);
+  })();
 
   // Nudge after a long quiet spell, then a fresh joke every so often (never more than once a minute)
   let idleT = 0;
-  const idle = () => { clearTimeout(idleT); idleT = setTimeout(() => { if (enabled() && !document.hidden && Date.now() - lastSay > 60000) { mood("wave", 1200); speak(pick([...TEASE, ...MOTIVATE])); } idle(); }, 90000); };
+  const idle = () => { clearTimeout(idleT); idleT = setTimeout(() => { if (enabled() && !document.hidden && Date.now() - lastSay > 60000) { act("wave", 2000); speak(pick([...TEASE, ...MOTIVATE])); } idle(); }, 90000); };
   ["pointerdown", "keydown", "scroll"].forEach(ev => addEventListener(ev, idle, { passive: true }));
 
   // the comfort-panel switch
@@ -232,5 +236,5 @@
   new MutationObserver(() => { if (!enabled()) el.hidden = true; else if (el.hidden) setTimeout(settle, 300); }).observe(root, { attributes: true, attributeFilter: ["class"] });
 
   put(); el.hidden = !enabled();
-  setTimeout(() => { if (!enabled()) return; const spots = visibleSpots(); jumpTo(spots[0] || null, false); setTimeout(() => { mood("wave", 1400); speak(GREET, 8000); }, 800); idle(); }, 1800);
+  setTimeout(() => { if (!enabled()) return; const spots = visibleSpots(); jumpTo(spots[0] || null, false); setTimeout(() => { act("wave", 2000); speak(GREET, 8000); }, 800); idle(); }, 1800);
 })();
