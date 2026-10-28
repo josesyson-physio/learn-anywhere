@@ -49,4 +49,8 @@ Library topics live in `library/*.js` (each file pushes topics onto `window.LIB_
 - Code: [MIT](LICENSE)
 - Educational content (topics, quiz questions): [CC BY-SA 4.0](CONTENT-LICENSE.md)
 
-This is a study aid for students, not medical advice for patients.
+This is a study aid for students, not medical advice for patients. It is independent and not affiliated with or endorsed by any university, publisher or guideline body it mentions.
+
+## Privacy
+
+No accounts, analytics, ads or cookies. Progress is kept in the browser's localStorage on the device. GitHub Pages (hosting) and Google Fonts receive visitors' IP addresses when the page loads.
