@@ -49,52 +49,58 @@
 </svg>`;
 
   const pick = a => a[Math.floor(Math.random() * a.length)];
-  const firstSentence = t => { const m = String(t || "").match(/^.{20,220}?[.!?](\s|$)/); return (m ? m[0] : String(t || "").slice(0, 200)).trim(); };
+  // The library's own real-life example, only when its first sentence is short enough to read at a glance
+  const short = t => { const m = String(t || "").match(/^.{15,115}?[.!?](\s|$)/); return m ? m[0].trim() : ""; };
   const hour = new Date().getHours();
-  const GREET = hour >= 23 || hour < 5 ? "It's late, friend. Revise one small thing, then sleep. Your brain saves today's learning while you snore."
-    : hour < 12 ? "Good morning, future physio! Chai first, then capsular patterns."
-    : hour < 17 ? "Post-lunch sleepy? Same. One topic before the nap wins, deal?"
-    : "Evening study squad! Ten focused minutes beats an hour of reels.";
+  // Lines are short on purpose: one glance, one smile, back to studying.
+  const GREET = hour >= 23 || hour < 5 ? "It's late 😴 One quick revision, then sleep. Memory saves at night."
+    : hour < 12 ? "Morning! Chai first ☕ then capsular patterns."
+    : hour < 17 ? "Post-lunch sleepy? Same. One topic, then nap."
+    : "Evening grind. 10 focused minutes > 1 hour of reels.";
 
   const TEASE = [
-    "You scroll faster than a sprinter's hamstring. Slow down and read one card fully.",
-    "Sitting like a question mark? Your neck is filing a complaint. Sit tall, small chin tuck, carry on.",
-    "Phone this close to your face? Look at something far away for 20 seconds. Your eyes asked me to say that.",
-    "Don't just read it. Close your eyes and say it out loud. People may stare. Toppers don't care.",
-    "Highlighting the whole page is not studying, it's colouring. Pick the three lines that matter.",
-    "Viva tip: examiners can smell \"I'll just say it confidently\". Know the why, not only the what.",
-    "If you can't explain it to your little cousin, you don't know it yet. Try it on me. I'm a drawing, I won't judge.",
-    "Bunking revision today? Your future self just sighed loudly."
+    "Bro is reading at 2x speed. Slow down 😭",
+    "Posture check. You look like a prawn. Sit up.",
+    "Phone too close to your face. Look far for 20 sec 👀",
+    "Highlighting the whole page isn't studying. It's colouring.",
+    "Read it 5 times? Cool. Now close it and say it out loud.",
+    "Examiner: \"Why?\" You: 🫠 Learn the why.",
+    "Reels can wait. Your viva can't.",
+    "Last-minute revision again? Classic.",
+    "That's the third time you scrolled past this. Just read it 😤"
   ];
   const MOTIVATE = [
-    "Every physio you admire once forgot the brachial plexus too. Keep going.",
-    "One topic a day is 365 topics a year. Compounding, like your quads after squats.",
-    "You don't need to beat the class topper. Just beat yesterday's you.",
-    "Patients won't remember your marks. They'll remember you got them walking again. Study for them.",
-    "Tired? Stand up, five calf raises, sip of water, back in. That's literally physio for your brain.",
-    "Small steps, daily. That's how we rehab a knee and that's how we rehab a syllabus."
+    "One topic a day = 365 a year. Lowkey insane.",
+    "Everyone forgets the brachial plexus. Everyone. Keep going.",
+    "Don't beat the topper. Beat yesterday's you.",
+    "Your future patient is counting on you. No pressure 😌",
+    "Stand up, 5 calf raises, sip water. Back in.",
+    "Small reps every day. Same as rehab."
   ];
   const SEC = {
-    flow: "Draw this flowchart in your answer. Examiners love boxes and arrows more than long paragraphs.",
-    glance: "Picture this diagram before you sleep. Visual memory is a cheat code that's totally legal.",
-    flags: "Red flags mean refer, don't treat. A good physio knows when not to touch.",
-    viva: "Practise these out loud with a friend. Bonus points if you do it in the examiner's serious voice.",
-    refs: "Name at least one textbook in your answer. Instant respect from the examiner.",
-    exam: "Match the length to the marks. A 2-marker is not a love letter.",
-    marks: "Match the length to the marks. A 2-marker is not a love letter.",
-    adv: "Advanced bit. You don't need it for every exam, but it makes you sound like a real clinician.",
-    simple: "Read the simple version first, then the exam version. Your brain needs the story before the jargon.",
-    play: "Try the activity. Learning with your hands sticks way longer than staring at a screen.",
-    ex: "Real-life examples are gold in a viva. Steal this one."
+    flow: "Draw this flowchart in the exam. Examiners love boxes.",
+    glance: "Screenshot this in your brain 📸",
+    flags: "Red flags = refer. Don't play hero.",
+    viva: "Say these out loud. Yes, out loud.",
+    refs: "Drop one textbook name in your answer. Instant aura.",
+    exam: "2 marks ≠ 2 pages. Match the marks.",
+    marks: "2 marks ≠ 2 pages. Match the marks.",
+    adv: "Bonus level. Makes you sound like a real clinician.",
+    simple: "Simple version first. Jargon later.",
+    play: "Try this one. Hands remember more than eyes.",
+    ex: "Steal this example for your viva."
   };
   const PLACE = {
-    today: P => P.streak ? `${P.streak}-day streak! Don't break it now, I've already told everyone about you.` : "Streak at zero? Let's fix that. One topic. I'll wait. I'm a drawing, I have all day.",
-    comfort: () => "Long study session? Switch on e-ink paper mode. Your eyes will send you a thank-you note.",
-    panel: () => "Type a topic, like \"stroke\" or \"knee\". Short words work best, just like in a viva.",
-    subj: s => `${s}? Good choice. Tap it and I'll line up the easy ones first.`,
-    qcard: () => "No peeking at the answer. I'm watching you through these shades.",
-    shelf: () => "Textbooks are heavy. That's why I carry a backpack. Read the chapter after the summary."
+    today: P => P.streak ? `🔥 ${P.streak}-day streak. Don't you dare break it.` : "Streak at 0. One topic fixes that.",
+    comfort: () => "Eyes tired? Try e-ink mode 👀",
+    panel: () => "Type a topic. \"knee\" works. Keep it short.",
+    subj: s => `${s}? Good pick 👌`,
+    qcard: () => "No peeking 👀",
+    shelf: () => "Summary first, then the real chapter 📚"
   };
+  const RIGHT = ["W answer 🔥", "Okay topper 👀", "Correct. You're cooking.", "That's going in the exam. Nice."];
+  const WRONG = ["L, but a useful L. Read the why.", "Close! Read the why once. Never miss it again.", "Happens. Now you won't forget it."];
+  const OK = ["👍 Bet", "👍 Got it", "👍 Say less", "👍 Okie", "👍 Fair"];
 
   function topicOf(node){
     const host = node.closest("[data-id]"); const id = host && host.dataset.id;
@@ -108,15 +114,15 @@
     const sec = node.closest(".sheet .sec[id]");
     if (sec && Math.random() < .8) {
       const key = (sec.id.match(/-([a-z]+)$/) || [])[1];
-      if (key === "relate" && R) return "Like a friend would say it: " + firstSentence(R.r);
-      if (key === "mem" && t && t.mnemonic && t.mnemonic.word) return `Memory hack: "${t.mnemonic.word}". Say it three times in your head. Done? Now it's yours.`;
+      if (key === "relate" && R && short(R.r)) return short(R.r);
+      if (key === "mem" && t && t.mnemonic && t.mnemonic.word) return `Memory key: "${t.mnemonic.word}" 🔑 Say it 3 times.`;
       if (SEC[key]) return SEC[key];
     }
     if (node.closest(".card,.sheet")) {
       const opts = [];
-      if (R && R.r) opts.push("Real life version: " + firstSentence(R.r));
-      if (t && t.mnemonic && t.mnemonic.word) opts.push(`"${t.mnemonic.word}" is the memory key for ${t.title}. Trust me, it saves you in the exam hall.`);
-      if (t) opts.push(`${t.title}. Open it, read the simple words, then hit Test me. Ten minutes, that's it.`);
+      if (R && short(R.r)) opts.push(short(R.r));
+      if (t && t.mnemonic && t.mnemonic.word) opts.push(`Memory key: "${t.mnemonic.word}" 🔑`);
+      if (t) opts.push(`${t.title.replace(/ \(.*\)$/, "")}. 10 minutes. Go.`);
       return pick(opts);
     }
     if (node.id === "today") { const P = prog.get(); return PLACE.today({ streak: streakOf(P) }); }
@@ -130,17 +136,25 @@
 
   const el = document.createElement("div");
   el.className = "buddy"; el.id = "buddy";
-  el.innerHTML = `<button type="button" class="bd-btn" aria-label="Jo, your study buddy. Tap for a tip">${SVG}</button><div class="bd-say" role="status" aria-live="polite" hidden><b>Jo</b><p></p><i class="bd-tail t1"></i><i class="bd-tail t2"></i></div>`;
+  el.innerHTML = `<button type="button" class="bd-btn" aria-label="Jo, your study buddy. Tap for a tip">${SVG}</button><div class="bd-say" role="status" aria-live="polite" hidden><b>Jo</b><p></p><span class="bd-acts"><button type="button" class="bd-ok">👍 Bet</button><button type="button" class="bd-shh" title="Jo stays quiet for 15 minutes unless you tap him">🤫 Shh</button></span><i class="bd-tail t1"></i><i class="bd-tail t2"></i></div>`;
   document.body.append(el);
   const say = el.querySelector(".bd-say"), sayP = say.querySelector("p"), svg = el.querySelector(".bd-svg");
   const W = 60, H = 67, SEAT = 51;
+  const okBtn = say.querySelector(".bd-ok"), shhBtn = say.querySelector(".bd-shh");
+  // Shh keeps him quiet for 15 minutes; each 👍 makes him wait a little longer before the next line
+  let quietUntil = 0, dismissals = 0;
+  try { quietUntil = +(sessionStorage.getItem("la-jo-quiet") || 0); } catch {}
+  const gap = () => 25000 + Math.min(dismissals, 4) * 15000;
+  const chatty = () => Date.now() > quietUntil && Date.now() - lastSay > gap();
   let x = innerWidth - W - 12, y = scrollY + innerHeight + 20, target = null, lastJump = 0, lastSay = 0, hideT = 0, anim = null;
   const enabled = () => pref.get("la-buddy") !== "0" && !root.classList.contains("focus-on");
   const moving = () => root.classList.contains("motion");
   const put = () => { el.style.transform = `translate(${x}px,${y}px)`; if (say) say.classList.toggle("below", y - scrollY < (el.classList.contains("big") ? 240 : 190)); };
 
-  function speak(text, ms = 7000, big = false){
+  function speak(text, ms, big = false){
     if (!text) return;
+    ms = ms || Math.min(7000, 2600 + text.length * 45);
+    okBtn.textContent = pick(OK);
     el.classList.toggle("big", big);
     sayP.textContent = text; say.hidden = false; lastSay = Date.now();
     say.classList.toggle("left", x - scrollX > innerWidth / 2);
@@ -184,7 +198,7 @@
     const stillThere = target && target.isConnected && target.offsetParent && (() => { const r = target.getBoundingClientRect(); return r.top > 190 && r.top < innerHeight * .85; })();
     if (stillThere) { const [nx, ny] = spotFor(target); if (Math.abs(nx - x) > 2 || Math.abs(ny - y) > 2) { x = nx; y = ny; put(); } return; }
     const spots = visibleSpots();
-    jumpTo(spots.length ? spots[Math.floor(spots.length / 3)] : null, Date.now() - lastSay > 6000);
+    jumpTo(spots.length ? spots[Math.floor(spots.length / 3)] : null, chatty());
   }
 
   let scrollT = 0;
@@ -194,18 +208,22 @@
     if (e.target.closest("nav.tabs button")) { target = null; setTimeout(settle, 450); return; }
     const opt = e.target.closest(".opt");
     if (opt) setTimeout(() => {
-      if (opt.classList.contains("right")) { mood("happy", 1600); speak(pick(["Topper energy! Your future patients just felt that.", "Correct! Okay, okay, you're cooking now.", "Right answer. Don't let it go to your head... okay, a little."])); }
-      else if (opt.classList.contains("wrong")) { mood("oops", 900); speak(pick(["Wrong, but that's how memory works. A mistake now saves you in the exam. Read the why.", "Arre, so close! Read the explanation once, you'll never miss this one again.", "Even I got that wrong the first time. And I wear sunglasses indoors."])); }
+      if (opt.classList.contains("right")) { mood("happy", 1600); if (Date.now() > quietUntil) speak(pick(RIGHT)); }
+      else if (opt.classList.contains("wrong")) { mood("oops", 900); if (Date.now() > quietUntil) speak(pick(WRONG)); }
     }, 60);
     const lb = e.target.closest(".learn-btn");
-    if (lb) setTimeout(() => { if (lb.getAttribute("aria-pressed") === "true") { mood("happy", 1600); speak("Marked as learned! Collecting topics like trophies. Revise it again in three days and it sticks for good."); } }, 60);
+    if (lb) setTimeout(() => { if (lb.getAttribute("aria-pressed") === "true") { mood("happy", 1600); if (Date.now() > quietUntil) speak("Learned ✅ Revise in 3 days and it's yours."); } }, 60);
   });
   el.querySelector(".bd-btn").addEventListener("click", () => {
     if (typeof haptic === "function") haptic("tap");
     act(null); mood("happy", 1400);
     speak(Math.random() < .55 ? lineFor(target) : pick(Math.random() < .5 ? TEASE : MOTIVATE), 8000, true);
   });
-  say.addEventListener("click", () => { say.hidden = true; el.classList.remove("big"); });
+  const close = () => { say.hidden = true; el.classList.remove("big"); clearTimeout(hideT); };
+  function pop(emoji){ const f = document.createElement("span"); f.className = "bd-pop"; f.textContent = emoji; el.append(f); setTimeout(() => f.remove(), 1100); }
+  okBtn.addEventListener("click", e => { e.stopPropagation(); close(); dismissals++; pop("👍"); mood("happy", 900); if (typeof haptic === "function") haptic("tap"); });
+  shhBtn.addEventListener("click", e => { e.stopPropagation(); close(); quietUntil = Date.now() + 15 * 60000; try { sessionStorage.setItem("la-jo-quiet", quietUntil); } catch {} pop("🤫"); if (typeof haptic === "function") haptic("tap"); });
+  say.addEventListener("click", close);
 
   // Little things Jo does while he sits: sips chai, reads, stretches, waves
   const ACTS = [["chai", 4200], ["read", 6000], ["stretch", 2600], ["wave", 2000]];
@@ -223,7 +241,7 @@
 
   // Nudge after a long quiet spell, then a fresh joke every so often (never more than once a minute)
   let idleT = 0;
-  const idle = () => { clearTimeout(idleT); idleT = setTimeout(() => { if (enabled() && !document.hidden && Date.now() - lastSay > 60000) { act("wave", 2000); speak(pick([...TEASE, ...MOTIVATE])); } idle(); }, 90000); };
+  const idle = () => { clearTimeout(idleT); idleT = setTimeout(() => { if (enabled() && !document.hidden && Date.now() - lastSay > 120000 && Date.now() > quietUntil) { act("wave", 2000); speak(pick([...TEASE, ...MOTIVATE])); } idle(); }, 90000); };
   ["pointerdown", "keydown", "scroll"].forEach(ev => addEventListener(ev, idle, { passive: true }));
 
   // the comfort-panel switch
@@ -236,5 +254,5 @@
   new MutationObserver(() => { if (!enabled()) el.hidden = true; else if (el.hidden) setTimeout(settle, 300); }).observe(root, { attributes: true, attributeFilter: ["class"] });
 
   put(); el.hidden = !enabled();
-  setTimeout(() => { if (!enabled()) return; const spots = visibleSpots(); jumpTo(spots[0] || null, false); setTimeout(() => { act("wave", 2000); speak(GREET, 8000); }, 800); idle(); }, 1800);
+  setTimeout(() => { if (!enabled()) return; const spots = visibleSpots(); jumpTo(spots[0] || null, false); setTimeout(() => { act("wave", 2000); if (Date.now() > quietUntil) speak(GREET); }, 800); idle(); }, 1800);
 })();
