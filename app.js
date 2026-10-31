@@ -229,7 +229,7 @@ const PATTERNS = {
   "Rajiv Gandhi University of Health Sciences, Karnataka": "RGUHS MPT (2020): four theory papers of 3 hours and 100 marks, each with 10 long essays of 10 marks and no choice. Plan each 10-mark answer in about 15 minutes: definition, key points, a diagram or flowchart, evidence and a short conclusion.",
   "Maharashtra University of Health Sciences, Nashik": "MUHS BPTh (competency-based, 2022): long answer (LAQ), short answer (SAQ) and MCQ questions with internal assessment and OSCE or OSPE practicals. Check the MUHS paper pattern for your batch.",
   "RGUHS (Karnataka)": "RGUHS MPT (2020): four theory papers of 3 hours and 100 marks, each with 10 long essays of 10 marks and no choice. Plan each 10-mark answer in about 15 minutes: definition, key points, a diagram or flowchart, evidence and a short conclusion. For BPT papers, check the RGUHS BPT pattern for your batch.",
-  "MUHS (Maharashtra)": "MUHS BPTh (competency-based, 2022): long answer (LAQ), short answer (SAQ) and MCQ questions with internal assessment and OSCE or OSPE practicals. Check the MUHS paper pattern for your batch.",
+  "MUHS (Maharashtra)": "MUHS BPTh (competency-based, 2022): long answer (LAQ), short answer (SAQ) and MCQ questions with internal assessment and OSCE or OSPE practicals. MUHS MPT (2019): four 100-mark papers, each with two 30-mark long answers (choose one of two) and four of five 10-mark short answers. Check the MUHS paper pattern for your batch.",
   "Tamil Nadu Dr. M.G.R. Medical University": "Dr. MGR BPT papers: 10 x 2-mark short answers, 10 x 5-mark short notes and 2 x 15-mark essays (3 hours, 100 marks). MPT (2018-19): 2 x 20-mark essays and 10 x 6-mark short notes."
 };
 function scaleMarking(a, n){
