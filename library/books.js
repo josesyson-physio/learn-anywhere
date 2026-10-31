@@ -55,7 +55,15 @@ window.BOOKS = {
   turnbull: { a: "Turnbull A, Turnbull HR, et al.", t: "Families, Professionals, and Exceptionality", s: "Family and community" },
   dunst: { a: "Dunst CJ, Trivette CM, Deal AG", t: "Enabling and Empowering Families", s: "Family and community" },
   emery: { a: "Turnpenny PD, Ellard S", t: "Emery's Elements of Medical Genetics", s: "Genetics" },
-  park: { a: "Park K", t: "Park's Textbook of Preventive and Social Medicine", s: "Community medicine" }
+  park: { a: "Park K", t: "Park's Textbook of Preventive and Social Medicine", s: "Community medicine" },
+  // MPT Paediatrics (RGUHS MPT 2020 recommended reading list)
+  effgen: { a: "Effgen SK", t: "Meeting the Physical Therapy Needs of Children", s: "Paediatrics" },
+  gallahue: { a: "Gallahue DL, Ozmun JC, Goodway JD", t: "Understanding Motor Development: Infants, Children, Adolescents, Adults", s: "Paediatrics" },
+  illingworth: { a: "Illingworth RS", t: "The Development of the Infant and Young Child: Normal and Abnormal", s: "Paediatrics" },
+  iap: { a: "Parthasarathy A, et al. (eds.)", t: "IAP Textbook of Pediatrics", s: "Paediatrics" },
+  rennie: { a: "Rennie JM, Kendall G", t: "A Manual of Neonatal Intensive Care", s: "Paediatrics" },
+  armstrong: { a: "Armstrong N, van Mechelen W (eds.)", t: "Oxford Textbook of Children's Sport and Exercise Medicine", s: "Paediatrics" },
+  pals: { a: "Disque K", t: "PALS: Pediatric Advanced Life Support Provider Handbook", s: "Paediatrics" }
 };
 // Shelf entries the user listed that topics don't cite directly.
 window.SHELF_EXTRA = [
