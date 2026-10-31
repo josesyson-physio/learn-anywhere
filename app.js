@@ -226,6 +226,10 @@ function glanceData(a){
 /* ================= writing for the marks ================= */
 const PATTERNS = {
   "Osmania University (with NIEPID, Secunderabad)": "PG Diploma in Early Intervention: each theory paper is 3 hours, 60 marks external plus 20 internal. Write long answers with definition, types, core content, identification, early intervention and the family's role.",
+  "Rajiv Gandhi University of Health Sciences, Karnataka": "RGUHS MPT (2020): four theory papers of 3 hours and 100 marks, each with 10 long essays of 10 marks and no choice. Plan each 10-mark answer in about 15 minutes: definition, key points, a diagram or flowchart, evidence and a short conclusion.",
+  "Maharashtra University of Health Sciences, Nashik": "MUHS BPTh (competency-based, 2022): long answer (LAQ), short answer (SAQ) and MCQ questions with internal assessment and OSCE or OSPE practicals. Check the MUHS paper pattern for your batch.",
+  "RGUHS (Karnataka)": "RGUHS MPT (2020): four theory papers of 3 hours and 100 marks, each with 10 long essays of 10 marks and no choice. Plan each 10-mark answer in about 15 minutes: definition, key points, a diagram or flowchart, evidence and a short conclusion. For BPT papers, check the RGUHS BPT pattern for your batch.",
+  "MUHS (Maharashtra)": "MUHS BPTh (competency-based, 2022): long answer (LAQ), short answer (SAQ) and MCQ questions with internal assessment and OSCE or OSPE practicals. Check the MUHS paper pattern for your batch.",
   "Tamil Nadu Dr. M.G.R. Medical University": "Dr. MGR BPT papers: 10 x 2-mark short answers, 10 x 5-mark short notes and 2 x 15-mark essays (3 hours, 100 marks). MPT (2018-19): 2 x 20-mark essays and 10 x 6-mark short notes."
 };
 function scaleMarking(a, n){
@@ -652,7 +656,7 @@ function renderMgr(){
   $("#mgrCourse").innerHTML = CS.map(c => `<button type="button" data-c="${esc(c.key)}" aria-pressed="${c === M}">${esc(c.label)}</button>`).join("");
   $("#mgrMeta").textContent = `${M.university}, ${M.course}: ${M.regulation}${M.note ? " (" + M.note + ")" : ""}. ${all.filter(k => ok(k[1])).length} of ${all.length} syllabus topics have a ready answer. Exam pattern: ${M.pattern}`;
   if (!M.years.some(y => y.y === mgrYear)) mgrYear = M.years[0].y;
-  $("#mgrYears").innerHTML = M.years.map(y => `<button type="button" data-y="${esc(y.y)}" aria-pressed="${y.y === mgrYear}">${M.key === "mgr" ? "Year " : ""}${esc(y.y)}</button>`).join("");
+  $("#mgrYears").innerHTML = M.years.map(y => `<button type="button" data-y="${esc(y.y)}" aria-pressed="${y.y === mgrYear}">${M.key === "mgr" ? "Year " : M.tabLabel ? esc(M.tabLabel) + " " : ""}${esc(y.y)}</button>`).join("");
   const y = M.years.find(x => x.y === mgrYear) || M.years[0];
   $("#mgrBody").dataset.uni = M.university;
   $("#mgrBody").innerHTML = y.s.map(s => {
