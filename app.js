@@ -1005,3 +1005,28 @@ if ("serviceWorker" in navigator && location.protocol !== "file:") {
     setInterval(check, 36e5);
   }).catch(() => {});
 }
+
+/* ================= phone counter ================= */
+// Counts each phone once, the first time the app opens with internet on the real site. Nothing about the
+// student is sent: no name, no ID, no cookie, just "+1". The About tab shows the running total.
+const COUNTER = "https://abacus.jasoncameron.dev";
+const COUNTER_KEY = "learn-anywhere-josesyson/phones";
+const LIVE_SITE = ["josesyson-physio.github.io", "learn.motionplusphysio.in"].includes(location.hostname);
+function showCount(n){
+  const el = $("#phoneCount"); if (!el || !Number.isFinite(n) || n < 1) return;
+  el.textContent = `About ${n.toLocaleString("en-IN")} phones have opened Learn Anywhere so far.`;
+  el.hidden = false;
+}
+async function phoneCounter(){
+  if (!LIVE_SITE || !navigator.onLine) return;
+  let counted = null;
+  try { counted = localStorage.getItem("la-counted"); } catch { return; } // no storage: skip so we never count twice
+  try {
+    const res = await fetch(`${COUNTER}/${counted ? "get" : "hit"}/${COUNTER_KEY}`, { cache: "no-store", credentials: "omit", referrerPolicy: "no-referrer" });
+    if (!res.ok) return;
+    const { value } = await res.json();
+    if (!counted) { try { localStorage.setItem("la-counted", "1"); } catch {} }
+    showCount(Number(value));
+  } catch {}
+}
+if (document.readyState === "complete") phoneCounter(); else addEventListener("load", phoneCounter);
