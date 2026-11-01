@@ -1012,21 +1012,22 @@ if ("serviceWorker" in navigator && location.protocol !== "file:") {
 const COUNTER = "https://abacus.jasoncameron.dev";
 const COUNTER_KEY = "learn-anywhere-josesyson/phones";
 const LIVE_SITE = ["josesyson-physio.github.io", "learn.motionplusphysio.in"].includes(location.hostname);
+function countLine(text){ const el = $("#phoneCount"); if (el) el.textContent = "📱 " + text; }
 function showCount(n){
-  const el = $("#phoneCount"); if (!el || !Number.isFinite(n) || n < 1) return;
-  el.textContent = `About ${n.toLocaleString("en-IN")} phones have opened Learn Anywhere so far.`;
-  el.hidden = false;
+  if (!Number.isFinite(n) || n < 1) return countLine("Phone count: not available right now.");
+  countLine(`Used on ${n.toLocaleString("en-IN")} ${n === 1 ? "phone" : "phones"} so far.`);
 }
 async function phoneCounter(){
-  if (!LIVE_SITE || !navigator.onLine) return;
+  if (!LIVE_SITE) return countLine("Phone count shows on the live site only.");
+  if (!navigator.onLine) return countLine("Phone count shows when you are online.");
   let counted = null;
-  try { counted = localStorage.getItem("la-counted"); } catch { return; } // no storage: skip so we never count twice
+  try { counted = localStorage.getItem("la-counted"); } catch { return countLine("Phone count: not available in this browser mode."); } // no storage: skip so we never count twice
   try {
     const res = await fetch(`${COUNTER}/${counted ? "get" : "hit"}/${COUNTER_KEY}`, { cache: "no-store", credentials: "omit", referrerPolicy: "no-referrer" });
-    if (!res.ok) return;
+    if (!res.ok) return countLine(`Phone count: the counter did not answer (error ${res.status}). Try again later.`);
     const { value } = await res.json();
     if (!counted) { try { localStorage.setItem("la-counted", "1"); } catch {} }
     showCount(Number(value));
-  } catch {}
+  } catch { countLine("Phone count: could not reach the counter right now. Try again later."); }
 }
 if (document.readyState === "complete") phoneCounter(); else addEventListener("load", phoneCounter);
