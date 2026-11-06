@@ -624,7 +624,12 @@ function libItems(){
   const base = q ? ranked(q) : allItems();
   return base.filter(it => !sub || it.subject === sub);
 }
+// The library holds hundreds of cards, so they are only built once the Library tab is open.
+// That keeps the first screen light on cheap phones.
+let libDirty = false;
 function renderLib(){
+  if ($("#view-lib").hidden) { libDirty = true; $("#libCount").textContent = `${allItems().length} topics`; return; }
+  libDirty = false;
   const items = libItems(), learnedSet = new Set(Object.keys(prog.get().learned));
   $("#libCards").innerHTML = items.length ? items.map(it => `<button class="card${learnedSet.has(it.id) ? " learned" : ""}" type="button" data-id="${esc(it.id)}" style="--sc:${subjOf(it.subject)[0]}">${icoHTML(it.subject)}<span class="meta"><span class="pill tag">${esc(it.subject||"Topic")}</span>${it.marks?`<span class="pill marks">${esc(it.marks)} marks</span>`:""}${it.saved?'<span class="pill ok">Saved</span>':""}</span><span class="t">${esc(it.title)}</span><span class="s">${esc((it.simple||"").slice(0,110))}${(it.simple||"").length>110?"...":""}</span></button>`).join("")
     : `<p class="small">No topic matches yet. Try a shorter word, or pick a subject.</p>`;
@@ -824,6 +829,7 @@ const TITLES = {ask:"Learn Anywhere: free offline physiotherapy study app for BP
 function show(v){
   views.forEach(x => { const t = $(`[data-view="${x}"]`); $("#view-"+x).hidden = x !== v; t.setAttribute("aria-selected", x === v ? "true" : "false"); t.tabIndex = x === v ? 0 : -1; });
   document.title = TITLES[v];
+  if (v === "lib" && libDirty) renderLib();
   moveInk();
   try { localStorage.setItem("la-tab", v); } catch {}
 }
